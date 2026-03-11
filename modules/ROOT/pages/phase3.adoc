@@ -1,0 +1,33 @@
+= Phase 3: Token Generation — Single-Model Serving
+:navtitle: Phase 3 Token Generation
+:toc: macro
+
+**Value:** Production-ready inference. Selection → Sizing → Tuning → Automation.
+
+== Outcome
+
+Associates can size, tune, and deploy a single LLM (e.g. Granite) with vLLM and GitOps.
+
+== Takeaway
+
+* Strategy and validated model selection; VRAM math; vLLM tuning (max-model-len, gpu-memory-utilization); automated deploy script.
+* **Engineering outcome:** One model serving endpoint, tuned for stability and performance.
+
+== Content
+
+|===
+| Topic | Source | Link
+
+| Enterprise serving (economics, strategy, sizing, vLLM, GitOps)
+| rhoai3-deploy
+| xref:rhoai3-deploy::ROOT:index.adoc[Deploy — home]
+| xref:rhoai3-deploy::chapter1:intro.adoc[Strategy and Selection]
+| xref:rhoai3-deploy::chapter1:vram-calc.adoc[VRAM Sizing]
+| xref:rhoai3-deploy::chapter1:tuning-vllm.adoc[vLLM Tuning]
+| xref:rhoai3-deploy::chapter1:model-serving.adoc[Deploy a Model]
+| xref:rhoai3-deploy::chapter1:summary.adoc[Summary]
+|===
+
+== Checkpoint
+
+* InferenceService (e.g. Granite) Ready; inference API responds; deployment is scripted (GitOps).

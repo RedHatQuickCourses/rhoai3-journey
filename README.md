@@ -1,60 +1,97 @@
-## Getting started with a new training content repository
+# Industrialized AI Token Platform — Unified Journey
 
-- Open the [course-starter-template](https://github.com/RedHatQuickCourses/course-starter-template)
+Single learning journey that combines nine enablement modules into one course for deploying an **industrialized AI token generation platform** on Red Hat OpenShift AI 3.x. Focus: optimized resources, performance SLOs, model governance, and engineering outcomes.
 
-- Click on `Use This template` button and select `Create a new repository` option.
+This repository was created from the [course-starter-template](https://github.com/RedHatQuickCourses/course-starter-template). For first-time setup (clone, course-init, GitHub Pages), see [README-TRAINING.md](./README-TRAINING.md) or the template link above.
 
-![use-this-template.png](./images/use-this-template.png)
+---
 
-- On `Create a new repository` page, Select the options as highlighted in the below image and then click `Create repository` button at the bottom of the page.
+## Course content: the nine modules
 
-![create-new-repo.png](./images/create-new-repo.png)
+**Repositories pulled in (content stays in those repos; this repo provides the playbook and journey map):**
 
-- Clone this repository on your local system:
+- **Phase 1:** rhoai3-storage, rhoai3-registry, rhoai3-catalog  
+- **Phase 2:** rhoai3-hwprofiles, rhoai3-gpu-aas  
+- **Phase 3:** rhoai3-deploy  
+- **Phase 4a:** llmops-llmd (distributed inference — required for MaaS)  
+- **Phase 4b:** rhoai3-maas  
+- **Phase 5:** rhoai3-validate  
+
+---
+
+## Prerequisites for building
+
+- All nine content repos must be **cloned as siblings** of this repo (same parent directory). Example layout:
+
+  ```
+  parent/
+  ├── rhoai3-journey/     ← you are here
+  ├── rhoai3-storage/
+  ├── rhoai3-registry/
+  ├── rhoai3-catalog/
+  ├── rhoai3-hwprofiles/
+  ├── rhoai3-gpu-aas/
+  ├── rhoai3-deploy/
+  ├── llmops-llmd/
+  ├── rhoai3-maas/
+  └── rhoai3-validate/
+  ```
+
+- **Node.js** (for `npx antora`) or **Docker** (for `antora/antora` image).
+
+---
+
+## Build the site
+
+### Option 1: Docker (recommended)
+
+Run from the **parent** directory that contains `rhoai3-journey` and all nine content repos:
+
+```bash
+cd /path/to/parent
+docker run -u $(id -u) -v $PWD:/workspace:Z --rm -t -w /workspace/rhoai3-journey antora/antora antora-playbook.yml
 ```
-git clone git@github.com:RedHatQuickCourses/my-training-repository.git
-```
-NOTE: Use your repository url in the above command.
 
-- Go in to the course repository directory and initialize the course.
-``` 
-cd my-training-repository/
-sh course-init.sh --type bfx --lab demo
-```
-NOTE: If you are using Mac, use *zsh* in place of *sh* in the above command.
+Then open `rhoai3-journey/build/site/index.html`.
 
-Sample output:
-```
-Initializing my-training-repository . . . done
+### Option 2: Local NPM
 
-Please replace the specified strings in the files below and commit the changes before proceeding with the course development.
-antora.yml:title: REPLACE Course Title
+```bash
+cd rhoai3-journey
+npm install
+npx antora antora-playbook.yml
 ```
 
-- Edit the files prompted by course initialization script.
+Then open `build/site/index.html`. Run from inside `rhoai3-journey` with the other repos as siblings.
 
-- Commit the changes done by course initialization script and your manual edits.
-```
- git status 
- git add -A; git commit -m "course initialization"
- git push origin main 
-```
+---
 
-- Browse your git repository url 
+## Using git URLs instead of local paths
 
-- On your github repo page, on left hand side pane, click on settings gear icon near `About` heading.
+For CI or when the content repos are not local siblings, replace the `content.sources` in `antora-playbook.yml` with git URLs (e.g. `https://github.com/YOUR_ORG/rhoai3-storage.git` with `branches: [main]`). See the playbook comments and adjust `YOUR_ORG` and branch/tag as needed.
 
-- Click `Use your GitHub Pages website` option to select (checked) it and then click `Save changes` button.
+---
 
-![github-pages-setting](./images/github-pages-setting.png)
+## Repository structure (journey-specific)
 
-- You should now see the link to access the rendered content within that same block.
+- **antora-playbook.yml** — Build config; lists this repo plus nine content sources; uses template UI (`./ui-bundle`, `./supplemental-ui`).
+- **antora.yml** — Journey component descriptor (ROOT module only for the journey map).
+- **modules/ROOT/** — Journey Map (index.adoc) and Phase 1–5 pages (phase1.adoc … phase5.adoc, phase4a.adoc, phase4b.adoc).
+- **TASKS.MD**, **INSIGHTS.MD** — Task log and insights for the unified journey.
 
-![quickcourse-rendered-url](./images/quickcourse-rendered-url.png)
+Template files (e.g. LABENV, chapter1–3, appendix, images, `.github/workflows`) remain from the starter template; the built site is driven by the playbook and ROOT content above.
 
-FIXME: highlight the relevant area on images.
+---
 
-**SEE ALSO**
+## Build notes
 
+- **Start page:** The site is configured to open at the Journey Map (`rhoai3-journey::index.adoc`). If it is not found, open `build/site/rhoai3-journey/1/index.html` after a successful build.
+- **Errors in other repos:** AsciiDoc errors (missing images, xrefs, doctype) in the upstream rhoai3-* and llmops-llmd repos must be fixed in those repositories.
+
+---
+
+## See also
+
+- [README-TRAINING.md](./README-TRAINING.md) — Template and training repo setup.
 - [Development using devspace](./DEVSPACE.md)
-- [Guideline for editing your content](./USAGEGUIDE.adoc)
+- [Guideline for editing content](./USAGEGUIDE.adoc)

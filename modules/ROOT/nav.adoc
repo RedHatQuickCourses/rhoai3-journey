@@ -1,1 +1,7 @@
-* xref:index.adoc[]
+* xref:index.adoc[Journey Map]
+* xref:phase1.adoc[Phase 1: Foundation]
+* xref:phase2.adoc[Phase 2: Resource Governance]
+* xref:phase3.adoc[Phase 3: Token Generation]
+* xref:phase4a.adoc[Phase 4a: Distributed Inference]
+* xref:phase4b.adoc[Phase 4b: Token Factory — MaaS]
+* xref:phase5.adoc[Phase 5: Quality and SLOs]

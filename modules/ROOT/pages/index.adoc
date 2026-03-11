@@ -1,27 +1,51 @@
-= An Example Quick Course
-:navtitle: Home
+= Industrialized AI Token Platform — Journey Map
+:navtitle: Journey Map
+:toc: macro
+:description: Single learning journey to deploy an industrialized AI token generation platform on Red Hat OpenShift AI—optimized resources, performance SLOs, model governance, and business value.
 
-== Introduction
+[.lead]
+*One course. One narrative. From governed data and models to a production token factory with validation.*
 
-Course Title: Course title FIXME
+This journey combines nine enablement modules into a single path for technical associates who want to deploy an **industrialized AI token generation platform** on Red Hat OpenShift AI 3.x. The focus is *value*: optimized resources, performance SLOs, model governance, and engineering outcomes—not depth for its own sake.
 
-Description:
-Course description FIXME
+== Who This Is For
 
-Duration: FIXME hours
+* **Audience:** Internal associates with a technical background (platform engineers, software engineers, ops)—not necessarily Generative AI experts.
+* **Prerequisites:** OpenShift/RHOAI access, `oc` CLI, basic Kubernetes (namespaces, pods, secrets). GenAI concepts are introduced in context.
 
-== Objectives
+== The Five Phases
 
-On completing this course, you should be able to:
+[cols="1,2,2"]
+|===
+| Phase | Outcome | Content Sources
 
-* Observable, measurable objective...
-* Observable, measurable objective...
-* Observable, measurable objective...
+| *Phase 1:* Foundation
+| Governed data and models; no shadow IT
+| link:phase1.adoc[Go to Phase 1] — Storage, Registry, Catalog
 
-== Prerequisites
+| *Phase 2:* Resource Governance
+| Optimized, fair GPU/compute allocation
+| link:phase2.adoc[Go to Phase 2] — Hardware Profiles, GPU as a Service
 
-This course assumes that you have the following prior experience:
+| *Phase 3:* Token Generation
+| Single-model production serving (vLLM + GitOps)
+| link:phase3.adoc[Go to Phase 3] — Enterprise Serving (rhoai3-deploy)
 
-* Course or experience...
-* Course or experience...
-* Course or experience...
+| *Phase 4a:* Distributed Inference
+| llm-d stack: Gateway, Scheduler, vLLM workers
+| link:phase4a.adoc[Go to Phase 4a] — llmops-llmd
+
+| *Phase 4b:* Token Factory — MaaS
+| Multi-tenant, API-first, governed LLM platform
+| link:phase4b.adoc[Go to Phase 4b] — Models as a Service
+
+| *Phase 5:* Quality and SLOs
+| Validation for business fit and SLOs
+| link:phase5.adoc[Go to Phase 5] — Model Validation
+|===
+
+== How to Use This Site
+
+* Follow the phases in order; each builds on the previous.
+* From each phase page, use the links into the source modules for full labs and deep dives.
+* **Engineering checkpoints:** Data Connection + PVC → Model from Catalog → Hardware profile in use → InferenceService Ready → llm-d stack / Arcade lab → MaaS endpoint with API key → Validation job and report.
