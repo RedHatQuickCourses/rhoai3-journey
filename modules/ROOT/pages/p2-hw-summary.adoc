@@ -1,2 +1,2 @@
 :navtitle: Hardware Profiles — Summary
-include::rhoai-hwprofiles::chapter1:summary.adoc[]
+include::rhoai-hwprofiles:chapter1:summary.adoc[]

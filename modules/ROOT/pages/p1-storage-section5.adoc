@@ -1,2 +1,2 @@
 :navtitle: Storage — Field Notes
-include::rhoai3-storage::chapter1:section5.adoc[]
+include::rhoai3-storage:chapter1:section5.adoc[]

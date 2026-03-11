@@ -1,2 +1,2 @@
 :navtitle: GPU as a Service — Introduction
-include::rhoai-gpu-aas::chapter1:index.adoc[]
+include::rhoai-gpu-aas:chapter1:index.adoc[]

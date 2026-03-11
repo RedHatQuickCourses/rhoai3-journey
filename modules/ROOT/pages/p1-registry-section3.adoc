@@ -1,2 +1,2 @@
 :navtitle: Registry — Model Catalog
-include::rhoai3-registry::chapter1:section3.adoc[]
+include::rhoai3-registry:chapter1:section3.adoc[]

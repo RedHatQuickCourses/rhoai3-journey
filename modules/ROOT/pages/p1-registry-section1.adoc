@@ -1,2 +1,2 @@
 :navtitle: Registry — Architecture
-include::rhoai3-registry::chapter1:section1.adoc[]
+include::rhoai3-registry:chapter1:section1.adoc[]

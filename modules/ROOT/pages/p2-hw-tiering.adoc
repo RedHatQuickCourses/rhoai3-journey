@@ -1,2 +1,2 @@
 :navtitle: Hardware Profiles — Tiering
-include::rhoai-hwprofiles::chapter1:tiering.adoc[]
+include::rhoai-hwprofiles:chapter1:tiering.adoc[]

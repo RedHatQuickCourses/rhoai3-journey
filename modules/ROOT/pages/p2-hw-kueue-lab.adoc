@@ -1,2 +1,2 @@
 :navtitle: Hardware Profiles — Kueue Lab
-include::rhoai-hwprofiles::chapter1:kueue-lab.adoc[]
+include::rhoai-hwprofiles:chapter1:kueue-lab.adoc[]

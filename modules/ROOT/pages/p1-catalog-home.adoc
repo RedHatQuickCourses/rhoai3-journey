@@ -1,2 +1,2 @@
 :navtitle: Catalog — Home
-include::rhoai3-catalog::ROOT:index.adoc[]
+include::rhoai3-catalog:ROOT:index.adoc[]

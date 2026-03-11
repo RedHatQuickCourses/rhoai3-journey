@@ -1,2 +1,2 @@
 :navtitle: Registry — QuickStart Lab
-include::rhoai3-registry::chapter1:section2.adoc[]
+include::rhoai3-registry:chapter1:section2.adoc[]

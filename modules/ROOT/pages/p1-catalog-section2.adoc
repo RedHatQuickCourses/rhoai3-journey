@@ -1,2 +1,2 @@
 :navtitle: Catalog — Customization CLI
-include::rhoai3-catalog:chapter1:partial$section2.adoc[]
+include::rhoai3-catalog:chapter1:section2.adoc[]
