@@ -1,5 +1,5 @@
 = Phase 4a: Distributed Inference — llm-d
-:navtitle: Phase 4a Distributed Inference
+:navtitle: Phase 4a Overview
 :toc: macro
 
 **Value:** TCO, SLOs, Sovereign AI. Distributed inference is required for MaaS.
@@ -13,25 +13,7 @@ Associates understand why distributed inference is required for MaaS and can art
 * Intelligent routing and pooling eliminate idle GPU waste and enable guaranteed SLOs.
 * **Engineering outcome:** Conceptual and hands-on grasp of llm-d so MaaS is not a black box.
 
-== Content
-
-|===
-| Topic | Source | Link
-
-| Red Hat AI and llm-d; vLLM and distributed inference
-| llmops-llmd
-| xref:llmops-llmd::chapter1:vllmllmd.adoc[vLLM and llm-d]
-
-| Architecture (Gateway, Scheduler, vLLM, request lifecycle)
-| llmops-llmd
-| xref:llmops-llmd::chapter1:llmdarch.adoc[Architecture and Request Lifecycle]
-
-| Well-lit paths; Arcade / walkthrough lab
-| llmops-llmd
-| xref:llmops-llmd::chapter1:simulator.adoc[Simulator]
-| xref:llmops-llmd::chapter1:labguide.adoc[Lab Guide]
-| xref:llmops-llmd::chapter1:summary.adoc[Summary]
-|===
+Use the navigation menu to work through the llm-d module (vLLM and llm-d, Architecture, Simulator, Lab Guide, Summary).
 
 == Checkpoint
 

@@ -1,5 +1,5 @@
 = Phase 2: Resource Governance — Optimized and Fair Allocation
-:navtitle: Phase 2 Resource Governance
+:navtitle: Phase 2 Overview
 :toc: macro
 
 **Value:** ROI and fairness. Right-sized, shared resources instead of dedicated hoarding.
@@ -13,21 +13,7 @@ Associates understand how to expose compute (including GPUs) as a governed menu 
 * Hardware Profiles hide Kubernetes complexity; GPU as a Service (time-slicing, MIG, Kueue) maximizes utilization.
 * **Engineering outcome:** Hardware profiles and GPU sharing configured for cost and fairness.
 
-== Content
-
-|===
-| Topic | Source | Link
-
-| Hardware Profiles (create, limits, isolation)
-| rhoai3-hwprofiles
-| xref:rhoai-hwprofiles::ROOT:index.adoc[Hardware Profiles — start here]
-| xref:rhoai-hwprofiles::chapter1:index.adoc[Chapter 1]
-
-| GPU as a Service (time-slicing, MIG, Kueue)
-| rhoai3-gpu-aas
-| xref:rhoai-gpu-aas::ROOT:index.adoc[GPU as a Service — start here]
-| xref:rhoai-gpu-aas::chapter1:index.adoc[Chapter 1]
-|===
+Use the navigation menu to work through Hardware Profiles, then GPU as a Service.
 
 == Checkpoint
 

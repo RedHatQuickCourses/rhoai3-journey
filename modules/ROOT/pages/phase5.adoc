@@ -1,5 +1,5 @@
 = Phase 5: Quality and SLOs — Model Governance and Business Validation
-:navtitle: Phase 5 Quality and SLOs
+:navtitle: Phase 5 Overview
 :toc: macro
 
 **Value:** Trust and fit. Deployment is not enough; validation proves fit-for-purpose and supports SLOs.
@@ -13,28 +13,7 @@ Associates can define validation criteria from business requirements and run or 
 * Business value of validation; application-specific validation (multi-language, performance, domain); optional automated validation services (Ch3 marked Advanced/Experimental).
 * **Engineering outcome:** Validation integrated into the deployment and operations workflow.
 
-== Content
-
-|===
-| Topic | Source | Link
-
-| Understanding business value; validation criteria
-| rhoai3-validate
-| xref:rhoai3-validate::chapter1:introduction.adoc[Introduction]
-| xref:rhoai3-validate::chapter1:business-requirements.adoc[Business Requirements]
-| xref:rhoai3-validate::chapter1:validation-criteria.adoc[Validation Criteria]
-
-| Application-specific validation (multi-language, performance, domain)
-| rhoai3-validate
-| xref:rhoai3-validate::chapter2:index.adoc[Chapter 2 — Validation Labs]
-| xref:rhoai3-validate::chapter2:multilang-validation.adoc[Multi-Language]
-| xref:rhoai3-validate::chapter2:performance-validation.adoc[Performance]
-| xref:rhoai3-validate::chapter2:domain-validation.adoc[Domain]
-
-| Deploying validation services (Advanced/Experimental)
-| rhoai3-validate
-| xref:rhoai3-validate::chapter3:index.adoc[Chapter 3 — Validation Services]
-|===
+Use the navigation menu to work through the Validation modules (Introduction, Business Requirements, ROI; Application-Specific Validation; Deploying Validation Services).
 
 == Checkpoint
 

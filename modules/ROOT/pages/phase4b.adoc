@@ -1,5 +1,5 @@
 = Phase 4b: Token Factory — Models as a Service
-:navtitle: Phase 4b Token Factory MaaS
+:navtitle: Phase 4b Overview
 :toc: macro
 
 **Value:** Scale and sovereignty. From "one model per project" to a governed, API-first token factory.
@@ -13,26 +13,7 @@ Associates understand and can operate a MaaS-style platform (Gateway, Kuadrant, 
 * llm-d is the distributed inference backbone; MaaS adds service tiers, API keys, and governance.
 * **Engineering outcome:** Centralized, governed LLM API with quotas and auth.
 
-== Content
-
-|===
-| Topic | Source | Link
-
-| Introduction and business value; strategy (standalone vs MaaS)
-| rhoai3-maas
-| xref:rhoai3-maas::chapter1:index.adoc[Introduction and Value]
-
-| Taxonomy; architecture; hands-on lab
-| rhoai3-maas
-| xref:rhoai3-maas::chapter1:section1.adoc[Strategy Guide]
-| xref:rhoai3-maas::chapter1:section2.adoc[Architecture]
-| xref:rhoai3-maas::chapter1:section3.adoc[Lab: Build Your MaaS]
-
-| Day-2 operations and troubleshooting
-| rhoai3-maas
-| xref:rhoai3-maas::chapter1:section4.adoc[Day-2 Operations]
-| xref:rhoai3-maas::chapter1:quiz.adoc[Quiz]
-|===
+Use the navigation menu to work through the MaaS module (Introduction, Strategy, Architecture, Lab, Day-2 Operations, Quiz).
 
 == Checkpoint
 

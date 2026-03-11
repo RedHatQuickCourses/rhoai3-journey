@@ -50,4 +50,8 @@ llm-d is required for MaaS: MaaS content assumes distributed inference concepts 
 
 ## Repo structure
 
-- This repo is based on the organization course-starter-template. The journey adds: playbook (with nine content sources), antora.yml (ROOT only for journey map), and `modules/ROOT/` (Journey Map + Phase 1–5 pages). Template modules (LABENV, chapter1–3, appendix) remain in the repo but are not included in the journey component nav; the playbook aggregates content from the nine external repos.
+- This repo is based on the organization course-starter-template. The journey adds: playbook (with nine content sources), antora.yml (ROOT only for journey map), and `modules/ROOT/` (Journey Map + Phase 1–5 overview pages). Template modules (LABENV, chapter1–3, appendix) remain in the repo but are not included in the journey component nav; the playbook aggregates content from the nine external repos.
+
+## Unified nav: actual modules inside the journey
+
+- The journey nav (`modules/ROOT/nav.adoc`) lists the **actual course module pages** from the nine source components via cross-component xref (e.g. `xref:rhoai3-storage::chapter1:section1.adoc[Storage — Architecture Deep Dive]`). Learners see one combined table of contents; clicking an entry opens the real page from that repo. Phase overview pages (phase1.adoc … phase5.adoc) are short intros with outcome, value, and checkpoint; they no longer duplicate links in tables.

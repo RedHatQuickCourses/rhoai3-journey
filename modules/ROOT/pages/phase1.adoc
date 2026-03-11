@@ -1,5 +1,5 @@
 = Phase 1: Foundation — Governed Data and Models
-:navtitle: Phase 1 Foundation
+:navtitle: Phase 1 Overview
 :toc: macro
 
 **Value:** No Shadow IT. One supply chain for credentials and models.
@@ -13,25 +13,7 @@ Associates can connect workbenches and model servers to storage and use a privat
 * Credentials in Kubernetes Secrets (Data Connections); models in a private Registry; Catalog as the showroom.
 * **Engineering outcome:** Reproducible, governed model and data access.
 
-== Content
-
-|===
-| Topic | Source | Link
-
-| Data Connections and PVCs
-| rhoai3-storage
-| xref:rhoai3-storage::chapter1:index.adoc[Storage — start here]
-
-| Private Model Registry (MySQL + MinIO, pipeline)
-| rhoai3-registry
-| xref:rhoai3-registry::ROOT:index.adoc[Registry — deploy and connect catalog]
-
-| Model Catalog ops (sources, wizard, guardrails)
-| rhoai3-catalog
-| xref:rhoai3-catalog::ROOT:index.adoc[Catalog — home]
-| xref:rhoai3-catalog::chapter1:section1.adoc[Architecture]
-| xref:rhoai3-catalog::chapter1:section4.adoc[Simulate the Catalog]
-|===
+Use the navigation menu to work through the module pages in order: Storage, then Registry, then Catalog.
 
 == Checkpoint
 
