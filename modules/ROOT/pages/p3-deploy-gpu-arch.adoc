@@ -1,2 +1,2 @@
 :navtitle: Deploy — GPU Architecture
-include::rhoai3-deploy::chapter1:gpu-arch.adoc[]
+include::rhoai3-deploy:chapter1:gpu-arch.adoc[]

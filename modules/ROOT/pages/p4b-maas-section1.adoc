@@ -1,2 +1,2 @@
 :navtitle: MaaS — Strategy Guide
-include::rhoai3-maas::chapter1:section1.adoc[]
+include::rhoai3-maas:chapter1:section1.adoc[]

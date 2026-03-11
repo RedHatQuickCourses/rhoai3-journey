@@ -1,2 +1,2 @@
 :navtitle: Validation — Zero Trust Architecture
-include::rhoai3-validate::chapter1:section2.adoc[]
+include::rhoai3-validate:chapter1:section2.adoc[]

@@ -1,2 +1,2 @@
 :navtitle: Validation — Application-Specific
-include::rhoai3-validate::chapter2:index.adoc[]
+include::rhoai3-validate:chapter2:index.adoc[]

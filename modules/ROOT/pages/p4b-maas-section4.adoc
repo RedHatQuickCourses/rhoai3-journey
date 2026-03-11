@@ -1,2 +1,2 @@
 :navtitle: MaaS — Day-2 Operations
-include::rhoai3-maas::chapter1:section4.adoc[]
+include::rhoai3-maas:chapter1:section4.adoc[]

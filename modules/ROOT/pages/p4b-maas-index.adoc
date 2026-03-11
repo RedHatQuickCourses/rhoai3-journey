@@ -1,2 +1,2 @@
 :navtitle: MaaS — Introduction & Value
-include::rhoai3-maas::chapter1:index.adoc[]
+include::rhoai3-maas:chapter1:index.adoc[]

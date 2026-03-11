@@ -1,2 +1,2 @@
 :navtitle: MaaS — Quiz
-include::rhoai3-maas::chapter1:quiz.adoc[]
+include::rhoai3-maas:chapter1:quiz.adoc[]

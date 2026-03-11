@@ -1,2 +1,2 @@
 :navtitle: Validation — Domain
-include::rhoai3-validate::chapter2:domain-validation.adoc[]
+include::rhoai3-validate:chapter2:domain-validation.adoc[]

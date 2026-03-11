@@ -1,2 +1,2 @@
 :navtitle: Deploy — Introduction & Value
-include::rhoai3-deploy::ROOT:index.adoc[]
+include::rhoai3-deploy:ROOT:index.adoc[]

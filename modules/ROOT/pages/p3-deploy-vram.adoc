@@ -1,2 +1,2 @@
 :navtitle: Deploy — The Sizing Guide
-include::rhoai3-deploy::chapter1:vram-calc.adoc[]
+include::rhoai3-deploy:chapter1:vram-calc.adoc[]

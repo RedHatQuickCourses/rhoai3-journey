@@ -1,2 +1,2 @@
 :navtitle: Validation — Results Analysis
-include::rhoai3-validate::chapter2:results-analysis.adoc[]
+include::rhoai3-validate:chapter2:results-analysis.adoc[]

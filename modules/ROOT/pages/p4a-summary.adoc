@@ -1,2 +1,2 @@
 :navtitle: llm-d — Summary
-include::llmops-llmd::chapter1:summary.adoc[]
+include::llmops-llmd:chapter1:summary.adoc[]

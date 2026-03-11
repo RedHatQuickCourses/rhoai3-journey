@@ -1,2 +1,2 @@
 :navtitle: Validation — Service Design
-include::rhoai3-validate::chapter3:validation-service-design.adoc[]
+include::rhoai3-validate:chapter3:validation-service-design.adoc[]

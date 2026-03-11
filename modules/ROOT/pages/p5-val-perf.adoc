@@ -1,2 +1,2 @@
 :navtitle: Validation — Performance
-include::rhoai3-validate::chapter2:performance-validation.adoc[]
+include::rhoai3-validate:chapter2:performance-validation.adoc[]

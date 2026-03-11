@@ -1,2 +1,2 @@
 :navtitle: Validation — Business Requirements
-include::rhoai3-validate::chapter1:business-requirements.adoc[]
+include::rhoai3-validate:chapter1:business-requirements.adoc[]

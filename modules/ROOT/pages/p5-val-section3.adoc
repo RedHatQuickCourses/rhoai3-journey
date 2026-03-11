@@ -1,2 +1,2 @@
 :navtitle: Validation — Deploy Guardrails
-include::rhoai3-validate::chapter1:section3.adoc[]
+include::rhoai3-validate:chapter1:section3.adoc[]

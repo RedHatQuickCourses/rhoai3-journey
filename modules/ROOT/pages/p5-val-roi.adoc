@@ -1,2 +1,2 @@
 :navtitle: Validation — Measuring ROI
-include::rhoai3-validate::chapter1:roi-measurement.adoc[]
+include::rhoai3-validate:chapter1:roi-measurement.adoc[]
