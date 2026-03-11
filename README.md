@@ -66,9 +66,11 @@ Then open `build/site/index.html`. Run from inside `rhoai3-journey` with the oth
 
 ---
 
-## Using git URLs instead of local paths
+## Why the nav links work (or don't)
 
-For CI or when the content repos are not local siblings, replace the `content.sources` in `antora-playbook.yml` with git URLs (e.g. `https://github.com/YOUR_ORG/rhoai3-storage.git` with `branches: [main]`). See the playbook comments and adjust `YOUR_ORG` and branch/tag as needed.
+The playbook uses **git URLs** for the nine content repos so that the **GitHub Pages build** (and any CI build) fetches and builds all of them. That way the generated site includes every component (e.g. `rhoai3-registry/1/chapter1/section3.html`), and the journey nav xrefs resolve to real pages instead of fragment fallbacks. If the playbook only had `url: ./`, only the journey pages would be built and nav links would change the URL to a `#...` fragment and not load the target page.
+
+For **local** builds with sibling clones, you can temporarily point sources at local paths (e.g. `url: ../rhoai3-storage`) in the playbook to avoid cloning; the same playbook with git URLs also works locally (Antora will clone the repos into its cache).
 
 ---
 

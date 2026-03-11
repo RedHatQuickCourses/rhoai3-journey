@@ -1,10 +1,39 @@
+# Unified Industrialized AI Token Platform Journey
+# Content sources: this repo + nine modules (git URLs so CI/GitHub Pages builds all of them).
+# For local build with sibling clones, you can temporarily replace url with ../<repo-name>.
+
 site:
-  title: Industrialized AI Token Platform — Journey Map
+  title: Industrialized AI Token Platform — RHOAI Journey
   start_page: rhoai3-journey::index.adoc
 
 content:
   sources:
+  # Journey map and phase overview (this repo)
   - url: ./
+  # Phase 1: Foundation
+  - url: https://github.com/RedHatQuickCourses/rhoai3-storage.git
+    branches: [main, master]
+  - url: https://github.com/RedHatQuickCourses/rhoai3-registry.git
+    branches: [main, master]
+  - url: https://github.com/RedHatQuickCourses/rhoai3-catalog.git
+    branches: [main, master]
+  # Phase 2: Resource governance
+  - url: https://github.com/RedHatQuickCourses/rhoai3-hwprofiles.git
+    branches: [main, master]
+  - url: https://github.com/RedHatQuickCourses/rhoai3-gpu-aas.git
+    branches: [main, master]
+  # Phase 3: Token generation
+  - url: https://github.com/RedHatQuickCourses/rhoai3-deploy.git
+    branches: [main, master]
+  # Phase 4a: Distributed inference (required for MaaS)
+  - url: https://github.com/RedHatQuickCourses/llmops-llmd.git
+    branches: [main, master]
+  # Phase 4b: MaaS
+  - url: https://github.com/RedHatQuickCourses/rhoai3-maas.git
+    branches: [main, master]
+  # Phase 5: Validation
+  - url: https://github.com/RedHatQuickCourses/rhoai3-validate.git
+    branches: [main, master]
 
 asciidoc:
   attributes:
