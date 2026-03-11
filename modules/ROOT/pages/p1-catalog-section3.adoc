@@ -1,2 +1,2 @@
 :navtitle: Catalog — Administration
-include::rhoai3-catalog::chapter1:section3.adoc[]
+include::rhoai3-catalog:chapter1:section3.adoc[]
