@@ -1,0 +1,2 @@
+:navtitle: Validation — Deploying Services
+include::rhoai3-validate::chapter3:index.adoc[]

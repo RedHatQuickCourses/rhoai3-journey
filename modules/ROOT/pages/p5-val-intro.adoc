@@ -1,0 +1,2 @@
+:navtitle: Validation — Introduction
+include::rhoai3-validate::chapter1:introduction.adoc[]

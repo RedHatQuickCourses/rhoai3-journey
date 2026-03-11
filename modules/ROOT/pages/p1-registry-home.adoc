@@ -1,0 +1,2 @@
+:navtitle: Registry — Home
+include::rhoai3-registry::ROOT:index.adoc[]

@@ -1,0 +1,2 @@
+:navtitle: Deploy — vLLM Tuning
+include::rhoai3-deploy::chapter1:tuning-vllm.adoc[]

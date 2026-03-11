@@ -1,0 +1,2 @@
+:navtitle: Deploy — KServe Architecture
+include::rhoai3-deploy::chapter1:kserve.adoc[]

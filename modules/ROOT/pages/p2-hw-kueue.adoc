@@ -1,0 +1,2 @@
+:navtitle: Hardware Profiles — Kueue
+include::rhoai-hwprofiles::chapter1:kueue.adoc[]

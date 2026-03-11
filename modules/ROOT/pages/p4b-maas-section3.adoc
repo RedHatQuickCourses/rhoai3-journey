@@ -1,0 +1,2 @@
+:navtitle: MaaS — Lab: Build Your MaaS
+include::rhoai3-maas::chapter1:section3.adoc[]

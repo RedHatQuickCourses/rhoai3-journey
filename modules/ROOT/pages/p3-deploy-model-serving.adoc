@@ -1,0 +1,2 @@
+:navtitle: Deploy a Model
+include::rhoai3-deploy::chapter1:model-serving.adoc[]

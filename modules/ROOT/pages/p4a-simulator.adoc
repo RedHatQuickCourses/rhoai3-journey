@@ -1,0 +1,2 @@
+:navtitle: llm-d — Simulator
+include::llmops-llmd::chapter1:simulator.adoc[]

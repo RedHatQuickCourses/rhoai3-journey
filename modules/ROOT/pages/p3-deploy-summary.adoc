@@ -1,0 +1,2 @@
+:navtitle: Deploy — Summary
+include::rhoai3-deploy::chapter1:summary.adoc[]

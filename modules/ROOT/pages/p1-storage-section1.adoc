@@ -1,0 +1,2 @@
+:navtitle: Storage — Architecture Deep Dive
+include::rhoai3-storage::chapter1:section1.adoc[]

@@ -1,0 +1,2 @@
+:navtitle: Validation — Multi-Language
+include::rhoai3-validate::chapter2:multilang-validation.adoc[]

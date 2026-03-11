@@ -1,0 +1,2 @@
+:navtitle: Hardware Profiles — Placement
+include::rhoai-hwprofiles::chapter1:placement.adoc[]

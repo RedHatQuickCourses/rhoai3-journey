@@ -1,0 +1,2 @@
+:navtitle: Validation — Automated Pipeline
+include::rhoai3-validate::chapter3:automated-validation.adoc[]
