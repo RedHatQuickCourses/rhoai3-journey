@@ -1,2 +1,2 @@
 :navtitle: Storage — Lab Exercises
-include::rhoai3-storage::chapter1:storage-lab.adoc[]
+include::3.2@rhoai3-storage:chapter1:storage-lab.adoc[]
