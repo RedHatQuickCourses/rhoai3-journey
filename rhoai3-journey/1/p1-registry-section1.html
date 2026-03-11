@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>Architecture: The AI Supply Chain :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="p1-registry-home.html">
     <link rel="next" href="p1-registry-section2.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -383,8 +383,299 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Architecture: The AI Supply Chain</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>A "registry" is not a "repository." Understanding the difference is key to a scalable AI platform.</strong></p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p1-registry-section1.adoc - include::rhoai3-registry::chapter1:section1.adoc[]</p>
+<p>To build a private AI Factory, you must distinguish between <strong>where the data lives</strong> and <strong>how the data is governed</strong>. In Red Hat OpenShift AI (RHOAI), we decouple these two concerns to ensure performance, security, and flexibility.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_core_concept_decoupling_control_vs_data"><a class="anchor" href="#_the_core_concept_decoupling_control_vs_data"></a>The Core Concept: Decoupling Control vs. Data</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The RHOAI Model Registry architecture follows a "split-plane" design.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The Control Plane (The "librarian"):</strong> This is the <strong>Model Registry</strong> itself. It is a lightweight metadata service backed by a relational database (MySQL). It knows <strong>about</strong> the models (e.g., author, version, license, metrics) but does not hold the files.</p>
+</li>
+<li>
+<p><strong>The Data Plane (The "bookshelf"):</strong> This is your object storage (S3/MinIO/Quay/Ceph). The Data Plane is where the heavy artifacts (e.g., Safetensors, ONNX files, configs) actually reside.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_component_breakdown"><a class="anchor" href="#_component_breakdown"></a>Component Breakdown</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_the_registry_service_control_plane"><a class="anchor" href="#_1_the_registry_service_control_plane"></a>1. The Registry Service (Control Plane)</h3>
+<div class="paragraph">
+<p>This is the brain of the operation. It exposes a REST API that allows users and systems to register, query, and update model metadata.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Technology:</strong> A Golang-based service managed by the <code>model-registry-operator</code>.</p>
+</li>
+<li>
+<p><strong>Backend:</strong> Requires a MySQL 8.x or Postgres database.</p>
+</li>
+<li>
+<p><strong>Function:</strong> Enforces the schema. It ensures that every registered model has the required fields (e.g., you cannot register a model without a version number).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_the_artifact_storage_data_plane"><a class="anchor" href="#_2_the_artifact_storage_data_plane"></a>2. The Artifact Storage (Data Plane)</h3>
+<div class="paragraph">
+<p>This is the vault. It must be an S3-compatible object storage service.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Technology:</strong> AWS S3, Red Hat Ceph Storage, or MinIO (for this lab).</p>
+</li>
+<li>
+<p><strong>Security:</strong> This bucket should be <strong>private</strong>. Only the specific Service Accounts used by your pipelines and serving runtimes should have read access.</p>
+</li>
+<li>
+<p><strong>The "Golden Image" concept:</strong> Once a model version is uploaded here and registered, the file should be treated as <strong>immutable</strong>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_the_model_catalog_the_showroom"><a class="anchor" href="#_3_the_model_catalog_the_showroom"></a>3. The Model Catalog (the "Showroom")</h3>
+<div class="paragraph">
+<p>The Catalog is where AI developers and data scientists browse available models. By default, it shows Red Hat Validated (ready for inference) and Red Hat AI models (ready for tuning pipeline). You&#8217;ll find models like Granite, DeepSeekR1 and Llama. To show <strong>your</strong> private models, we must explicitly connect the two.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The Mechanism:</strong> The RHOAI Dashboard reads from <strong>Catalog sources</strong>.</p>
+</li>
+<li>
+<p><strong>The Integration:</strong> The Model Catalog does not use a database for configuration; it uses a Kubernetes <strong>ConfigMap</strong>. You will edit this object directly to add your model details.</p>
+</li>
+<li>
+<p><strong>The Workflow:</strong>
+You need to define two logical "files" inside this ConfigMap:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong><code>sources.yaml</code></strong>: Registers your custom catalog path.</p>
+</li>
+<li>
+<p><strong><code>my-models.yaml</code></strong>: Contains the actual metadata for your models.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<details>
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: model-catalog-sources
+  namespace: rhoai-model-registries
+data:
+  # FILE 1: The Main Config - Points to your custom file
+  sources.yaml: |
+    catalogs:
+      - name: "Model-Registry-Lab"
+        id: "registry-custom-models"
+        type: "yaml"
+        properties:
+          yamlCatalogPath: "/data/user-sources/registry-models.yaml"
+
+  # FILE 2: Your Model Definitions (Add models here)
+  registry-models.yaml: |
+    models:
+      # --- MODEL 1: IBM Granite ---
+      - name: "granite-3.0-2b-instruct"
+        description: "IBM Granite Small Language Model"
+        customProperties:
+          model_type:
+            metadataType: MetadataStringValue
+            string_value: "generative"
+          author:
+            metadataType: MetadataStringValue
+            string_value: "IBM"
+          version:
+            metadataType: MetadataStringValue
+            string_value: "1.0"
+        artifacts:
+          - name: "model-artifact"
+            uri: "oci://quay.io/redhat-ai-services/modelcar-catalog:granite-3.0-2b-instruct"</code></pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_data_flow_lifecycle_of_a_model"><a class="anchor" href="#_the_data_flow_lifecycle_of_a_model"></a>The Data Flow: Lifecycle of a Model</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Understanding the flow for the hands-on lab you are about to perform.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Setup the Stage (Deploy MySQL &amp; Minio):</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Clone the Git repository</p>
+</li>
+<li>
+<p>Execute the setup.sh script</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Configure the Registry (Connect the Registry to the DB):</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the Model Registry API to add a new Model Registry</p>
+</li>
+<li>
+<p>Connect it to the DB from step1</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Ingestion (the Download):</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>A Python script authenticates with Hugging Face (or another source).</p>
+</li>
+<li>
+<p>It downloads the raw files to a temporary workspace.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Storage (the Storage):</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>The script uploads the files to your private S3 bucket (e.g., <code>s3://my-private-models/granite-7b/v1/</code>).</p>
+</li>
+<li>
+<p><strong>Result:</strong> The data is now safe and sovereign.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Registration (the Model Registry):</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>The script calls the Model Registry API.</p>
+</li>
+<li>
+<p>It sends a JSON payload: "I have a model named 'Granite', Version '1.0', located at 's3://&#8230;&#8203;'"</p>
+</li>
+<li>
+<p><strong>Result:</strong> The Registry generates a unique ID and stamps the entry.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Visibility (the Model Catalog):</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Edit the Model catalog source ConfigMap,</p>
+</li>
+<li>
+<p>Add the yaml files to the ConfigMap,</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Discovery (the Consumption):</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>A data scientist opens the RHOAI Dashboard.</p>
+</li>
+<li>
+<p>They see the "Granite 2B" card.</p>
+</li>
+<li>
+<p>When they click "Deploy," RHOAI reads the S3 URI from the Registry and pulls the weights directly from your private bucket—<strong>never</strong> touching the public internet.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_system_requirements_for_the_lab"><a class="anchor" href="#_system_requirements_for_the_lab"></a>System Requirements for the Lab</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To build this architecture in the next module, your cluster must meet these minimums:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Component</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requirement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Role</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>OpenShift AI</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Platform</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Compute</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 vCPUs, 4GB RAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For Registry &amp; DB Pods</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<div class="paragraph">
+<p><strong>Now that you understand the blueprint, it is time to pick up the tools.</strong></p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p1-registry-home.html">Registry — Home</a></span>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>Architecture: The GPU-as-a-Service Stack :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="p2-gpu-index.html">
     <link rel="next" href="p2-gpu-section2.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -383,8 +383,169 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Architecture: The GPU-as-a-Service Stack</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>To scale AI infrastructure, you must decouple the physical hardware from the user request.</strong></p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p2-gpu-section1.adoc - include::rhoai-gpu-aas::chapter1:section1.adoc[]</p>
+<p>In a standard Kubernetes environment, users request specific nodes (e.g., via <code>nodeSelectors</code>). This creates a rigid 1:1 dependency that breaks at scale. The GPU-as-a-Service architecture introduces a <strong>Governance Layer</strong> that mediates between the available infrastructure and the user&#8217;s intent.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_decoupled_architecture"><a class="anchor" href="#_the_decoupled_architecture"></a>The Decoupled Architecture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The system is composed of three distinct planes. Understand the interaction between these layers for troubleshooting and configuration.</p>
+</div>
+<div class="sect2">
+<h3 id="_1_the_supply_plane_virtualization"><a class="anchor" href="#_1_the_supply_plane_virtualization"></a>1. The Supply Plane (Virtualization)</h3>
+<div class="paragraph">
+<p>This layer is responsible for the <strong>Physical Assets</strong>. It converts raw silicon into advertised Kubernetes resources.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>NVIDIA GPU Operator:</strong> The "Hypervisor" for the GPU. It applies the partitioning logic (Time-Slicing or MIG) to the driver.</p>
+</li>
+<li>
+<p><strong>Node Feature Discovery (NFD):</strong> The "Inventory System." It scans the modified driver state and labels the node with the new capacity.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>State Change:</strong> The node transitions from advertising <code>nvidia.com/gpu: 1</code> (Physical) to <code>nvidia.com/gpu: 4</code> (Virtual Time-Sliced) or <code>nvidia.com/mig-1g.10gb: 7</code> (MIG).</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_the_control_plane_governance"><a class="anchor" href="#_2_the_control_plane_governance"></a>2. The Control Plane (Governance)</h3>
+<div class="paragraph">
+<p>This layer is responsible for <strong>Arbitration</strong>. It decides which workloads run based on quotas and priority, rather than simple node availability.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Kueue:</strong> The scheduling engine. It intercepts Pods before they reach the standard Kubernetes scheduler.</p>
+</li>
+<li>
+<p><strong>ResourceFlavor:</strong> The "Translation Layer." It maps a logical request (e.g., "Standard GPU") to the physical node labels (e.g., <code>instance-type=p4d.24xlarge</code> or <code>mig-config=1g.5gb</code>).</p>
+</li>
+<li>
+<p><strong>ClusterQueue:</strong> The "Policy Engine." It enforces global limits (e.g., "Team Finance gets max 10 GPUs") and borrowing rules.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_the_demand_plane_consumption"><a class="anchor" href="#_3_the_demand_plane_consumption"></a>3. The Demand Plane (Consumption)</h3>
+<div class="paragraph">
+<p>This layer is responsible for <strong>User Experience</strong>. It abstracts the complexity of the layers below.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Hardware Profile:</strong> The "Service Catalog" entry. In this architecture, the profile does <strong>not</strong> point to a Node. It points to a <strong>LocalQueue</strong>. This ensures that all requests pass through the governance engine.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_request_workflow_packet_flow"><a class="anchor" href="#_the_request_workflow_packet_flow"></a>The Request Workflow (Packet Flow)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When a Data Scientist clicks "Start" on a Workbench, the following sequence occurs:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Submission:</strong> The Dashboard generates a Pod spec containing a specific <code>hardware-profile</code> label.</p>
+</li>
+<li>
+<p><strong>Interception:</strong> The Hardware Profile Controller detects the label and injects a reference to the user&#8217;s <strong>LocalQueue</strong>.</p>
+</li>
+<li>
+<p><strong>Admission Check:</strong> Kueue receives the job from the LocalQueue. It checks the parent <strong>ClusterQueue</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Check 1:</strong> Is there free quota?</p>
+</li>
+<li>
+<p><strong>Check 2:</strong> Is the priority high enough?</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Assignment:</strong> If approved, Kueue assigns a <strong>ResourceFlavor</strong> to the job. This injects the necessary <code>nodeSelectors</code> and <code>tolerations</code> into the Pod.</p>
+</li>
+<li>
+<p><strong>Scheduling:</strong> The Pod—now fully decorated with physical constraints—is handed to the Kubernetes Scheduler, which binds it to a specific L40S node slice.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_component_configuration_map"><a class="anchor" href="#_component_configuration_map"></a>Component Configuration Map</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As a Platform Engineer, you will configure these specific Custom Resources (CRs) in the following order:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Layer</th>
+<th class="tableblock halign-left valign-top">Custom Resource</th>
+<th class="tableblock halign-left valign-top">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Supply</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ClusterPolicy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables Time-Slicing or MIG strategies on the physical nodes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Control</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ResourceFlavor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Links the abstract "Flavor" to the specific NFD node labels.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Control</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ClusterQueue</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines the total pool of resources (Quota) available to the cluster.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Demand</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LocalQueue</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The entry point for a specific project namespace.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Demand</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HardwareProfile</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The visible menu item in the RHOAI Dashboard.</p></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<div class="paragraph">
+<p><strong>With the architecture defined, proceed to the next section to configure the Supply Plane.</strong></p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p2-gpu-index.html">GPU as a Service — Introduction</a></span>
