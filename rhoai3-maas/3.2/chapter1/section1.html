@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Strategy: Defining Your Path to Production (OpenShift AI 3.3) :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <link rel="prev" href="../index.html">
+    <link rel="next" href="section2.html">
+    <meta name="description" content="Define the strategic deployment models in Red Hat OpenShift AI 3.3 and understand when to pitch Standalone Model Serving versus Distributed Models as a Service (MaaS).">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Industrialized AI Token Platform — RHOAI Journey</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai3-maas" data-version="3.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introduction &amp; Value</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="section1.html">Strategy Guide (Well-Lit Paths)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section2.html">MaaS Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section3.html">Lab: Build Your MaaS</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section4.html">Day-2 Operations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section5.html">New</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="quiz.html">Quiz</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</span>
+    <span class="version">3.2</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai-gpu-aas/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-journey/1/index.html">Industrialized AI Token Platform — Journey Map</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-journey/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../llmops-llmd/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-validate/1/index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-validate/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="../index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-deploy/1/index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-deploy/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-storage/3.2/index.html">The Storage Strategy, Architecting for AI Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../rhoai3-journey/1/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a></li>
+    <li><a href="section1.html">Strategy Guide (Well-Lit Paths)</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Strategy: Defining Your Path to Production (OpenShift AI 3.3)</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>Before we write a single line of YAML or commit to a Git repository, we have to help the customer choose their architectural strategy.</strong></p>
+</div>
+<div class="paragraph">
+<p>In Red Hat OpenShift AI 3.3, "model serving" has split into two very specific, mechanically different paths. Choosing the wrong path leads to either wasted infrastructure spend or an inability to apply governance.</p>
+</div>
+<div class="paragraph">
+<p>Our job is to guide the customer. We need to look at their use cases and explain why not every AI workload should be deployed the same way.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_strategic_divide_standalone_vs_distributed_maas"><a class="anchor" href="#_the_strategic_divide_standalone_vs_distributed_maas"></a>The Strategic Divide: Standalone vs. Distributed MaaS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Not every AI workload is the same. Serving a massive, fine-tuned model for a single, high-frequency internal application requires a different architecture than providing a general-purpose, rate-limited LLM API to 500 enterprise developers across different departments.</p>
+</div>
+<div class="paragraph">
+<p>When positioning OpenShift AI to leadership, think of it like transportation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Standalone Serving</strong> is a <strong>Race Car</strong>. It is purpose-built, highly tuned for a single driver (application), and consumes dedicated resources. It&#8217;s incredibly fast, but it doesn&#8217;t scale to handle the general public.</p>
+</li>
+<li>
+<p><strong>Models as a Service (MaaS)</strong> is <strong>City Transit</strong>. It is designed for high throughput, shared resources, and access control (tickets/tokens). It efficiently moves hundreds of people (developers) using the same infrastructure footprint.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_path_a_standalone_serving_the_race_car"><a class="anchor" href="#_path_a_standalone_serving_the_race_car"></a>Path A: Standalone Serving (The "Race Car")</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The Setup:</strong> A traditional KServe deployment where a model gets a dedicated OpenShift Route and dedicated GPU(s).</p>
+</li>
+<li>
+<p><strong>The Pros:</strong> Absolute performance isolation. Zero interference from other workloads.</p>
+</li>
+<li>
+<p><strong>The Cons:</strong> Terrible resource utilization if the application isn&#8217;t constantly inferencing. There is no built-in rate limiting, no API key generation in the UI, and no multi-tenant token tracking.</p>
+</li>
+<li>
+<p><strong>When to pitch it:</strong> When a customer has a single, mission-critical application that demands guaranteed, uninterrupted latency and the business unit is willing to pay for dedicated hardware.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_path_b_distributed_maas_the_city_transit"><a class="anchor" href="#_path_b_distributed_maas_the_city_transit"></a>Path B: Distributed MaaS (The "City Transit")</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The Setup:</strong> The model is deployed using the Distributed Inference Server (<code>llm-d</code>), published as a MaaS endpoint, and placed behind the Kubernetes Gateway API and Kuadrant governance engine.</p>
+</li>
+<li>
+<p><strong>The Pros:</strong> Massive ROI. GPUs are pooled and shared. Developers are issued API keys and placed into Service Tiers (e.g., Free, Premium) to prevent any one team from exhausting the system. Cross-departmental chargebacks become possible.</p>
+</li>
+<li>
+<p><strong>The Cons:</strong> Requires a much more complex architectural foundation (which we will cover next).</p>
+</li>
+<li>
+<p><strong>When to pitch it:</strong> When the business wants to become an "internal AI provider" for its developers, offering a standard catalog of approved models (like Granite or Llama) to the entire organization securely.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps_understanding_the_blueprint"><a class="anchor" href="#_next_steps_understanding_the_blueprint"></a>Next Steps: Understanding the Blueprint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we know <strong>why</strong> we are pitching MaaS to maximize the customer&#8217;s hardware ROI, we need to understand <strong>how</strong> it actually works.</p>
+</div>
+<div class="paragraph">
+<p>If we just click "Deploy" in the UI without understanding the backend, we will fail. In the next module, we will look under the hood at the "Invisible Dependency Chain" of operators that make this City Transit system run.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../index.html">Introduction &amp; Value</a></span>
+  <span class="next"><a href="section2.html">MaaS Architecture</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lab: The Heavy Lifters (Multi-GPU Aggregation) :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <link rel="prev" href="section3.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Industrialized AI Token Platform — RHOAI Journey</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai-gpu-aas" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">End the GPU Bottleneck, Automated Access at Scale</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section1.html">Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section2.html">Supply Lab: Time-Slicing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section3.html">Governance Lab: Kueue &amp; Profiles</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="section4.html">Aggregation Lab: Scaling Up</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">End the GPU Bottleneck, Automated Access at Scale</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-journey/1/index.html">Industrialized AI Token Platform — Journey Map</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-journey/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../llmops-llmd/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-validate/1/index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-validate/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-maas/3.2/index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-maas/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-deploy/1/index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-deploy/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-storage/3.2/index.html">The Storage Strategy, Architecting for AI Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../rhoai3-journey/1/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">End the GPU Bottleneck, Automated Access at Scale</a></li>
+    <li><a href="section4.html">Aggregation Lab: Scaling Up</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Lab: The Heavy Lifters (Multi-GPU Aggregation)</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>When a single engine isn&#8217;t enough, you build a cluster.</strong></p>
+</div>
+<div class="paragraph">
+<p>In the previous labs, we focused on <strong>efficiency</strong> (slicing 1 GPU into 4). Now, we pivot to <strong>power</strong>.</p>
+</div>
+<div class="paragraph">
+<p>A standard NVIDIA L40S has 48GB of VRAM. If your data scientists need to fine-tune a Llama-3-70B model, they will hit an "Out of Memory" (OOM) error immediately. To solve this, you must engineer a "Heavy Lifter" profile that aggregates multiple physical cards into a single addressable resource.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Hardware:</strong> A node with at least 2 physical GPUs (e.g., <code>nvidia.com/gpu: 2</code> or more).</p>
+</li>
+<li>
+<p><strong>Topology:</strong> Ideally, these GPUs should be connected via high-speed interconnects (NVLink), though PCIe aggregation works for functional testing.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_1_define_the_heavy_flavor_control"><a class="anchor" href="#_step_1_define_the_heavy_flavor_control"></a>Step 1: Define the "Heavy" Flavor (Control)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Kueue needs to understand that a "Heavy" request is fundamentally different from a standard one. It requires a node with <strong>at least</strong> 2 cards available.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Create the Multi-GPU Flavor:</strong></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: kueue.x-k8s.io/v1beta1
+kind: ResourceFlavor
+metadata:
+  name: flavor-dual-gpu
+spec:
+  nodeLabels:
+    nvidia.com/gpu.count: "2"  # &lt;1&gt; Targeting nodes with high density
+  tolerations:
+  - key: "nvidia.com/gpu"
+    operator: "Exists"</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_2_update_the_quota_policy"><a class="anchor" href="#_step_2_update_the_quota_policy"></a>Step 2: Update the Quota (Policy)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Your existing <code>ClusterQueue</code> might restrict users to small quotas. We need to explicitly allow this heavy workload.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Patch the ClusterQueue:</strong>
+Add the new flavor to your existing queue configuration.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: kueue.x-k8s.io/v1beta1
+kind: ClusterQueue
+metadata:
+  name: cluster-queue-gpu
+spec:
+  resourceGroups:
+  - coveredResources: ["nvidia.com/gpu"]
+    flavors:
+    - name: default-flavor # (Existing 1-GPU flavor)
+    - name: flavor-dual-gpu # &lt;1&gt; New 2-GPU flavor
+      resources:
+      - name: "nvidia.com/gpu"
+        nominalQuota: 4 # &lt;2&gt; Allow up to 2 concurrent "Dual GPU" jobs</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_3_create_the_heavy_profile_demand"><a class="anchor" href="#_step_3_create_the_heavy_profile_demand"></a>Step 3: Create the "Heavy" Profile (Demand)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now, we create the user-facing button. This is where we solve the "Topology Trap."</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="title">The Topology Trap</div>
+<div class="paragraph">
+<p>Requesting "2 GPUs" is dangerous if they are on different NUMA nodes (slow communication). For production training, you should ensure this profile targets machines with NVLink.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Define the Hardware Profile:</strong></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: dashboard.opendatahub.io/v1alpha1
+kind: HardwareProfile
+metadata:
+  name: profile-dual-l40s
+  namespace: redhat-ods-applications
+spec:
+  displayName: "Dual L40S Station (96GB VRAM)"
+  description: "Bundled 2x GPU for LLM Fine-tuning and Distributed Training."
+  identifiers:
+    - identifier: nvidia.com/gpu
+      count: 2  # &lt;1&gt; The Aggregation Request
+  # Note: Kueue handles the placement, but you can add affinity here if not using Kueue</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_4_verification_the_voltron_check"><a class="anchor" href="#_step_4_verification_the_voltron_check"></a>Step 4: Verification (The "Voltron" Check)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We need to prove that the pod actually sees two distinct devices.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Launch a Workbench using the <strong>"Dual L40S Station"</strong> profile.</p>
+</li>
+<li>
+<p>Open a Terminal inside the Jupyter environment.</p>
+</li>
+<li>
+<p>Run the NVIDIA System Management Interface check:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">nvidia-smi -L</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Success Criteria:</strong>
+You should see two distinct UUIDs listed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">GPU 0: NVIDIA L40S (UUID: GPU-123...)
+GPU 1: NVIDIA L40S (UUID: GPU-456...)</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>You have now successfully engineered a scale-up solution. Your platform can handle both lightweight inference (Slicing) and heavy-duty training (Aggregation).</strong></p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="section3.html">Governance Lab: Kueue &amp; Profiles</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
