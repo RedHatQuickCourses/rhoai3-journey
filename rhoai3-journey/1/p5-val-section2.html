@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>The Architecture of Trust :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="p5-val-intro.html">
     <link rel="next" href="p5-val-section3.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -383,8 +383,173 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">The Architecture of Trust</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div id="trustyai-arch" class="paragraph lead">
+<p><strong>To industrialize AI, you must move from "monitoring" to "intercepting."</strong></p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p5-val-section2.adoc - include::rhoai3-validate::chapter1:section2.adoc[]</p>
+<p>In a traditional MLOps pipeline, monitoring happens <strong>after</strong> the fact. You analyze logs at the end of the week to see if your model drifted.</p>
+</div>
+<div class="paragraph">
+<p>In the <strong>Industrial AI Factory</strong>, this is too late. If a GenAI model leaks PII or outputs hate speech, the damage is instantaneous. Therefore, the architecture of Red Hat OpenShift AI (RHOAI) 3.x shifts from passive observation to <strong>active interception</strong>.</p>
+</div>
+<div class="paragraph">
+<p>This module deconstructs the technical stack you will be building. It explains how TrustyAI sits between your users and your models to enforce the "Zero Trust" paradigm.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_core_architecture_the_man_in_the_middle"><a class="anchor" href="#_the_core_architecture_the_man_in_the_middle"></a>The Core Architecture: The "Man-in-the-Middle"</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TrustyAI is not a single binary; it is a set of distinct services that integrate with the <strong>KServe</strong> inference stack. Understanding these components is critical for the "Systems Architect" persona.</p>
+</div>
+<div class="sect2">
+<h3 id="_1_the_guardrails_orchestrator_the_shield"><a class="anchor" href="#_1_the_guardrails_orchestrator_the_shield"></a>1. The Guardrails Orchestrator (The "Shield")</h3>
+<div class="paragraph">
+<p>This is the active defense layer. It functions as a proxy that intercepts every inference request.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Role:</strong> It pauses the request, sends the prompt to a series of "Detectors" (e.g., Regex, Toxicity Model, PII Scanner), and waits for a verdict.</p>
+</li>
+<li>
+<p><strong>The Decision:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Pass:</strong> The request is forwarded to the LLM.</p>
+</li>
+<li>
+<p><strong>Block:</strong> The request is rejected immediately. The LLM never sees it, saving GPU compute costs.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Deployment:</strong> Runs as a sidecar or gateway service within the Service Mesh, ensuring mTLS encryption.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_the_model_serving_runtime_the_engine"><a class="anchor" href="#_2_the_model_serving_runtime_the_engine"></a>2. The Model Serving Runtime (The "Engine")</h3>
+<div class="paragraph">
+<p>This is where the actual intelligence lives (e.g., Granite-8B, Llama-3).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Role:</strong> Pure inference. In this architecture, the model is "blind" to the outside world; it only accepts traffic from the Guardrails Orchestrator.</p>
+</li>
+<li>
+<p><strong>Technology:</strong> We use <strong>vLLM</strong> on GPU nodes to handle the heavy lifting.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_the_trustyai_service_the_auditor"><a class="anchor" href="#_3_the_trustyai_service_the_auditor"></a>3. The TrustyAI Service (The "Auditor")</h3>
+<div class="paragraph">
+<p>This is the passive observation layer. It asynchronously consumes payload data to calculate long-term metrics.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Role:</strong> It computes "drift" (how much data has changed over time) and "fairness" (bias detection).</p>
+</li>
+<li>
+<p><strong>Storage:</strong> It writes these metrics to Prometheus for visualization in Grafana or the RHOAI dashboard.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_taxonomy_of_risk_speaking_the_language"><a class="anchor" href="#_the_taxonomy_of_risk_speaking_the_language"></a>The Taxonomy of Risk: Speaking the Language</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before we configure the operator, we must define what we are measuring. "Bad AI" comes in three distinct flavors in the enterprise:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 60%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Risk Term</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Definition</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Countermeasure</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Hallucination</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The model confidently generates false information (e.g., citing a court case that doesn&#8217;t exist).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>LM-Eval (Factuality)</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Toxicity / Jailbreak</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The model is tricked into generating hate speech, bomb-making instructions, or phishing emails.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Guardrails (Input/Output)</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Bias / Drift</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The model performs worse for a specific demographic group or degrades over time as the world changes.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>TrustyAI Service (Metrics)</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_up_next"><a class="anchor" href="#_up_next"></a>Up Next</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We are moving away from theoretical slides and into the console. You will be configuring the <strong>TrustyAI Operator</strong> to take full control of the cluster&#8217;s AI lifecycle.</p>
+</div>
+<div class="paragraph">
+<p>By the end of this module, you will know how to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Provision the TrustyAI Operator</strong> in a "Managed" state within the <code>DataScienceCluster</code>.</p>
+</li>
+<li>
+<p><strong>Define the <code>LMEvalJob</code> Custom Resource</strong> to run automated benchmarks.</p>
+</li>
+<li>
+<p><strong>Architect the flow</strong> of data from a user, through the Guardrails, to the vLLM runtime.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Architecture Decision Point</div>
+<div class="paragraph">
+<p>In this course, we will deploy the <strong>Guardrails Orchestrator</strong> in "Service Mode." This decouples the guardrails from the model, allowing you to update your safety rules without restarting the heavy GPU pods running the LLM.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Concept check complete. Let&#8217;s enter the lab.</strong></p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p5-val-intro.html">Validation — Introduction</a></span>

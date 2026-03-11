@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>The Distributed Inference Stack: vLLM &amp; llm-d :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="phase4a.html">
     <link rel="next" href="p4a-llmdarch.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -383,8 +383,126 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">The Distributed Inference Stack: vLLM &amp; llm-d</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="imageblock text-left unresolved">
+<div class="content">
+<img src="llmd-banner.png" alt="Red Hat OpenShift AI" width="200">
+</div>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p4a-vllmllmd.adoc - include::llmops-llmd::chapter1:vllmllmd.adoc[]</p>
+<p><strong>Role:</strong> System Architect<br>
+<strong>Technical Objective:</strong> Understand the "Stacked Architecture" that decouples orchestration (Control Plane) from execution (Inference Engine).</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_industrializing_generative_ai"><a class="anchor" href="#_industrializing_generative_ai"></a>Industrializing Generative AI</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To move from "Experiment" to "Enterprise Service," we must stop treating model serving as a single, monolithic pod.  Industrial-grade inference requires two distinct layers of optimization:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>A High-Performance Engine:</strong> To manage raw speed and memory at the node level.</p>
+</li>
+<li>
+<p><strong>An Intelligent Control Plane:</strong> To manage resource efficiency and routing across the entire cluster.
+Red Hat OpenShift AI combines the industry-standard <strong>vLLM</strong> engine with the Kubernetes-native <strong>llm-d</strong> framework to create this unified, production-grade stack.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_stack_architecture"><a class="anchor" href="#_the_stack_architecture"></a>The Stack Architecture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following architectural model visualizes the functional separation of the inference stack.</p>
+</div>
+<div class="sect2">
+<h3 id="_layer_1_the_control_plane_llm_drole_orchestration_routing"><a class="anchor" href="#_layer_1_the_control_plane_llm_drole_orchestration_routing"></a>Layer 1: The Control Plane (llm-d)<strong>Role:</strong> Orchestration &amp; Routing</h3>
+<div class="paragraph">
+<p>At the top of the stack is <strong>llm-d</strong>, a Kubernetes-native framework that transforms monolithic deployments into intelligent microservices. It acts as the "Traffic Cop" for your compute.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Intelligent Scheduling:</strong> Unlike standard Kubernetes round-robin routing, <code>llm-d</code> utilizes live metadata to route requests to the "warmest" nodes (KV Cache Affinity).</p>
+</li>
+<li>
+<p><strong>Disaggregation:</strong> It splits the compute-heavy "Prefill" phase from the latency-sensitive "Decode" phase into separate services, optimizing hardware utilization.</p>
+</li>
+<li>
+<p><strong>MoE Parallelism:</strong> It manages the complex inter-node communication required for massive Mixture-of-Expert (MoE) models that exceed single-node capacity.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_layer_2_the_service_layer_vllm_role_high_throughput_execution"><a class="anchor" href="#_layer_2_the_service_layer_vllm_role_high_throughput_execution"></a>Layer 2: The Service Layer (vLLM) <strong>Role:</strong> High-Throughput Execution</h3>
+<div class="paragraph">
+<p>The middle layer is powered by <strong>vLLM</strong>, the state-of-the-art open-source engine. In this stack, vLLM is the worker engine running inside the pods managed by <code>llm-d</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>PagedAttention:</strong> Manages KV cache memory in fixed-size pages (similar to OS virtual memory), eliminating fragmentation and enabling large context windows.</p>
+</li>
+<li>
+<p><strong>Continuous Batching:</strong> Processes multiple queries together dynamically to maximize GPU saturation.</p>
+</li>
+<li>
+<p><strong>Speculative Decoding:</strong> Predicts future tokens in parallel to speed up the generation phase.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_layer_3_the_hardware_layerrole_base_compute_resources"><a class="anchor" href="#_layer_3_the_hardware_layerrole_base_compute_resources"></a>Layer 3: The Hardware Layer<strong>Role:</strong> Base Compute Resources</h3>
+<div class="paragraph">
+<p>At the foundation are the physical resources (e.g., NVIDIA H100, A100). The software stack ensures these expensive assets are never wasted:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>vLLM</strong> ensures the GPU is not idle during execution cycles.</p>
+</li>
+<li>
+<p><strong>llm-d</strong> ensures requests are routed to the right GPU at the right time.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">The Logistics Analogy</div>
+<div class="paragraph">
+<p>Think of running an LLM at scale like managing a global logistics network:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>llm-d</strong> is the <strong>Air Traffic Control Tower</strong>, optimizing routes and managing the fleet.</p>
+</li>
+<li>
+<p><strong>vLLM</strong> is the <strong>Jet Engine</strong> on every plane, ensuring maximum speed and efficiency for the individual unit.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="phase4a.html">Phase 4a Overview</a></span>

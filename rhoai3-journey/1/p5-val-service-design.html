@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>Validation Service Design :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="p5-val-ch3-index.html">
     <link rel="next" href="p5-val-deploy-svc.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -383,8 +383,146 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Validation Service Design</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>Good architecture enables automation. Understanding the design helps you deploy effectively.</strong></p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p5-val-service-design.adoc - include::rhoai3-validate::chapter3:validation-service-design.adoc[]</p>
+<p>Before deploying, understand the validation service architecture and how it integrates with your OpenShift AI environment.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_validation_service_architecture"><a class="anchor" href="#_validation_service_architecture"></a>Validation Service Architecture</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_components"><a class="anchor" href="#_components"></a>Components</h3>
+<div class="paragraph">
+<p>The validation service consists of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Validation Controller:</strong> Orchestrates validation jobs</p>
+</li>
+<li>
+<p><strong>Validation Jobs:</strong> Run validation tests (TrustyAI LMEvalJob, GuideLLM)</p>
+</li>
+<li>
+<p><strong>Results Storage:</strong> S3-compatible storage for validation results</p>
+</li>
+<li>
+<p><strong>Validation API:</strong> REST API for triggering validations and retrieving results</p>
+</li>
+<li>
+<p><strong>Dashboard:</strong> Visualization of validation results</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integration_points"><a class="anchor" href="#_integration_points"></a>Integration Points</h3>
+<div class="paragraph">
+<p>The validation service integrates with:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>InferenceService:</strong> Monitors deployed models</p>
+</li>
+<li>
+<p><strong>Model Registry:</strong> Tracks model versions</p>
+</li>
+<li>
+<p><strong>S3 Storage:</strong> Stores validation results</p>
+</li>
+<li>
+<p><strong>OpenShift AI Dashboard:</strong> Displays validation status</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_service_design_patterns"><a class="anchor" href="#_service_design_patterns"></a>Service Design Patterns</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_scheduled_validation"><a class="anchor" href="#_scheduled_validation"></a>Scheduled Validation</h3>
+<div class="paragraph">
+<p>Run validation on a schedule (e.g., daily, weekly):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Use Case:</strong> Regular quality checks</p>
+</li>
+<li>
+<p><strong>Trigger:</strong> CronJob or scheduled pipeline</p>
+</li>
+<li>
+<p><strong>Frequency:</strong> Based on business requirements</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_event_driven_validation"><a class="anchor" href="#_event_driven_validation"></a>Event-Driven Validation</h3>
+<div class="paragraph">
+<p>Run validation triggered by events (e.g., model updates):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Use Case:</strong> Validate on every model deployment</p>
+</li>
+<li>
+<p><strong>Trigger:</strong> Webhook or pipeline event</p>
+</li>
+<li>
+<p><strong>Frequency:</strong> On-demand</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_continuous_validation"><a class="anchor" href="#_continuous_validation"></a>Continuous Validation</h3>
+<div class="paragraph">
+<p>Run validation continuously:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Use Case:</strong> Real-time quality monitoring</p>
+</li>
+<li>
+<p><strong>Trigger:</strong> Continuous monitoring loop</p>
+</li>
+<li>
+<p><strong>Frequency:</strong> Continuous</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>Next Steps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Proceed to <a href="#deploy-validation-service.adoc" class="xref unresolved">deploy the validation service</a></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Now let&#8217;s deploy the validation service.</strong></p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p5-val-ch3-index.html">Validation — Deploying Services</a></span>

@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>Strategy: Defining Your Path to Production (OpenShift AI 3.3) :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="p4b-maas-index.html">
     <link rel="next" href="p4b-maas-section2.html">
+    <meta name="description" content="Define the strategic deployment models in Red Hat OpenShift AI 3.3 and understand when to pitch Standalone Model Serving versus Distributed Models as a Service (MaaS).">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script>var uiRootPath = '../../_'</script>
@@ -383,8 +384,89 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Strategy: Defining Your Path to Production (OpenShift AI 3.3)</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>Before we write a single line of YAML or commit to a Git repository, we have to help the customer choose their architectural strategy.</strong></p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p4b-maas-section1.adoc - include::rhoai3-maas::chapter1:section1.adoc[]</p>
+<p>In Red Hat OpenShift AI 3.3, "model serving" has split into two very specific, mechanically different paths. Choosing the wrong path leads to either wasted infrastructure spend or an inability to apply governance.</p>
+</div>
+<div class="paragraph">
+<p>Our job is to guide the customer. We need to look at their use cases and explain why not every AI workload should be deployed the same way.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_strategic_divide_standalone_vs_distributed_maas"><a class="anchor" href="#_the_strategic_divide_standalone_vs_distributed_maas"></a>The Strategic Divide: Standalone vs. Distributed MaaS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Not every AI workload is the same. Serving a massive, fine-tuned model for a single, high-frequency internal application requires a different architecture than providing a general-purpose, rate-limited LLM API to 500 enterprise developers across different departments.</p>
+</div>
+<div class="paragraph">
+<p>When positioning OpenShift AI to leadership, think of it like transportation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Standalone Serving</strong> is a <strong>Race Car</strong>. It is purpose-built, highly tuned for a single driver (application), and consumes dedicated resources. It&#8217;s incredibly fast, but it doesn&#8217;t scale to handle the general public.</p>
+</li>
+<li>
+<p><strong>Models as a Service (MaaS)</strong> is <strong>City Transit</strong>. It is designed for high throughput, shared resources, and access control (tickets/tokens). It efficiently moves hundreds of people (developers) using the same infrastructure footprint.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_path_a_standalone_serving_the_race_car"><a class="anchor" href="#_path_a_standalone_serving_the_race_car"></a>Path A: Standalone Serving (The "Race Car")</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The Setup:</strong> A traditional KServe deployment where a model gets a dedicated OpenShift Route and dedicated GPU(s).</p>
+</li>
+<li>
+<p><strong>The Pros:</strong> Absolute performance isolation. Zero interference from other workloads.</p>
+</li>
+<li>
+<p><strong>The Cons:</strong> Terrible resource utilization if the application isn&#8217;t constantly inferencing. There is no built-in rate limiting, no API key generation in the UI, and no multi-tenant token tracking.</p>
+</li>
+<li>
+<p><strong>When to pitch it:</strong> When a customer has a single, mission-critical application that demands guaranteed, uninterrupted latency and the business unit is willing to pay for dedicated hardware.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_path_b_distributed_maas_the_city_transit"><a class="anchor" href="#_path_b_distributed_maas_the_city_transit"></a>Path B: Distributed MaaS (The "City Transit")</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The Setup:</strong> The model is deployed using the Distributed Inference Server (<code>llm-d</code>), published as a MaaS endpoint, and placed behind the Kubernetes Gateway API and Kuadrant governance engine.</p>
+</li>
+<li>
+<p><strong>The Pros:</strong> Massive ROI. GPUs are pooled and shared. Developers are issued API keys and placed into Service Tiers (e.g., Free, Premium) to prevent any one team from exhausting the system. Cross-departmental chargebacks become possible.</p>
+</li>
+<li>
+<p><strong>The Cons:</strong> Requires a much more complex architectural foundation (which we will cover next).</p>
+</li>
+<li>
+<p><strong>When to pitch it:</strong> When the business wants to become an "internal AI provider" for its developers, offering a standard catalog of approved models (like Granite or Llama) to the entire organization securely.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps_understanding_the_blueprint"><a class="anchor" href="#_next_steps_understanding_the_blueprint"></a>Next Steps: Understanding the Blueprint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we know <strong>why</strong> we are pitching MaaS to maximize the customer&#8217;s hardware ROI, we need to understand <strong>how</strong> it actually works.</p>
+</div>
+<div class="paragraph">
+<p>If we just click "Deploy" in the UI without understanding the backend, we will fail. In the next module, we will look under the hood at the "Invisible Dependency Chain" of operators that make this City Transit system run.</p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p4b-maas-index.html">MaaS — Introduction &amp; Value</a></span>

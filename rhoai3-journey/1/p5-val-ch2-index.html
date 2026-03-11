@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>Application-Specific Validation :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="p5-val-roi.html">
     <link rel="next" href="p5-val-multilang.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -383,8 +383,203 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Application-Specific Validation</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>Application-specific validation tests whether your model works for YOUR business use case.</strong></p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p5-val-ch2-index.adoc - include::rhoai3-validate::chapter2:index.adoc[]</p>
+<p>You&#8217;ve defined your business requirements and validation criteria. Now it&#8217;s time to run comprehensive validation tests that measure how well your model performs for your specific application.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_three_dimensions_of_validation"><a class="anchor" href="#_the_three_dimensions_of_validation"></a>The Three Dimensions of Validation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter covers three critical dimensions of application-specific validation:</p>
+</div>
+<div class="sect2">
+<h3 id="_1_multi_language_validation"><a class="anchor" href="#_1_multi_language_validation"></a>1. Multi-Language Validation</h3>
+<div class="paragraph">
+<p><strong>Business Question:</strong> "Does the model work across all our markets?"</p>
+</div>
+<div class="paragraph">
+<p>For global applications, validate model accuracy across multiple languages:
+* English (en)
+* Spanish (es)
+* Japanese (ja)</p>
+</div>
+<div class="paragraph">
+<p><strong>What you&#8217;ll learn:</strong>
+* How to run multi-language accuracy tests using TrustyAI LMEvalJob
+* How to interpret accuracy metrics across languages
+* How to identify language-specific performance gaps</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_performance_validation"><a class="anchor" href="#_2_performance_validation"></a>2. Performance Validation</h3>
+<div class="paragraph">
+<p><strong>Business Question:</strong> "Can the model serve requests fast enough for our application?"</p>
+</div>
+<div class="paragraph">
+<p>Measure system performance to ensure the model meets production requirements:
+* Latency (time to first token, inter-token latency)
+* Throughput (requests per second, tokens per second)
+* Resource utilization (GPU and memory usage)</p>
+</div>
+<div class="paragraph">
+<p><strong>What you&#8217;ll learn:</strong>
+* How to run performance benchmarks using GuideLLM
+* How to interpret latency and throughput metrics
+* How to identify performance bottlenecks</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_domain_specific_validation"><a class="anchor" href="#_3_domain_specific_validation"></a>3. Domain-Specific Validation</h3>
+<div class="paragraph">
+<p><strong>Business Question:</strong> "Does the model understand our business domain?"</p>
+</div>
+<div class="paragraph">
+<p>Test model performance on business-relevant scenarios:
+* Domain terminology understanding
+* Use case workflow handling
+* Compliance and safety requirements</p>
+</div>
+<div class="paragraph">
+<p><strong>What you&#8217;ll learn:</strong>
+* How to create custom validation datasets for your application
+* How to run domain-specific evaluation jobs
+* How to measure model performance on business-relevant tasks</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before starting this chapter, ensure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You have completed Chapter 1 (business requirements defined)</p>
+</li>
+<li>
+<p>Your InferenceService is deployed and in "Ready" state</p>
+</li>
+<li>
+<p>TrustyAI operator is installed and configured</p>
+</li>
+<li>
+<p>You have access to create LMEvalJob resources</p>
+</li>
+<li>
+<p>S3 storage is available for results</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="title">Verify Your Model is Ready</div>
+<div class="paragraph">
+<p>Before proceeding, verify your InferenceService is running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Check your InferenceService status
+oc get inferenceservice -n &lt;your-namespace&gt;
+
+# Verify the service is ready
+oc get inferenceservice &lt;your-model-name&gt; -n &lt;your-namespace&gt; \
+  -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be <code>True</code>. If not, troubleshoot your deployment before continuing.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lab_structure"><a class="anchor" href="#_lab_structure"></a>Lab Structure</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter is organized into four sequential labs:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Multi-Language Validation:</strong> Test accuracy across languages</p>
+</li>
+<li>
+<p><strong>Performance Validation:</strong> Measure system performance</p>
+</li>
+<li>
+<p><strong>Domain-Specific Validation:</strong> Test business-relevant scenarios</p>
+</li>
+<li>
+<p><strong>Results Analysis:</strong> Analyze and interpret validation results</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_expected_outcomes"><a class="anchor" href="#_expected_outcomes"></a>Expected Outcomes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By the end of this chapter, you will have:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Run comprehensive validation tests across accuracy, performance, and domain knowledge</p>
+</li>
+<li>
+<p>Stored all validation results in S3 for future reference</p>
+</li>
+<li>
+<p>Analyzed validation results in business context</p>
+</li>
+<li>
+<p>Created validation reports suitable for stakeholder review</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>Next Steps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Start with <a href="#multilang-validation.adoc" class="xref unresolved">Multi-Language Validation</a> to test accuracy across languages</p>
+</li>
+<li>
+<p>Or proceed to <a href="#performance-validation.adoc" class="xref unresolved">Performance Validation</a> to measure system performance</p>
+</li>
+<li>
+<p>Or jump to <a href="#domain-validation.adoc" class="xref unresolved">Domain-Specific Validation</a> for business-focused testing</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Ready to validate? Let&#8217;s start with multi-language accuracy testing.</strong></p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p5-val-roi.html">Validation — Measuring ROI</a></span>

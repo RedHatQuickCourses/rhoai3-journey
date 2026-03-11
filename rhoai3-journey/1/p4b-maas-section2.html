@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>Architecture &amp; Ecosystem: Lessons from the Trenches (OpenShift AI 3.3) :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="p4b-maas-section1.html">
     <link rel="next" href="p4b-maas-section3.html">
+    <meta name="description" content="A technical breakdown of the OpenShift AI 3.3 Models-as-a-Service (MaaS) ecosystem, exploring the "Invisible Dependency Chain" and request lifecycle.">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script>var uiRootPath = '../../_'</script>
@@ -383,8 +384,170 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Architecture &amp; Ecosystem: Lessons from the Trenches (OpenShift AI 3.3)</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>We set out to build a Models-as-a-Service (MaaS) deployment using a GitOps approach. We expected a straightforward path: deploy a model, expose it, and manage access. Instead, we hit several roadblocks that forced us to look under the hood.</strong></p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p4b-maas-section2.adoc - include::rhoai3-maas::chapter1:section2.adoc[]</p>
+<p>What we discovered fundamentally changed how we view the platform.</p>
+</div>
+<div class="paragraph">
+<p>In OpenShift AI 3.3, MaaS is <strong>not a standalone application; it is an ecosystem.</strong> If you just click "Deploy" in the Gen AI Studio UI without understanding the backend foundation, the platform&#8217;s fail-safes will silently halt your deployment.</p>
+</div>
+<div class="paragraph">
+<p>Here is what we learned the hard way about the "Invisible Dependency Chain," and the exact architecture you need to understand to build this factory for your customers.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_the_invisible_dependency_chain"><a class="anchor" href="#_1_the_invisible_dependency_chain"></a>1. The Invisible Dependency Chain</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To make MaaS work in a scalable, GitOps-driven environment, you are actually orchestrating a stack of five distinct technologies. The inference request flows from the top down, but the infrastructure must be built from the bottom up.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The Network Front Door: Kubernetes Gateway API</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>What it does:</strong> Replaces standard OpenShift Routes to handle advanced HTTP/REST traffic routing into the cluster.</p>
+</li>
+<li>
+<p><strong>The Catch:</strong> The OpenShift AI Operator looks for a specific Gateway resource (<code>maas-default-gateway</code>). If it doesn&#8217;t exist, it halts the MaaS API deployment to prevent unroutable services.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>The Governance Engine: Red Hat Connectivity Link (Kuadrant)</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>What it does:</strong> Provides the API key authentication (Authorino) and rate-limiting (Limitador) necessary to protect expensive GPU resources from abuse.</p>
+</li>
+<li>
+<p><strong>The Catch:</strong> The RHOAI Operator refuses to generate the <code>maas-parameters</code> configuration if Kuadrant is missing. It acts as a fail-safe to prevent insecure models from being exposed.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>The Resource Bank: Kueue Operator</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>What it does:</strong> Manages quotas and queues for distributed workloads, ensuring fair sharing of GPU and CPU resources across namespaces.</p>
+</li>
+<li>
+<p><strong>The Catch:</strong> Distributed inference must ask Kueue for permission to use a GPU via a <code>ClusterQueue</code>. If Kueue isn&#8217;t configured, the deployment is rejected immediately with scheduling errors.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>The Pod Orchestrator: LeaderWorkerSet (LWS) Operator</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>What it does:</strong> Groups pods into a "Leader" (handling API routing) and "Workers" (handling the GPU execution math).</p>
+</li>
+<li>
+<p><strong>The Catch:</strong> KServe requires LWS to deploy the distributed runtime. Even on a single-node cluster, KServe will fail with a <code>ReconcileMultiNodeWorkloadError</code> if the LWS Custom Resource Definitions (CRDs) are missing.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>The Execution Engine: KServe &amp; llm-d</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>What it does:</strong> The actual inference server that loads the model into vLLM and serves the tokens.</p>
+</li>
+<li>
+<p><strong>The Catch:</strong> This sits at the very top of the stack. It relies entirely on the Gateway for traffic, Kuadrant for security, Kueue for GPUs, and LWS for pod management.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_the_maas_vocabulary"><a class="anchor" href="#_2_the_maas_vocabulary"></a>2. The MaaS Vocabulary</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When designing this architecture with customers, you must speak the language of the 3.3 release. These are the core concepts that separate MaaS from legacy model serving:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Distributed Inference Server (<code>llm-d</code>)</dt>
+<dd>
+<p>The mandatory orchestrator for MaaS. It acts as an intelligent router, receiving requests and distributing them efficiently across multiple backend vLLM worker engines. It enables cache-aware scheduling and separates the "prefill" phase from the "decode" phase to eliminate latency bottlenecks.</p>
+</dd>
+<dt class="hdlist1">Service Tiers &amp; Tokens</dt>
+<dd>
+<p>The business-logic layer. You define Tiers (e.g., Free, Premium) that map directly to OpenShift User Groups. These tiers dictate the strict request rates and token limits enforced by Kuadrant. Crucially, Kuadrant counts <strong>aggregate tokens</strong>, not just HTTP hits, preventing users from exhausting GPUs with massive context windows.</p>
+</dd>
+<dt class="hdlist1">Hardware Efficiency (Time-Slicing &amp; RoCE)</dt>
+<dd>
+<p>MaaS is designed to maximize hardware ROI. <strong>Time-Slicing</strong> allows multiple <code>llm-d</code> workloads to share a single physical GPU by dividing processing time. For massive models (like Llama 3 70B) that must span multiple physical nodes, <strong>RoCE (RDMA over Converged Ethernet)</strong> allows GPUs on different servers to communicate directly with sub-microsecond latency, bypassing the CPU entirely.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_the_request_lifecycle_tying_it_together"><a class="anchor" href="#_3_the_request_lifecycle_tying_it_together"></a>3. The Request Lifecycle: Tying it Together</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To troubleshoot or engineer this system, you must understand the exact flow of a request through the dependency chain we just outlined:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Client</strong> sends an OpenAI-compatible POST request (<code>/v1/chat/completions</code>) using their generated MaaS API Token.</p>
+</li>
+<li>
+<p><strong>Gateway API</strong> receives the request at the edge of the OpenShift cluster.</p>
+</li>
+<li>
+<p><strong>Kuadrant (Authorino)</strong> intercepts the traffic and validates the API token against the defined Service Tiers.</p>
+</li>
+<li>
+<p><strong>Kuadrant (Limitador)</strong> checks the token consumption math. <em>(If the user&#8217;s quota is exceeded, it immediately returns a 429 Error, saving GPU cycles).</em></p>
+</li>
+<li>
+<p><strong>llm-d Orchestrator</strong> receives the validated request. It checks its cache map and routes the prompt to the most optimal worker.</p>
+</li>
+<li>
+<p><strong>vLLM Worker</strong> executes the forward pass (leveraging RoCE if spanning multiple nodes) and streams tokens back to <code>llm-d</code>.</p>
+</li>
+<li>
+<p><strong>Limitador</strong> asynchronously updates the user&#8217;s token usage in the backend database for accurate chargeback monitoring.</p>
+</li>
+<li>
+<p><strong>Client</strong> receives the streamed response.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps_building_the_foundation"><a class="anchor" href="#_next_steps_building_the_foundation"></a>Next Steps: Building the Foundation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that you understand the "Invisible Dependency Chain" and how traffic flows through the ecosystem, it is time to build it.</p>
+</div>
+<div class="paragraph">
+<p>In the next module, we will put on our Platform Engineer hats and use a strict GitOps/CLI approach to deploy these foundational layers so the AI Administrators have a working factory to govern.</p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p4b-maas-section1.html">MaaS — Strategy Guide</a></span>

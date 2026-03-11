@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>Deploying Validation Services in OpenShift AI :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="p5-val-results.html">
     <link rel="next" href="p5-val-service-design.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -383,8 +383,149 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Deploying Validation Services in OpenShift AI</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>Automated validation services ensure ongoing model quality and catch issues before they impact customers.</strong></p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p5-val-ch3-index.adoc - include::rhoai3-validate::chapter3:index.adoc[]</p>
+<p>You&#8217;ve validated your model manually. Now it&#8217;s time to deploy automated validation services that continuously monitor model quality and provide early warning of issues.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_deploy_validation_services"><a class="anchor" href="#_why_deploy_validation_services"></a>Why Deploy Validation Services</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Manual validation is valuable, but automated validation services provide:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Continuous Monitoring:</strong> Validate models on every update</p>
+</li>
+<li>
+<p><strong>Early Warning:</strong> Catch issues before they impact customers</p>
+</li>
+<li>
+<p><strong>Consistency:</strong> Standardized validation across all models</p>
+</li>
+<li>
+<p><strong>Efficiency:</strong> Automated validation reduces manual effort</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_youll_deploy"><a class="anchor" href="#_what_youll_deploy"></a>What You&#8217;ll Deploy</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter teaches you to deploy:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Validation Service:</strong> A Kubernetes service that runs validation tests</p>
+</li>
+<li>
+<p><strong>Validation Pipeline:</strong> Automated validation triggered by model updates</p>
+</li>
+<li>
+<p><strong>Validation Dashboard:</strong> Visualization of validation results</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before starting, ensure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You have completed Chapter 2 (validation tests run successfully)</p>
+</li>
+<li>
+<p>Your OpenShift AI cluster is accessible</p>
+</li>
+<li>
+<p>You have permissions to create Kubernetes resources</p>
+</li>
+<li>
+<p>S3 storage is available for validation results</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_chapter_structure"><a class="anchor" href="#_chapter_structure"></a>Chapter Structure</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter is organized into three modules:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Validation Service Design:</strong> Understand the architecture</p>
+</li>
+<li>
+<p><strong>Deploy Validation Service:</strong> Deploy the service in OpenShift AI</p>
+</li>
+<li>
+<p><strong>Automated Validation Pipeline:</strong> Integrate validation into your workflow</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_expected_outcomes"><a class="anchor" href="#_expected_outcomes"></a>Expected Outcomes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By the end of this chapter, you will have:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deployed a validation service in OpenShift AI</p>
+</li>
+<li>
+<p>Automated validation triggered by model updates</p>
+</li>
+<li>
+<p>A validation dashboard showing ongoing model quality</p>
+</li>
+<li>
+<p>Integration of validation into your deployment workflow</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>Next Steps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Learn about <a href="#validation-service-design.adoc" class="xref unresolved">validation service design</a></p>
+</li>
+<li>
+<p>Proceed to <a href="#deploy-validation-service.adoc" class="xref unresolved">deploy the validation service</a></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Ready to deploy? Let&#8217;s start with service design.</strong></p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p5-val-results.html">Validation — Results Analysis</a></span>

@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>Building the Foundation: The Platform Engineer Lab (OpenShift AI 3.3) :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="p4b-maas-section2.html">
     <link rel="next" href="p4b-maas-section4.html">
+    <meta name="description" content="A step-by-step GitOps guide to deploying the MaaS infrastructure, enabling the backend, and deploying an LLMInferenceService via YAML in OpenShift AI 3.3.">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script>var uiRootPath = '../../_'</script>
@@ -383,8 +384,320 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Building the Foundation: The Platform Engineer Lab (OpenShift AI 3.3)</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">The GitOps Disclaimer</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p4b-maas-section3.adoc - include::rhoai3-maas::chapter1:section3.adoc[]</p>
+<p>OpenShift AI 3.3 introduces the "Gen AI Studio" dashboard for creating Tiers, deploying models, and generating API keys visually. While the UI provides a great demo experience, industrialized enterprise customers rely on Infrastructure-as-Code.</p>
+</div>
+<div class="paragraph">
+<p>In this lab, we are going to intentionally bypass the UI. You will use the OpenShift CLI (<code>oc</code>) to deploy the underlying Custom Resources (CRs) that the UI generates behind the scenes. This equips you with the exact YAML manifests you need to build a customer&#8217;s GitOps pipeline (e.g., using Red Hat OpenShift GitOps / ArgoCD).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph lead">
+<p><strong>Theory is over. We know the architecture. Now, let&#8217;s roll up our sleeves and build the factory.</strong></p>
+</div>
+<div class="paragraph">
+<p>In this lab, you are acting as the customer&#8217;s Lead Platform Engineer. Your job is to satisfy the "Invisible Dependency Chain" we discussed in the previous module, activate the MaaS platform, and deploy your first governed generative AI model strictly through code.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_phase_1_pre_flight_operator_verification"><a class="anchor" href="#_phase_1_pre_flight_operator_verification"></a>Phase 1: Pre-Flight &amp; Operator Verification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before we apply any configuration, ensure your cluster has the necessary operators installed from OperatorHub. If any of these are missing, the deployment will silently fail.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Red Hat OpenShift Service Mesh</strong> (Provides the underlying Istio networking).</p>
+</li>
+<li>
+<p><strong>Red Hat Connectivity Link</strong> (v1.2+ for Kuadrant governance).
+3 .  <strong>Red Hat OpenShift AI</strong> (v3.0+).</p>
+</li>
+<li>
+<p><strong>LeaderWorkerSet Operator</strong> (Mandatory for <code>llm-d</code> orchestration).</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_phase_2_infrastructure_foundation"><a class="anchor" href="#_phase_2_infrastructure_foundation"></a>Phase 2: Infrastructure Foundation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The OpenShift AI Operator is a strict gatekeeper. It will not provision the MaaS API unless the foundational network routing and security engines are actively running on the cluster.</p>
+</div>
+<div class="sect2">
+<h3 id="_1_initialize_the_governance_engine_kuadrant"><a class="anchor" href="#_1_initialize_the_governance_engine_kuadrant"></a>1. Initialize the Governance Engine (Kuadrant)</h3>
+<div class="paragraph">
+<p>We must tell the Connectivity Link operator to spin up Authorino and Limitador so MaaS has a place to enforce its token quotas.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF | oc apply -f -
+apiVersion: kuadrant.io/v1beta1
+kind: Kuadrant
+metadata:
+  name: kuadrant
+  namespace: kuadrant-system
+EOF</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_create_the_maas_gateway_the_front_door"><a class="anchor" href="#_2_create_the_maas_gateway_the_front_door"></a>2. Create the MaaS Gateway (The Front Door)</h3>
+<div class="paragraph">
+<p>KServe requires a specific Gateway resource to exist before it will route external traffic to your models.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF | oc apply -f -
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: maas-default-gateway
+  namespace: openshift-ingress
+spec:
+  gatewayClassName: openshift-gateway-controller
+  listeners:
+  - name: http
+    port: 80
+    protocol: HTTP
+    allowedRoutes:
+      namespaces:
+        from: All
+EOF</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_phase_3_platform_activation"><a class="anchor" href="#_phase_3_platform_activation"></a>Phase 3: Platform Activation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With the infrastructure in place, we instruct the OpenShift AI operator to turn on the MaaS features.</p>
+</div>
+<div class="sect2">
+<h3 id="_1_enable_the_maas_backend"><a class="anchor" href="#_1_enable_the_maas_backend"></a>1. Enable the MaaS Backend</h3>
+<div class="paragraph">
+<p>Patch the <code>DataScienceCluster</code> to set the <code>modelsAsService</code> management state to <code>Managed</code>. This prompts the operator to build the <code>maas-api</code> pods and default RBAC roles.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc patch datasciencecluster default-dsc --type=merge -p '{
+  "spec": {
+    "components": {
+      "kserve": {
+        "managementState": "Managed",
+        "modelsAsService": {
+          "managementState": "Managed"
+        }
+      }
+    }
+  }
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_enable_the_dashboard_gen_ai_studio"><a class="anchor" href="#_2_enable_the_dashboard_gen_ai_studio"></a>2. Enable the Dashboard (Gen AI Studio)</h3>
+<div class="paragraph">
+<p>Even though we are deploying via GitOps, the AI Administrators will still need the UI to manage tokens. Turn it on:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc patch odhdashboardconfig odh-dashboard-config -n redhat-ods-applications --type=merge -p '{
+  "spec": {
+    "dashboardConfig": {
+      "modelAsService": true,
+      "genAiStudio": true
+    }
+  }
+}'</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_phase_4_deploying_the_model_the_gitops_way"><a class="anchor" href="#_phase_4_deploying_the_model_the_gitops_way"></a>Phase 4: Deploying the Model (The GitOps Way)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now we deploy the model using the <code>llm-d</code> runtime. When the UI does this, it creates an <code>LLMInferenceService</code>. Here is the exact YAML required to do it declaratively.</p>
+</div>
+<div class="sect2">
+<h3 id="_1_prepare_the_target_project"><a class="anchor" href="#_1_prepare_the_target_project"></a>1. Prepare the Target Project</h3>
+<div class="paragraph">
+<p>Create a namespace and inject it into the service mesh.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc new-project maas-production
+oc label namespace maas-production istio-injection=enabled --overwrite</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_apply_the_llminferenceservice"><a class="anchor" href="#_2_apply_the_llminferenceservice"></a>2. Apply the LLMInferenceService</h3>
+<div class="paragraph">
+<p>This manifest tells KServe to use <code>llm-d</code>, requests 1 GPU, and critically, applies the <code>maas-endpoint: "true"</code> annotation which tells Kuadrant to protect this route.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF | oc apply -f -
+apiVersion: serving.kserve.io/v1alpha1
+kind: LLMInferenceService
+metadata:
+  name: qwen
+  namespace: my-api-lab
+  annotations:
+    opendatahub.io/hardware-profile-name: gpu-profile
+    opendatahub.io/hardware-profile-namespace: redhat-ods-applications
+    opendatahub.io/model-type: generative
+    openshift.io/display-name: qwen
+    security.opendatahub.io/enable-auth: 'false'
+spec:
+  replicas: 1
+  model:
+    uri: hf://Qwen/Qwen3-0.6B
+    name: Qwen/Qwen3-0.6B
+  router:
+    scheduler:
+      template:
+        containers:
+          - name: main
+            env:
+              - name: TOKENIZER_CACHE_DIR
+                value: /tmp/tokenizer-cache
+              - name: HF_HOME
+                value: /tmp/tokenizer-cache
+              - name: TRANSFORMERS_CACHE
+                value: /tmp/tokenizer-cache
+              - name: XDG_CACHE_HOME
+                value: /tmp
+            args:
+              - --pool-group
+              - inference.networking.x-k8s.io
+              - '--pool-name'
+              - '{{ ChildName .ObjectMeta.Name `-inference-pool` }}'
+              - '--pool-namespace'
+              - '{{ .ObjectMeta.Namespace }}'
+              - '--zap-encoder'
+              - json
+              - '--grpc-port'
+              - '9002'
+              - '--grpc-health-port'
+              - '9003'
+              - '--secure-serving'
+              - '--model-server-metrics-scheme'
+              - https
+              - '--config-text'
+              - |
+                apiVersion: inference.networking.x-k8s.io/v1alpha1
+                kind: EndpointPickerConfig
+                plugins:
+                - type: single-profile-handler
+                - type: queue-scorer
+                - type: kv-cache-utilization-scorer
+                - type: prefix-cache-scorer
+                schedulingProfiles:
+                - name: default
+                  plugins:
+                  - pluginRef: queue-scorer
+                    weight: 2
+                  - pluginRef: kv-cache-utilization-scorer
+                    weight: 2
+                  - pluginRef: prefix-cache-scorer
+                    weight: 3
+            volumeMounts:
+              - name: tokenizer-cache
+                mountPath: /tmp/tokenizer-cache
+              - name: cachi2-cache
+                mountPath: /cachi2
+        volumes:
+          - name: tokenizer-cache
+            emptyDir: {}
+          - name: cachi2-cache
+            emptyDir: {}
+    route: { }
+    gateway: { }
+  template:
+    tolerations:
+      - key: "nvidia.com/gpu"
+        operator: "Exists"
+        effect: "NoSchedule"
+    containers:
+      - name: main
+        env:
+          - name: VLLM_ADDITIONAL_ARGS
+            value: "--disable-uvicorn-access-log --max-model-len=16000"
+        resources:
+          limits:
+            cpu: '1'
+            memory: 8Gi
+            nvidia.com/gpu: "1"
+          requests:
+            cpu: '1'
+            memory: 8Gi
+            nvidia.com/gpu: "1"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+            scheme: HTTPS
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 30
+          failureThreshold: 5
+EOF</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_map_users_to_service_tiers_rbac"><a class="anchor" href="#_3_map_users_to_service_tiers_rbac"></a>3. Map Users to Service Tiers (RBAC)</h3>
+<div class="paragraph">
+<p>MaaS uses Kubernetes RBAC to determine which Service Tiers a user can access. To grant an application (or user) access to your model, you must bind them to the appropriate viewer role.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Create a ServiceAccount for the application that will consume the AI
+oc create serviceaccount ai-app-bot -n maas-production
+
+# Bind it to the viewer role to grant it access to the MaaS endpoint
+oc create rolebinding bot-model-access \
+  --role=llm-inference-viewer \
+  --serviceaccount=maas-production:ai-app-bot \
+  -n maas-production</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps_handing_over_the_keys"><a class="anchor" href="#_next_steps_handing_over_the_keys"></a>Next Steps: Handing over the Keys</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The foundation is built. The Gateway is open, the Governance engine is watching, and the Model is deployed and protected.</p>
+</div>
+<div class="paragraph">
+<p>In the next module, we will switch personas. We will step into the shoes of the <strong>AI Administrator</strong> and log into the Gen AI Studio UI to define our service tiers, generate an API key for our new model, and watch the factory come to life.</p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p4b-maas-section2.html">MaaS — Architecture</a></span>

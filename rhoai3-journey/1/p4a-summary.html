@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>Maximizing ROI &amp; Next Steps :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="p4a-labguide.html">
     <link rel="next" href="phase4b.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -383,8 +383,118 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Maximizing ROI &amp; Next Steps</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="imageblock text-left unresolved">
+<div class="content">
+<img src="llmd-banner.png" alt="Red Hat OpenShift AI" width="200">
+</div>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p4a-summary.adoc - include::llmops-llmd::chapter1:summary.adoc[]</p>
+<p><strong>Role:</strong> Platform Architect<br>
+<strong>Strategic Objective:</strong> Synthesize the "AI Factory" capabilities and review critical implementation caveats before production deployment.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mission_accomplished_the_transformation"><a class="anchor" href="#_mission_accomplished_the_transformation"></a>Mission Accomplished: The Transformation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You have now acquired the architectural blueprint to transform monolithic, hard-to-scale AI experiments into a repeatable, economically viable <strong>Intelligence Factory</strong>.</p>
+</div>
+<div class="paragraph">
+<p>By adopting <strong>Distributed Inference with <code>llm-d</code></strong> on Red Hat OpenShift AI 3.0, you have moved beyond "best effort" serving to a platform that delivers three non-negotiable outcomes:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Outcome</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Technical Driver</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1. Optimized TCO</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Stop Paying for Idle GPUs.</strong><br>
+Intelligent Scheduling and KV Cache Management allow you to pack more active models and users onto the same hardware, directly lowering the cost-per-token.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>2. Guaranteed Performance</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Latency Consistency.</strong><br>
+By disaggregating the compute-heavy "Prefill" from the memory-heavy "Decode," you ensure that a heavy batch job never blocks a user&#8217;s chatbot interaction.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>3. Sovereign Control</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Total Data Ownership.</strong><br>
+Proprietary data, RAG contexts, and user prompts are processed entirely within your secure OpenShift perimeter—never sent to a third-party API.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implementation_reality_check_openshift_ai_3_0"><a class="anchor" href="#_implementation_reality_check_openshift_ai_3_0"></a>Implementation Reality Check: OpenShift AI 3.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As you move from this course to your production environment, keep these specific release constraints in mind to ensure a smooth deployment.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="title">Critical Caveats for Release 3.0</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>"Failed" Status False Positive:</strong> Models may initially show a <strong>Failed</strong> status in the dashboard while initializing. This is often a UI delay; check the pod logs. The status will flip to <strong>Started</strong> when ready.</p>
+</li>
+<li>
+<p><strong>Unsupported Topologies:</strong> Multi-node on GB200 is not supported. Wide Expert-Parallelism (multi-node) is currently Developer Preview.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_final_thought_the_ai_factory_standard"><a class="anchor" href="#_final_thought_the_ai_factory_standard"></a>Final Thought: The "AI Factory" Standard</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You are no longer just "running a model." You are managing a distributed system.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Before:</strong> A black box pod that was expensive and slow.</p>
+</li>
+<li>
+<p><strong>After:</strong> A transparent, instrumented pipeline where every GPU cycle is accounted for and every request is routed intelligently.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You are now prepared to architect complex, production-grade Generative AI workloads that are faster, cheaper, and more manageable across your hybrid cloud environment.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>Thanks for taking this solution focused course: Maximize Your GPU ROI: Scaling LLM Inference with llm-d.</p>
+</div>
+<div class="paragraph">
+<p>Have a suggestion for improvement, <a href="https://github.com/RedHatQuickCourses/llmops-llmd/issues" target="blank">submit an issue here</a>.</p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p4a-labguide.html">llm-d — Lab Guide</a></span>

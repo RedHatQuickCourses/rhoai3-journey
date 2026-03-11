@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>Course Summary: The Engineering Reality :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="p3-deploy-model-serving.html">
     <link rel="next" href="phase4a.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -383,8 +383,98 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Course Summary: The Engineering Reality</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>You have achieved model inference.</strong></p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p3-deploy-summary.adoc - include::rhoai3-deploy::chapter1:summary.adoc[]</p>
+<p>At the start of this course, we identified the core problem:
+<strong>Downloading models to a laptop is easy. Serving them at scale, on budget, and without crashing production is hard.</strong></p>
+</div>
+<div class="paragraph">
+<p>You have now built a governed <strong>AI Serving Engine</strong>. Let&#8217;s review the engineering decisions you made to get here.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_journey_recap"><a class="anchor" href="#_the_journey_recap"></a>The Journey Recap</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Phase</th>
+<th class="tableblock halign-left valign-top">The Engineering Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1. Strategy</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instead of grabbing random models, you selected <strong>granite-3.3-2b-instruct</strong> from the <strong>Red Hat AI Validated Repository</strong>.</p>
+<p class="tableblock"><strong>Result:</strong> You gained legal certainty (Apache 2.0) and performance predictability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>2. Architecture</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instead of guessing, you matched the hardware to the workload.</p>
+<p class="tableblock"><strong>Result:</strong> You avoided deploying an FP16 model on incompatible hardware or over-provisioning an H100 for a tiny task.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>3. Sizing</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">You performed the VRAM math: <code>(Weights * 1.2) + KV Cache</code>.</p>
+<p class="tableblock"><strong>Result:</strong> You identified that the default 128k context window would crash your A10G GPU.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>4. Tuning</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">You configured <strong>vLLM</strong> with <code>--max-model-len=16000</code>.</p>
+<p class="tableblock"><strong>Result:</strong> You reduced requirement to prevent OOM errors under high load.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>5. Operations</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">You abandoned the UI for a GitOps script (<code>deploy-model-yaml</code>) from the <code>rhoai3-deploy</code> repository.</p>
+<p class="tableblock"><strong>Result:</strong> Your deployment is now reproducible, version-controlled, and ready for automation.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps_day_2_operations"><a class="anchor" href="#_next_steps_day_2_operations"></a>Next Steps: Day 2 Operations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Serving the model is just Day 1. To run a true production platform, your next steps are:</p>
+</div>
+<div class="paragraph">
+<p><strong>1. Observability:</strong>
+Configure <strong>Prometheus</strong> to scrape the vLLM metrics port (<code>8080</code>).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Key Metric:</strong> <code>vllm:num_requests_running</code> (Concurrency) and <code>vllm:gpu_cache_usage_perc</code> (Are we running out of KV Cache?).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>2. Quantization:</strong>
+Explore the <strong>Quantization Labs</strong> (coming soon) to shrink your Granite-3.3 model to <strong>INT8</strong>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Goal:</strong> Double your throughput on the same hardware.</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Congratulations. You are now ready to serve AI responsibly.</strong></p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p3-deploy-model-serving.html">Deploy a Model</a></span>
