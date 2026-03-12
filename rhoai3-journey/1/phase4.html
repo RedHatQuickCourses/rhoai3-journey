@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Deploying Validation Services in OpenShift AI :: Industrialized AI Token Platform — RHOAI Journey</title>
-    <link rel="prev" href="p5-val-results.html">
-    <link rel="next" href="p5-val-service-design.html">
+    <title>Phase 4: Governance &amp; Compound Systems :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <link rel="prev" href="p4b-maas-quiz.html">
+    <link rel="next" href="p5-val-intro.html">
+    <meta name="description" content="Transition from "vibes-based" AI to engineered trust using TrustyAI, Guardrails, and LMEvalJob to secure your Compound AI Systems.">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script>var uiRootPath = '../../_'</script>
@@ -226,7 +227,7 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">4: Quality and SLOs</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="phase4.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -260,7 +261,7 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="p5-val-results.html">Validation — Results Analysis</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="3">
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="p5-val-ch3-index.html">Validation — Deploying Services</a>
   </li>
   <li class="nav-item" data-depth="3">
@@ -380,8 +381,7 @@
   <ul>
     <li><a href="index.html">Industrialized AI Token Platform — Journey Map</a></li>
     <li>4: Quality and SLOs</li>
-    <li><a href="p5-val-intro.html">Validation — Home</a></li>
-    <li><a href="p5-val-ch3-index.html">Validation — Deploying Services</a></li>
+    <li><a href="phase4.html">Overview</a></li>
   </ul>
 </nav>
 </div>
@@ -390,153 +390,145 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Deploying Validation Services in OpenShift AI</h1>
+<h1 class="page">Phase 4: Governance &amp; Compound Systems</h1>
 <div id="preamble">
 <div class="sectionbody">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="title">Early Draft &amp; Testing Notice</div>
+<div class="paragraph">
+<p>The validation and governance architectures presented in this phase are currently in an early draft state and are undergoing active testing. While the structural concepts and deployment methodologies are aligned with the target state of Red Hat OpenShift AI 3.x, expect to adapt some configurations as the platform’s governance capabilities (like the Guardrails Orchestrator) reach final validation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph lead">
-<p><strong>Automated validation services ensure ongoing model quality and catch issues before they impact customers.</strong></p>
+<p><strong>Stop crossing your fingers when you deploy GenAI. Start engineering trust.</strong></p>
 </div>
 <div class="paragraph">
-<p>You&#8217;ve validated your model manually. Now it&#8217;s time to deploy automated validation services that continuously monitor model quality and provide early warning of issues.</p>
+<p>In the experimental phase of AI, organizations were content with "vibes-based" evaluation. A data scientist would prompt a model, read the output, and say, "Looks good to me." But you cannot build an enterprise on "looks good."</p>
+</div>
+<div class="paragraph">
+<p>In the Industrial AI Factory, models are not magic tricks; they are high-throughput software components that carry massive liability.  GenAI introduces non-deterministic risks—hallucinations, toxic injections, and PII leakage—that traditional software testing cannot catch.  This is the shift from the Black Box (blind trust in public APIs) to the Glass Box (mathematical certainty and control).</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_why_deploy_validation_services"><a class="anchor" href="#_why_deploy_validation_services"></a>Why Deploy Validation Services</h2>
+<h2 id="_part_1_the_architecture_of_trust"><a class="anchor" href="#_part_1_the_architecture_of_trust"></a>Part 1: The Architecture of Trust</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Manual validation is valuable, but automated validation services provide:</p>
+<p>To industrialize AI, you must move from "monitoring" to "intercepting." In a traditional MLOps pipeline, monitoring happens after the fact. If a GenAI model leaks PII or outputs hate speech, the damage is instantaneous.</p>
+</div>
+<div class="paragraph">
+<p>Therefore, TrustyAI functions as the nervous system of Red Hat OpenShift AI, providing an active defense layer.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Continuous Monitoring:</strong> Validate models on every update</p>
+<p><strong>The Guardrails Orchestrator (The Shield):</strong> This acts as a proxy that intercepts every inference request.It pauses the request, sends the prompt to a series of detectors (Regex, Toxicity, PII), and waits for a verdict If blocked, the request is rejected immediately, and the LLM never sees it, saving GPU compute costs.</p>
 </li>
 <li>
-<p><strong>Early Warning:</strong> Catch issues before they impact customers</p>
+<p><strong>The Model Serving Runtime (The Engine):</strong> The model only accepts traffic from the Guardrails Orchestrator.</p>
 </li>
 <li>
-<p><strong>Consistency:</strong> Standardized validation across all models</p>
-</li>
-<li>
-<p><strong>Efficiency:</strong> Automated validation reduces manual effort</p>
+<p><strong>TrustyAI Service (The Auditor):</strong> This passive layer consumes payload data to calculate long-term metrics like drift and bias, writing them to Prometheus.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_what_youll_deploy"><a class="anchor" href="#_what_youll_deploy"></a>What You&#8217;ll Deploy</h2>
+<h2 id="_part_2_the_three_pillars_of_governance_value"><a class="anchor" href="#_part_2_the_three_pillars_of_governance_value"></a>Part 2: The Three Pillars of Governance Value</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This chapter teaches you to deploy:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Validation Service:</strong> A Kubernetes service that runs validation tests</p>
-</li>
-<li>
-<p><strong>Validation Pipeline:</strong> Automated validation triggered by model updates</p>
-</li>
-<li>
-<p><strong>Validation Dashboard:</strong> Visualization of validation results</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Before starting, ensure:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>You have completed Chapter 2 (validation tests run successfully)</p>
-</li>
-<li>
-<p>Your OpenShift AI cluster is accessible</p>
-</li>
-<li>
-<p>You have permissions to create Kubernetes resources</p>
-</li>
-<li>
-<p>S3 storage is available for validation results</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_chapter_structure"><a class="anchor" href="#_chapter_structure"></a>Chapter Structure</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This chapter is organized into three modules:</p>
+<p>By implementing this architecture, you unlock three critical capabilities that public APIs cannot provide:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Validation Service Design:</strong> Understand the architecture</p>
+<p><strong>Economic Viability (The Shield):</strong> Malicious actors or broken apps can flood your models, draining your budget. Because the Guardrails Orchestrator blocks toxic prompts <strong>before</strong> they hit the GPU, you stop paying for "bad" inference.</p>
 </li>
 <li>
-<p><strong>Deploy Validation Service:</strong> Deploy the service in OpenShift AI</p>
+<p><strong>Sovereignty &amp; Security (The Perimeter):</strong> TrustyAI runs entirely within your OpenShift cluster, ensuring total disconnection from public networks.  Your data never leaves your VPC.</p>
 </li>
 <li>
-<p><strong>Automated Validation Pipeline:</strong> Integrate validation into your workflow</p>
+<p><strong>Quantitative Risk (The Audit):</strong> Executives need numbers, not qualitative assurances.  By integrating security for AI (AIMI), TrustyAI performs automated Red Teaming to mathematically calculate a risk score.  You replace "I think it&#8217;s safe" with a verified statistical risk metric.</p>
 </li>
 </ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_expected_outcomes"><a class="anchor" href="#_expected_outcomes"></a>Expected Outcomes</h2>
+<h2 id="_part_3_the_taxonomy_of_risk_countermeasures"><a class="anchor" href="#_part_3_the_taxonomy_of_risk_countermeasures"></a>Part 3: The Taxonomy of Risk &amp; Countermeasures</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By the end of this chapter, you will have:</p>
+<p>Before we configure the operator, we must define what we are measuring. "Bad AI" comes in three distinct flavors in the enterprise:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Deployed a validation service in OpenShift AI</p>
-</li>
-<li>
-<p>Automated validation triggered by model updates</p>
-</li>
-<li>
-<p>A validation dashboard showing ongoing model quality</p>
-</li>
-<li>
-<p>Integration of validation into your deployment workflow</p>
-</li>
-</ul>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 60%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Risk Term</th>
+<th class="tableblock halign-left valign-top">Definition</th>
+<th class="tableblock halign-left valign-top">Factory Countermeasure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Hallucination</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The model confidently generates false information.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>LM-Eval (Factuality)</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Toxicity / Jailbreak</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The model is tricked into generating hate speech or phishing emails.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Bias / Drift</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_part_4_the_accuracy_exam_lm_eval"><a class="anchor" href="#_part_4_the_accuracy_exam_lm_eval"></a>Part 4: The Accuracy Exam (LM-Eval)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Deployment proves the pipes work; evaluation proves the water is clean. In this phase, you will use the <code>LMEvalJob</code> Custom Resource to administer two types of exams:
+1. <strong>The Standardized Test:</strong> Using public benchmarks like MMLU for general reasoning.
+2. <strong>The Custom Exam:</strong> Creating domain-specific tests (like "OpenShift Trivia") using a <code>task.yaml</code> configuration.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>Next Steps</h2>
+<h2 id="_the_engineering_outcome"><a class="anchor" href="#_the_engineering_outcome"></a>The Engineering Outcome</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>By the end of this phase, you will have locked down your production engine.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Learn about <a href="#validation-service-design.adoc" class="xref unresolved">validation service design</a></p>
-</li>
-<li>
-<p>Proceed to <a href="#deploy-validation-service.adoc" class="xref unresolved">deploy the validation service</a></p>
+<p><strong>Checkpoint:</strong> You will deploy the Guardrails Orchestrator in "Service Mode" (decoupling it from the model for easier updates), intercept a live toxic prompt, and successfully run an <code>LMEvalJob</code> benchmark to prove your model&#8217;s reasoning capabilities.</p>
 </li>
 </ul>
 </div>
-<hr>
 <div class="paragraph">
-<p><strong>Ready to deploy? Let&#8217;s start with service design.</strong></p>
+<p>With governance in place, your AI Factory is now a trusted launchpad. You are ready to start building autonomous Agentic applications and Compound AI Systems securely on top of this foundation.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="p5-val-results.html">Validation — Results Analysis</a></span>
-  <span class="next"><a href="p5-val-service-design.html">Validation — Service Design</a></span>
+  <span class="prev"><a href="p4b-maas-quiz.html">MaaS — Quiz</a></span>
+  <span class="next"><a href="p5-val-intro.html">Validation — Home</a></span>
 </nav>
 </article>
   </div>
