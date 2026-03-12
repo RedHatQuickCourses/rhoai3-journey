@@ -49,7 +49,7 @@
 *** xref:p4a-labguide.adoc[llm-d — Lab Guide]
 *** xref:p4a-summary.adoc[llm-d — Summary]
 //** xref:phase4b.adoc[Phase 3 Overview]
-*** xref:p4b-maas-index.adoc[MaaS — Home]
+** xref:p4b-maas-index.adoc[MaaS — Home]
 *** xref:p4b-maas-section1.adoc[MaaS — Strategy Guide]
 *** xref:p4b-maas-section2.adoc[MaaS — Architecture]
 *** xref:p4b-maas-section3.adoc[MaaS — Lab: Build Your MaaS]
