@@ -1,20 +1,48 @@
-= Phase 1: Foundation — Governed Data and Models
-:navtitle: Phase 1 Overview
+= Phase 1: Assembling the Factory
+:navtitle: Phase 1: Assembling the Factory
 :toc: macro
+:description: Build the foundational infrastructure and supply chain for your AI Factory. Learn to configure Data Connections, the Model Registry, the Model Catalog, Hardware Profiles, and GPU-as-a-Service.
 
-**Value:** No Shadow IT. One supply chain for credentials and models.
+[.lead]
+*Before you can manufacture intelligence, you have to organize the supply chain and calibrate the machinery.*
 
-== Outcome
+You are starting with a greenfield Red Hat OpenShift AI environment equipped with multiple GPUs. In a traditional, experimental AI setup, resources are often hoarded by individual teams, data is scattered, and "Shadow AI" thrives without central governance. 
 
-Associates can connect workbenches and model servers to storage and use a private, curated model catalog.
+In **Phase 1**, your mandate as a platform engineer is to build a highly efficient, cost-effective token generation platform. We achieve this by locking down the raw materials (Data and Models) and industrializing the machinery (Compute and GPUs).
 
-== Takeaway
+== The Architect's Decision: Why Models Before Hardware?
 
-* Credentials in Kubernetes Secrets (Data Connections); models in a private Registry; Catalog as the showroom.
-* **Engineering outcome:** Reproducible, governed model and data access.
+While these modules are standalone components that you can take in any order, the recommended learning path is: **Storage → Catalog → Registry → Hardware Profiles → GPU as a Service.** 
 
-Use the navigation menu to work through the module pages in order: Storage, then Registry, then Catalog.
+Why start with the models rather than the physical hardware? **Because you cannot right-size a factory if you do not understand the manufacturing requirements of your product.**
 
-== Checkpoint
+By starting with model selection and storage, you gain critical context on:
 
-* Data Connection created and attached; PVC bound; model registered and visible in Catalog; deployment from wizard succeeds.
+ * **Hardware Requirements:** How much vRAM does a 70B parameter model actually need to load into memory?
+ * **Throughput:** What are the token-per-second generation requirements for your specific business use case?
+ * **Optimization:** How does model compression and quantization change the compute footprint?
+
+Understanding the model's physical footprint provides the vital context you need when you eventually configure the hardware layers. 
+
+== Part 1: The Supply Chain (Governed Data & Models)
+
+We begin by securing the supply chain. We want one single, governed pipeline for credentials and models to eliminate unverified external downloads.
+
+ * **Data Connections (Storage):** Models need a secure place to live before they are served. You will configure data connections using object storage (like AWS S3), securely storing credentials within Kubernetes Secrets in the appropriate namespaces.
+ * **Model Catalog:** This is your internal "showroom." The catalog makes your vetted, validated, and quantized models easily discoverable. Instead of developers guessing which model to use, they select an approved, hardware-matched model from your catalog.
+ * **Model Registry:** To back the catalog, you will provision a database (MySQL 8+ or Postgres) to support the Model Registry. This provides strict version control, tracking, and governance for every model your organization develops or imports.
+
+== Part 2: The Machinery (Hardware & Resource Governance)
+
+Now that you understand the models you are hosting, it is time to build the engine room. A model sitting idle on a server is a cost center; a model running inference is a value generator. 
+
+ * **Hardware Profiles:** We must abstract the complex infrastructure details into simple, consumable menu items for your users. Hardware profiles hide the underlying Kubernetes complexity, allowing authorized users to request exactly what the model needs without requesting excessive resources.
+ * **GPU-as-a-Service:** Finally, we end the GPU bottleneck. Instead of dedicating full GPUs to single workloads, you will configure NVIDIA Operator policies for GPU sharing and Multi-Instance GPU (MIG). Paired with `kueue` to manage work prioritization, this ensures your hardware is saturated, shared securely across namespaces, and operating at maximum ROI.
+
+== The Engineering Outcome
+
+By the end of this phase, you will have transformed a cluster of raw hardware into an automated, governed foundation that is perfectly calibrated to the models it will serve.
+
+ * **Checkpoint:** You should be able to verify that a Data Connection is created, a model is securely registered and visible in the Model Catalog, a governed Hardware Profile is available, and a GPU sharing strategy is active.
+
+Once your factory is assembled and the supply chain is secure, it is time to turn on the machines in **Phase 2: Token Production Engine**.

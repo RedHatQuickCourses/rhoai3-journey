@@ -1,20 +1,52 @@
-= Phase 2: Resource Governance — Optimized and Fair Allocation
-:navtitle: Phase 2 Overview
+= Phase 2: Token Production Engine
+:navtitle: Phase 2: Token Production Engine
 :toc: macro
+:description: Transition from manual deployments to a high-throughput, governed token production engine using vLLM, KServe RawDeployment, and GitOps automation.
 
-**Value:** ROI and fairness. Right-sized, shared resources instead of dedicated hoarding.
+[.lead]
+*Inference is where the bill arrives.*
 
-== Outcome
+In the experimentation phase, the only metric that matters is the "intelligence" of the model. But on the factory floor, the metrics change completely. Suddenly, your success is judged by **latency**, **throughput**, and **cost per token**. 
 
-Associates understand how to expose compute (including GPUs) as a governed menu and increase utilization via sharing.
+In Phase 1, we secured the supply chain (models) and calibrated the machinery (hardware). In **Phase 2**, we turn the engine on. We are moving away from "Shadow AI"—where users blindly deploy massive models via "Click-Ops"—to an industrialized approach where inference is fast, mathematically sized, and governed by code. 
 
-== Takeaway
 
-* Hardware Profiles hide Kubernetes complexity; GPU as a Service (time-slicing, MIG, Kueue) maximizes utilization.
-* **Engineering outcome:** Hardware profiles and GPU sharing configured for cost and fairness.
+== Part 1: Sizing the Engine
 
-Use the navigation menu to work through Hardware Profiles, then GPU as a Service.
+A common mistake is looking at a model's file size and assuming it will fit on a GPU with matching RAM. It won't. Inference fails for one primary reason: Out of Memory (OOM).
 
-== Checkpoint
+Before deploying, a platform engineer must calculate the true cost using this formula: **Total VRAM = (Weights x 1.2) + (KV Cache)**.
 
-* At least one Hardware Profile created (UI or YAML); GPU sharing strategy (time-slicing or MIG) configured; profile visible in dashboard.
+* **The Static Cost (Weights):** The baseline VRAM required just to load the model into memory.
+* **The Dynamic Cost (KV Cache):** The variable VRAM consumed by user traffic and context history. If you deploy a Granite-8B model with a full 128k context window on an A10G (24GB) card, it will crash because the KV cache alone demands ~20GB.
+* **Matching GPU to Workload:** You must match the model's quantization to the correct GPU architecture (Ampere, Hopper, or Blackwell). For example, deploying an FP8 model on an H100 utilizes its native Transformer Engine, whereas running a small 2B model on that same H100 is financial waste.
+
+== Part 2: Tuning the Machinery (vLLM)
+
+To bridge the gap between our hardware and our models, we use **vLLM**, the standard inference engine for Red Hat OpenShift AI. 
+
+vLLM changed the industry with **PagedAttention**, an algorithm that manages GPU memory much like an operating system handles RAM. Instead of reserving large, contiguous blocks of memory that result in fragmentation and waste, it allocates memory on-demand.
+
+However, default settings are for tourists; engineers tune their engines. You will learn to configure critical parameters within your `ServingRuntime`:
+
+ * `--max-model-len`: Hard-limiting the context window to prevent OOM crashes.
+ * `--gpu-memory-utilization`: Optimizing the VRAM allocation (e.g., pushing it to 95%) to maximize the concurrent user batch size.
+
+== Part 3: The Assembly Line (KServe & GitOps)
+
+Click-Ops does not scale. To deploy our tuned engine, we rely on **KServe**, a Kubernetes-native tool that provides a standardized `InferenceService`.
+
+For enterprise LLM workloads, we abandon the default "Serverless" mode and utilize **RawDeployment**. 
+
+ * **Why RawDeployment?** Booting a large model can take 30-60 seconds. In a production chat application, waiting for a "cold start" is unacceptable. RawDeployment ensures the model is always on, providing consistent, low-latency streaming responses.
+
+Finally, we package this entire configuration—the storage connections, the vLLM runtime, and the KServe deployment—into parameterized Infrastructure-as-Code scripts. This allows you to launch your production line in minutes, consistently and reliably.
+
+
+== The Engineering Outcome
+
+By the end of this phase, you will have deployed the open-source `granite-3.3-2b-instruct` model using an automated script, avoiding the OpenShift UI entirely. 
+
+* **Checkpoint:** You should be able to verify your `InferenceService` is in a "Ready" state and successfully test the endpoint using an OpenAI-compatible API call.
+
+Once your single-model production engine is humming, we will look at scaling it across the enterprise in **Phase 3: Scaling the Utility**.
