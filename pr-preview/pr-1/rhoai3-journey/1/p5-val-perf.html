@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lab: Performance Validation :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <link rel="prev" href="p5-val-multilang.html">
+    <link rel="next" href="p5-val-domain.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../..">Industrialized AI Token Platform — RHOAI Journey</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai3-journey" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Industrialized AI Token Platform — Journey Map</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Journey Map</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">1: Assembling the Factory</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase1.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-storage-index.html">Storage — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section1.html">Storage — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section3.html">Storage — Data Connection Types</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-lab.html">Storage — Lab Exercises</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section5.html">Storage — Field Notes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-registry-home.html">Registry — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section1.html">Registry — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section2.html">Registry — QuickStart Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section3.html">Registry — Model Catalog</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-catalog-home.html">Catalog — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section1.html">Catalog — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section4.html">Catalog — Simulate the Experience</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section2.html">Catalog — Customization CLI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section3.html">Catalog — Administration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-hwprofiles.html">Hardware Profiles — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-placement.html">Hardware Profiles — Placement</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-tiering.html">Hardware Profiles — Tiering</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue.html">Hardware Profiles — Kueue</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue-lab.html">Hardware Profiles — Kueue Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-summary.html">Hardware Profiles — Summary</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-gpu-index.html">GPU as a Service — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section1.html">GPU as a Service — Section 1</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section2.html">GPU as a Service — Section 2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section3.html">GPU as a Service — Section 3</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section4.html">GPU as a Service — Section 4</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">2: Token Production Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase2.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p3-deploy-index.html">Deploy — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-gpu-arch.html">Deploy — GPU Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-kserve.html">Deploy — KServe Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vram.html">Deploy — The Sizing Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vllm.html">Deploy — vLLM</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-tuning.html">Deploy — vLLM Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-model-serving.html">Deploy a Model</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-summary.html">Deploy — Summary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3: Scaling the Utility</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase3.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p4a-vllmllmd.html">llm-d — Distributed Inference Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-llmdarch.html">llm-d — Architecture &amp; Request Lifecycle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-simulator.html">llm-d — Simulator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-labguide.html">llm-d — Lab Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-summary.html">llm-d — Summary</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-index.html">MaaS — Home</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section1.html">MaaS — Strategy Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section2.html">MaaS — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section3.html">MaaS — Lab: Build Your MaaS</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section4.html">MaaS — Day-2 Operations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-quiz.html">MaaS — Quiz</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">4: Quality and SLOs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase4.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p5-val-intro.html">Validation — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section2.html">Validation — Zero Trust Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section3.html">Validation — Deploy Guardrails</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-business.html">Validation — Business Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-roi.html">Validation — Measuring ROI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch2-index.html">Validation — Application-Specific</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-multilang.html">Validation — Multi-Language</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="p5-val-perf.html">Validation — Performance</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-domain.html">Validation — Domain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-results.html">Validation — Results Analysis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch3-index.html">Validation — Deploying Services</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-service-design.html">Validation — Service Design</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-deploy-svc.html">Validation — Deploy Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-automated.html">Validation — Automated Pipeline</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Industrialized AI Token Platform — Journey Map</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-gpu-aas/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">Industrialized AI Token Platform — Journey Map</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../llmops-llmd/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-validate/1/index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-validate/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-maas/3.2/index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-maas/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-deploy/1/index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-deploy/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-storage/3.2/index.html">The Storage Strategy, Architecting for AI Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Industrialized AI Token Platform — Journey Map</a></li>
+    <li>4: Quality and SLOs</li>
+    <li><a href="p5-val-intro.html">Validation — Home</a></li>
+    <li><a href="p5-val-perf.html">Validation — Performance</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Lab: Performance Validation</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>Performance is where cost meets user experience. A model that is accurate but too slow will fail in production.</strong></p>
+</div>
+<div class="paragraph">
+<p>This lab teaches you to measure your model&#8217;s system performance using <strong>GuideLLM</strong> to ensure it meets your business performance requirements.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_performance_validation_matters"><a class="anchor" href="#_why_performance_validation_matters"></a>Why Performance Validation Matters</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>System performance directly impacts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>User Experience:</strong> Latency determines response time. Users expect sub-second responses in interactive applications.</p>
+</li>
+<li>
+<p><strong>Cost Efficiency:</strong> Throughput determines how many requests you can serve per GPU. Higher throughput = lower cost per request.</p>
+</li>
+<li>
+<p><strong>Scalability:</strong> Resource utilization determines how many concurrent users you can support.</p>
+</li>
+<li>
+<p><strong>Deployment Readiness:</strong> Performance metrics inform architectural decisions (batching, caching, distributed serving).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This lab uses <strong>GuideLLM</strong> to measure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Latency:</strong> Time to first token (TTFT) and inter-token latency</p>
+</li>
+<li>
+<p><strong>Throughput:</strong> Requests per second (RPS) and tokens per second (TPS)</p>
+</li>
+<li>
+<p><strong>Resource Utilization:</strong> GPU and memory usage under load</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before starting, ensure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Your InferenceService is deployed and in "Ready" state</p>
+</li>
+<li>
+<p>You know your model&#8217;s inference endpoint URL</p>
+</li>
+<li>
+<p>Tekton is installed in your cluster</p>
+</li>
+<li>
+<p>You have access to create Tekton TaskRuns</p>
+</li>
+<li>
+<p>S3 storage is available for results</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_1_identify_your_model_endpoint"><a class="anchor" href="#_step_1_identify_your_model_endpoint"></a>Step 1: Identify Your Model Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Get your model&#8217;s inference endpoint:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Set your namespace
+export NAMESPACE="model-deploy-lab"
+export MODEL_NAME="granite-4-micro"
+
+# Get the inference endpoint
+export INFERENCE_URL=$(oc get inferenceservice $MODEL_NAME -n ${NAMESPACE} \
+  -o jsonpath='{.status.url}')
+echo "Inference URL: $INFERENCE_URL"
+
+# For GuideLLM, we need the /v1 endpoint
+export TARGET_ENDPOINT="${INFERENCE_URL}/v1"
+echo "Target endpoint: $TARGET_ENDPOINT"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_2_run_performance_benchmark"><a class="anchor" href="#_step_2_run_performance_benchmark"></a>Step 2: Run Performance Benchmark</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Run the GuideLLM benchmark with a sweep test that automatically tests multiple request rates:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Set benchmark parameters
+export PROCESSOR="ibm-granite/granite-4-micro"
+export DATA_CONFIG="prompt_tokens=512,output_tokens=128"
+export MAX_SECONDS="60"
+export RATE_TYPE="sweep"
+export RATE="1.0,2.0,4.0,8.0"
+export MAX_CONCURRENCY="10"
+
+# Create TaskRun (simplified - adjust based on your GuideLLM setup)
+# Refer to genai-amep chapter 2 for full GuideLLM TaskRun configuration</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Full GuideLLM Configuration</div>
+<div class="paragraph">
+<p>For complete GuideLLM benchmark configuration, refer to the performance evaluation lab in the genai-amep course. This lab focuses on the business value and interpretation of results.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_understanding_performance_results"><a class="anchor" href="#_understanding_performance_results"></a>Understanding Performance Results</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The GuideLLM results include:</p>
+</div>
+<div class="sect2">
+<h3 id="_latency_metrics"><a class="anchor" href="#_latency_metrics"></a>Latency Metrics</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Time to First Token (TTFT):</strong> How long until the first token is generated</p>
+</li>
+<li>
+<p><strong>Inter-Token Latency:</strong> Average time between tokens</p>
+</li>
+<li>
+<p><strong>End-to-End Latency:</strong> Total time for a complete request</p>
+</li>
+<li>
+<p><strong>Percentiles:</strong> p50, p95, p99 latency values</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_throughput_metrics"><a class="anchor" href="#_throughput_metrics"></a>Throughput Metrics</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Requests Per Second (RPS):</strong> How many requests the system can handle</p>
+</li>
+<li>
+<p><strong>Tokens Per Second (TPS):</strong> Token generation rate</p>
+</li>
+<li>
+<p><strong>Successful Requests:</strong> Percentage of requests that completed successfully</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_interpreting_results_in_business_context"><a class="anchor" href="#_interpreting_results_in_business_context"></a>Interpreting Results in Business Context</h3>
+<div class="paragraph">
+<p>Typical performance targets:
+* <strong>TTFT:</strong> &lt; 200ms for interactive applications
+* <strong>Inter-Token Latency:</strong> &lt; 50ms for smooth streaming
+* <strong>RPS:</strong> Varies by model size, but 10+ RPS is good for most use cases
+* <strong>Success Rate:</strong> &gt; 99% for production readiness</p>
+</div>
+<div class="paragraph">
+<p><strong>Business Decision Points:</strong>
+* If latency exceeds your application requirements, consider:
+  * Optimizing model configuration
+  * Using a smaller/faster model
+  * Implementing caching strategies
+* If throughput is insufficient, consider:
+  * Scaling horizontally (multiple replicas)
+  * Optimizing batch processing
+  * Using more powerful hardware</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>Next Steps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Proceed to <a href="#domain-validation.adoc" class="xref unresolved">Domain-Specific Validation</a> to test business-relevant scenarios</p>
+</li>
+<li>
+<p>Or continue to <a href="#results-analysis.adoc" class="xref unresolved">Results Analysis</a> to analyze all your validation results together</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Performance measured. Now let&#8217;s test domain knowledge.</strong></p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="p5-val-multilang.html">Validation — Multi-Language</a></span>
+  <span class="next"><a href="p5-val-domain.html">Validation — Domain</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

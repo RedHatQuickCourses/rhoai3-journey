@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Phase 2: Token Production Engine :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <link rel="prev" href="p2-gpu-section4.html">
+    <link rel="next" href="p3-deploy-index.html">
+    <meta name="description" content="Transition from manual deployments to a high-throughput, governed token production engine using vLLM, KServe RawDeployment, and GitOps automation.">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../..">Industrialized AI Token Platform — RHOAI Journey</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai3-journey" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Industrialized AI Token Platform — Journey Map</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Journey Map</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">1: Assembling the Factory</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase1.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-storage-index.html">Storage — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section1.html">Storage — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section3.html">Storage — Data Connection Types</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-lab.html">Storage — Lab Exercises</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section5.html">Storage — Field Notes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-registry-home.html">Registry — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section1.html">Registry — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section2.html">Registry — QuickStart Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section3.html">Registry — Model Catalog</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-catalog-home.html">Catalog — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section1.html">Catalog — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section4.html">Catalog — Simulate the Experience</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section2.html">Catalog — Customization CLI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section3.html">Catalog — Administration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-hwprofiles.html">Hardware Profiles — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-placement.html">Hardware Profiles — Placement</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-tiering.html">Hardware Profiles — Tiering</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue.html">Hardware Profiles — Kueue</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue-lab.html">Hardware Profiles — Kueue Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-summary.html">Hardware Profiles — Summary</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-gpu-index.html">GPU as a Service — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section1.html">GPU as a Service — Section 1</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section2.html">GPU as a Service — Section 2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section3.html">GPU as a Service — Section 3</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section4.html">GPU as a Service — Section 4</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">2: Token Production Engine</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="phase2.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p3-deploy-index.html">Deploy — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-gpu-arch.html">Deploy — GPU Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-kserve.html">Deploy — KServe Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vram.html">Deploy — The Sizing Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vllm.html">Deploy — vLLM</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-tuning.html">Deploy — vLLM Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-model-serving.html">Deploy a Model</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-summary.html">Deploy — Summary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3: Scaling the Utility</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase3.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p4a-vllmllmd.html">llm-d — Distributed Inference Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-llmdarch.html">llm-d — Architecture &amp; Request Lifecycle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-simulator.html">llm-d — Simulator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-labguide.html">llm-d — Lab Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-summary.html">llm-d — Summary</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-index.html">MaaS — Home</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section1.html">MaaS — Strategy Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section2.html">MaaS — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section3.html">MaaS — Lab: Build Your MaaS</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section4.html">MaaS — Day-2 Operations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-quiz.html">MaaS — Quiz</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">4: Quality and SLOs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase4.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p5-val-intro.html">Validation — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section2.html">Validation — Zero Trust Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section3.html">Validation — Deploy Guardrails</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-business.html">Validation — Business Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-roi.html">Validation — Measuring ROI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch2-index.html">Validation — Application-Specific</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-multilang.html">Validation — Multi-Language</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-perf.html">Validation — Performance</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-domain.html">Validation — Domain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-results.html">Validation — Results Analysis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch3-index.html">Validation — Deploying Services</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-service-design.html">Validation — Service Design</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-deploy-svc.html">Validation — Deploy Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-automated.html">Validation — Automated Pipeline</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Industrialized AI Token Platform — Journey Map</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-gpu-aas/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">Industrialized AI Token Platform — Journey Map</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../llmops-llmd/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-validate/1/index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-validate/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-maas/3.2/index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-maas/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-deploy/1/index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-deploy/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-storage/3.2/index.html">The Storage Strategy, Architecting for AI Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Industrialized AI Token Platform — Journey Map</a></li>
+    <li>2: Token Production Engine</li>
+    <li><a href="phase2.html">Overview</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Phase 2: Token Production Engine</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>Inference is where the bill arrives.</strong></p>
+</div>
+<div class="paragraph">
+<p>In the experimentation phase, the only metric that matters is the "intelligence" of the model. But on the factory floor, the metrics change completely. Suddenly, your success is judged by <strong>latency</strong>, <strong>throughput</strong>, and <strong>cost per token</strong>.</p>
+</div>
+<div class="paragraph">
+<p>In Phase 1, we secured the supply chain (models) and calibrated the machinery (hardware). In <strong>Phase 2</strong>, we turn the engine on. We are moving away from "Shadow AI"—where users blindly deploy massive models via "Click-Ops"—to an industrialized approach where inference is fast, mathematically sized, and governed by code.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_part_1_sizing_the_engine"><a class="anchor" href="#_part_1_sizing_the_engine"></a>Part 1: Sizing the Engine</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A common mistake is looking at a model&#8217;s file size and assuming it will fit on a GPU with matching RAM. It won&#8217;t. Inference fails for one primary reason: Out of Memory (OOM).</p>
+</div>
+<div class="paragraph">
+<p>Before deploying, a platform engineer must calculate the true cost using this formula: <strong>Total VRAM = (Weights x 1.2) + (KV Cache)</strong>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The Static Cost (Weights):</strong> The baseline VRAM required just to load the model into memory.</p>
+</li>
+<li>
+<p><strong>The Dynamic Cost (KV Cache):</strong> The variable VRAM consumed by user traffic and context history. If you deploy a Granite-8B model with a full 128k context window on an A10G (24GB) card, it will crash because the KV cache alone demands ~20GB.</p>
+</li>
+<li>
+<p><strong>Matching GPU to Workload:</strong> You must match the model&#8217;s quantization to the correct GPU architecture (Ampere, Hopper, or Blackwell). For example, deploying an FP8 model on an H100 utilizes its native Transformer Engine, whereas running a small 2B model on that same H100 is financial waste.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_part_2_tuning_the_machinery_vllm"><a class="anchor" href="#_part_2_tuning_the_machinery_vllm"></a>Part 2: Tuning the Machinery (vLLM)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To bridge the gap between our hardware and our models, we use <strong>vLLM</strong>, the standard inference engine for Red Hat OpenShift AI.</p>
+</div>
+<div class="paragraph">
+<p>vLLM changed the industry with <strong>PagedAttention</strong>, an algorithm that manages GPU memory much like an operating system handles RAM. Instead of reserving large, contiguous blocks of memory that result in fragmentation and waste, it allocates memory on-demand.</p>
+</div>
+<div class="paragraph">
+<p>However, default settings are for tourists; engineers tune their engines. You will learn to configure critical parameters within your <code>ServingRuntime</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>--max-model-len</code>: Hard-limiting the context window to prevent OOM crashes.</p>
+</li>
+<li>
+<p><code>--gpu-memory-utilization</code>: Optimizing the VRAM allocation (e.g., pushing it to 95%) to maximize the concurrent user batch size.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_part_3_the_assembly_line_kserve_gitops"><a class="anchor" href="#_part_3_the_assembly_line_kserve_gitops"></a>Part 3: The Assembly Line (KServe &amp; GitOps)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Click-Ops does not scale. To deploy our tuned engine, we rely on <strong>KServe</strong>, a Kubernetes-native tool that provides a standardized <code>InferenceService</code>.</p>
+</div>
+<div class="paragraph">
+<p>For enterprise LLM workloads, we abandon the default "Serverless" mode and utilize <strong>RawDeployment</strong>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Why RawDeployment?</strong> Booting a large model can take 30-60 seconds. In a production chat application, waiting for a "cold start" is unacceptable. RawDeployment ensures the model is always on, providing consistent, low-latency streaming responses.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Finally, we package this entire configuration—the storage connections, the vLLM runtime, and the KServe deployment—into parameterized Infrastructure-as-Code scripts. This allows you to launch your production line in minutes, consistently and reliably.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_engineering_outcome"><a class="anchor" href="#_the_engineering_outcome"></a>The Engineering Outcome</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By the end of this phase, you will have deployed the open-source <code>granite-3.3-2b-instruct</code> model using an automated script, avoiding the OpenShift UI entirely.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Checkpoint:</strong> You should be able to verify your <code>InferenceService</code> is in a "Ready" state and successfully test the endpoint using an OpenAI-compatible API call.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Once your single-model production engine is humming, we will look at scaling it across the enterprise in <strong>Phase 3: Scaling the Utility</strong>.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="p2-gpu-section4.html">GPU as a Service — Section 4</a></span>
+  <span class="next"><a href="p3-deploy-index.html">Deploy — Home</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

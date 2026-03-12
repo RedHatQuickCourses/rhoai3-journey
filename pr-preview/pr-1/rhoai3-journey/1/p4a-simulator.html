@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Simulator: Distributed Inference Operations :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <link rel="prev" href="p4a-llmdarch.html">
+    <link rel="next" href="p4a-labguide.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../..">Industrialized AI Token Platform — RHOAI Journey</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai3-journey" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Industrialized AI Token Platform — Journey Map</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Journey Map</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">1: Assembling the Factory</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase1.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-storage-index.html">Storage — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section1.html">Storage — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section3.html">Storage — Data Connection Types</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-lab.html">Storage — Lab Exercises</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section5.html">Storage — Field Notes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-registry-home.html">Registry — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section1.html">Registry — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section2.html">Registry — QuickStart Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section3.html">Registry — Model Catalog</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-catalog-home.html">Catalog — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section1.html">Catalog — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section4.html">Catalog — Simulate the Experience</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section2.html">Catalog — Customization CLI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section3.html">Catalog — Administration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-hwprofiles.html">Hardware Profiles — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-placement.html">Hardware Profiles — Placement</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-tiering.html">Hardware Profiles — Tiering</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue.html">Hardware Profiles — Kueue</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue-lab.html">Hardware Profiles — Kueue Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-summary.html">Hardware Profiles — Summary</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-gpu-index.html">GPU as a Service — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section1.html">GPU as a Service — Section 1</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section2.html">GPU as a Service — Section 2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section3.html">GPU as a Service — Section 3</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section4.html">GPU as a Service — Section 4</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">2: Token Production Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase2.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p3-deploy-index.html">Deploy — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-gpu-arch.html">Deploy — GPU Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-kserve.html">Deploy — KServe Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vram.html">Deploy — The Sizing Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vllm.html">Deploy — vLLM</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-tuning.html">Deploy — vLLM Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-model-serving.html">Deploy a Model</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-summary.html">Deploy — Summary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3: Scaling the Utility</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase3.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p4a-vllmllmd.html">llm-d — Distributed Inference Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-llmdarch.html">llm-d — Architecture &amp; Request Lifecycle</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="p4a-simulator.html">llm-d — Simulator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-labguide.html">llm-d — Lab Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-summary.html">llm-d — Summary</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-index.html">MaaS — Home</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section1.html">MaaS — Strategy Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section2.html">MaaS — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section3.html">MaaS — Lab: Build Your MaaS</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section4.html">MaaS — Day-2 Operations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-quiz.html">MaaS — Quiz</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">4: Quality and SLOs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase4.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p5-val-intro.html">Validation — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section2.html">Validation — Zero Trust Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section3.html">Validation — Deploy Guardrails</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-business.html">Validation — Business Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-roi.html">Validation — Measuring ROI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch2-index.html">Validation — Application-Specific</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-multilang.html">Validation — Multi-Language</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-perf.html">Validation — Performance</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-domain.html">Validation — Domain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-results.html">Validation — Results Analysis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch3-index.html">Validation — Deploying Services</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-service-design.html">Validation — Service Design</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-deploy-svc.html">Validation — Deploy Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-automated.html">Validation — Automated Pipeline</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Industrialized AI Token Platform — Journey Map</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-gpu-aas/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">Industrialized AI Token Platform — Journey Map</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../llmops-llmd/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-validate/1/index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-validate/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-maas/3.2/index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-maas/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-deploy/1/index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-deploy/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-storage/3.2/index.html">The Storage Strategy, Architecting for AI Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Industrialized AI Token Platform — Journey Map</a></li>
+    <li>3: Scaling the Utility</li>
+    <li><a href="p4a-vllmllmd.html">llm-d — Distributed Inference Home</a></li>
+    <li><a href="p4a-simulator.html">llm-d — Simulator</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Simulator: Distributed Inference Operations</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="imageblock text-left">
+<div class="content">
+<img src="_images/llmd-banner.png" alt="Red Hat OpenShift AI" width="200">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Role:</strong> All Personas (No Lab Required)<br>
+<strong>Objective:</strong> Execute a complete end-to-end deployment cycle—from infrastructure provisioning to validation—in a guided, risk-free simulation.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_interactive_experience"><a class="anchor" href="#_the_interactive_experience"></a>The Interactive Experience</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Welcome to the <strong>Distributed Inference Simulator</strong>. This module provides a high-speed, guided tour of the entire <code>llm-d</code> workflow on Red Hat OpenShift AI 3.0.</p>
+</div>
+<div class="paragraph">
+<p>Use this simulator if:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You do not have access to a GPU-enabled OpenShift cluster today.</p>
+</li>
+<li>
+<p>You need to validate the "ClickOps" workflow before building automation.</p>
+</li>
+<li>
+<p>You want to see the "Big Picture" operations without waiting for provisioning times.</p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_phase_1_infrastructure_provisioning"><a class="anchor" href="#_phase_1_infrastructure_provisioning"></a>Phase 1: Infrastructure Provisioning</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before we deploy models, we must secure the OpenShift AI 3.0 Environment. This simulations use Red Hat demo plaform to provision a RHOAI 3.0 platform.</p>
+</div>
+<div class="sect2">
+<h3 id="_1_1_access_hardware_verification"><a class="anchor" href="#_1_1_access_hardware_verification"></a>1.1 Access &amp; Hardware Verification</h3>
+<div class="paragraph">
+<p><strong>Task:</strong> Log in to the RHOAI console, review the dashboard menus, inspect the settings for "Hardware Profiles" to understand how allocate physical GPUs for inference, then deploy a model from the RHOAI Model Catalog.</p>
+</div>
+<iframe src="https://demo.arcade.software/GfqvGnWw1uQdlBhkLhy9?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+</div>
+<div class="sect2">
+<h3 id="_1_2_operator_health_check"><a class="anchor" href="#_1_2_operator_health_check"></a>1.2 Operator Health Check</h3>
+<div class="paragraph">
+<p><strong>Task:</strong> From the Openshift Dashboard install the "Leader Worker Set (LWS)" Operator. This is the secret sauce <code>llm-d</code> uses to manage pod fleets.  Next, explore the OpenShift console to validate, OCP version of 4.19 or greater, with 4.20 recommended.  Install the Terminal Operator to interact with our cluster via the command line.</p>
+</div>
+<iframe src="https://demo.arcade.software/S1dHIjii1Vjkqi0phdSd?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_phase_2_the_distributed_inference_deployment"><a class="anchor" href="#_phase_2_the_distributed_inference_deployment"></a>Phase 2: The Distributed Inference Deployment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that the foundation is solid, we execute the deployment. These simulations show the transition from "Config" to "Running Service."</p>
+</div>
+<div class="sect2">
+<h3 id="_2_1_deploying_with_llm_d"><a class="anchor" href="#_2_1_deploying_with_llm_d"></a>2.1 Deploying with llm-d</h3>
+<div class="paragraph">
+<p><strong>Task:</strong> Configure the <code>llm-d</code> Serving Runtime, attach the Granite model, and select the distributed hardware profile.</p>
+</div>
+<iframe src="https://demo.arcade.software/WDbYI8agiNhgCIfYPLp9?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+</div>
+<div class="sect2">
+<h3 id="_2_2_observability_topology"><a class="anchor" href="#_2_2_observability_topology"></a>2.2 Observability &amp; Topology</h3>
+<div class="paragraph">
+<p><strong>Task:</strong> Inspect the OpenShift Topology view to confirm the separation of the <strong>Inference Scheduler</strong> (Control Plane) and <strong>vLLM Pods</strong> (Engine). Explore the pods state during the llm-d inference deployment via the OpenShift console.</p>
+</div>
+<iframe src="https://demo.arcade.software/z3WQEOr7Vd1QrGmxVRQf?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true"  width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_phase_3_validation_the_test"><a class="anchor" href="#_phase_3_validation_the_test"></a>Phase 3: Validation (The Test)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A deployment is only successful if it answers questions.</p>
+</div>
+<div class="sect2">
+<h3 id="_3_1_inference_validation"><a class="anchor" href="#_3_1_inference_validation"></a>3.1 Inference Validation</h3>
+<div class="paragraph">
+<p><strong>Task:</strong> Launch a Jupyter Notebook, connect to the new inference endpoint, and validate the response and percieved latency.</p>
+</div>
+<iframe src="https://demo.arcade.software/cKkaV0pgSsSJnRM0wRsj?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="p4a-llmdarch.html">llm-d — Architecture &amp; Request Lifecycle</a></span>
+  <span class="next"><a href="p4a-labguide.html">llm-d — Lab Guide</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

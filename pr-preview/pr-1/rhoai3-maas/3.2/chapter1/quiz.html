@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Knowledge Check: Industrializing AI (OpenShift AI 3.3) :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <link rel="prev" href="section5.html">
+    <meta name="description" content="Test your knowledge of Red Hat OpenShift AI 3.3 Models-as-a-Service architecture, governance, and strategy.">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Industrialized AI Token Platform — RHOAI Journey</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai3-maas" data-version="3.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introduction &amp; Value</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section1.html">Strategy Guide (Well-Lit Paths)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section2.html">MaaS Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section3.html">Lab: Build Your MaaS</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section4.html">Day-2 Operations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section5.html">New</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="quiz.html">Quiz</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</span>
+    <span class="version">3.2</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai-gpu-aas/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-journey/1/index.html">Industrialized AI Token Platform — Journey Map</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-journey/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../llmops-llmd/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-validate/1/index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-validate/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="../index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-deploy/1/index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-deploy/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-storage/3.2/index.html">The Storage Strategy, Architecting for AI Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../rhoai3-journey/1/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a></li>
+    <li><a href="quiz.html">Quiz</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Knowledge Check: Industrializing AI (OpenShift AI 3.3)</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>Did you master the factory floor? Let&#8217;s find out.</strong></p>
+</div>
+<div class="paragraph">
+<p>You have explored the strategy, mastered the taxonomy, built the GitOps factory, and learned how to keep it running. Test your understanding with these 6 scenarios.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_question_1_the_value_proposition_business_case"><a class="anchor" href="#_question_1_the_value_proposition_business_case"></a>Question 1: The Value Proposition (Business Case)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Scenario:</strong> Your organization is debating whether to build an internal MaaS platform or use only public APIs (e.g., OpenAI) for enterprise LLM workloads. <strong>Which benefit does MaaS provide that public APIs typically do not?</strong></p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> A. Lower compute costs at very high, unpredictable usage spikes.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> B. The ability to completely avoid managing any infrastructure.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> C. Guaranteed SLOs (predictable latency) and mathematical control over where proprietary data is processed.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> D. Immediate access to the absolute largest models in the world without any setup.</p>
+</li>
+</ul>
+</div>
+<details>
+<summary class="title">Click here for the Answer</summary>
+<div class="content">
+<div class="paragraph">
+<p><strong>Correct Answer: C</strong><br>
+MaaS gives you control over your capacity and governance. It allows you to guarantee Service Level Objectives (SLOs) without "noisy neighbors" and keeps proprietary data entirely within your private network (Zero Trust). Public APIs share capacity and expose data externally.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_question_2_the_architecture_choice"><a class="anchor" href="#_question_2_the_architecture_choice"></a>Question 2: The Architecture Choice</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Scenario:</strong> Your enterprise needs to provide an internal, ChatGPT-like API for 500 developers across 10 different departments. You need to enforce token quotas to charge each department for their specific usage. <strong>Which inference architecture must you choose in OpenShift AI 3.3?</strong></p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> A. A standard <code>InferenceService</code> using the standard <code>vLLM</code> runtime.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> B. An <code>LLMInferenceService</code> using the Distributed Inference Server (<code>llm-d</code>) runtime.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> C. The Caikit-TGIS standalone runtime.</p>
+</li>
+</ul>
+</div>
+<details>
+<summary class="title">Click here for the Answer</summary>
+<div class="content">
+<div class="paragraph">
+<p><strong>Correct Answer: B</strong><br>
+In OpenShift AI 3.3, true MaaS capabilities—including the Gen AI Studio UI, API key generation, and tier-based token quotas—are exclusively supported by the <strong>Distributed Inference Server (<code>llm-d</code>)</strong>. Standard <code>vLLM</code> is used for standalone, isolated workloads that do not require multi-tenant governance.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_question_3_network_optimization"><a class="anchor" href="#_question_3_network_optimization"></a>Question 3: Network Optimization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Question:</strong> You are deploying a massive model (e.g., Llama-3-70B), which requires tensor parallelism across multiple physical worker nodes. To prevent the network from bottlenecking the GPU-to-GPU communication, <strong>what Technology Preview feature should your Cluster Administrator enable?</strong></p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> A. KEDA Autoscaling</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> B. GPU Time-Slicing</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> C. RoCE (RDMA over Converged Ethernet)</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> D. The Gateway API</p>
+</li>
+</ul>
+</div>
+<details>
+<summary class="title">Click here for the Answer</summary>
+<div class="content">
+<div class="paragraph">
+<p><strong>Correct Answer: C</strong><br>
+<strong>RoCE</strong> allows GPUs on different physical nodes to communicate directly with sub-microsecond latency, bypassing the host CPU entirely. Time-slicing is used for sharing a single GPU among smaller models, and the Gateway API handles inbound client HTTP traffic, not backend GPU communication.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_question_4_investigating_access"><a class="anchor" href="#_question_4_investigating_access"></a>Question 4: Investigating Access</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Question:</strong> A developer is trying to query your newly published 3.3 MaaS endpoint using a <code>curl</code> command. They receive a <code>401 Unauthorized</code> HTTP error. <strong>What is the most likely cause?</strong></p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> A. They exceeded their Tier&#8217;s token limit for the minute.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> B. They are using their standard OpenShift ServiceAccount token instead of generating a specific MaaS API Token.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> C. The <code>llm-d</code> backend pods are still pending and waiting for GPU resources.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> D. The HTTPRoute is missing.</p>
+</li>
+</ul>
+</div>
+<details>
+<summary class="title">Click here for the Answer</summary>
+<div class="content">
+<div class="paragraph">
+<p><strong>Correct Answer: B</strong><br>
+A <code>401</code> error means authentication failed at the Gateway (intercepted by Authorino). In 3.3 MaaS, standard Kubernetes tokens are not accepted; users must generate a specific MaaS token from the Gen AI Studio. Exceeding a limit results in a <code>429 Too Many Requests</code> error.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_question_5_the_governance_engine"><a class="anchor" href="#_question_5_the_governance_engine"></a>Question 5: The Governance Engine</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Question:</strong> Behind the scenes, <strong>which component is physically tracking the token consumption math</strong> and instructing the gateway to reject traffic when a user exceeds their Tier&#8217;s limits?</p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> A. The vLLM Worker Pods</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> B. TrustyAI</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> C. Limitador (part of Kuadrant / Red Hat Connectivity Link)</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> D. The OpenShift Router</p>
+</li>
+</ul>
+</div>
+<details>
+<summary class="title">Click here for the Answer</summary>
+<div class="content">
+<div class="paragraph">
+<p><strong>Correct Answer: C</strong><br>
+<strong>Limitador</strong> tracks the token consumption counters globally across the cluster. It evaluates the math against the defined Service Tiers and instructs the Envoy proxy to drop traffic (<code>429</code> error) before it ever reaches the expensive vLLM pods.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_question_6_observability"><a class="anchor" href="#_question_6_observability"></a>Question 6: Observability</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Question:</strong> When monitoring the performance of your MaaS deployment, <strong>which metric is most directly tied to the end-user&#8217;s perceived responsiveness of an LLM?</strong></p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> A. GPU Memory Utilization</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> B. Time to First Token (TTFT)</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> C. Total number of requests per second</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> D. CPU utilization of the orchestrator node</p>
+</li>
+</ul>
+</div>
+<details>
+<summary class="title">Click here for the Answer</summary>
+<div class="content">
+<div class="paragraph">
+<p><strong>Correct Answer: B</strong><br>
+<strong>TTFT (Time to First Token)</strong> measures the latency from request submission until the first word is streamed back to the user. While GPU utilization and request rates are important operational metrics, TTFT dictates whether the user feels the application is "fast" or "laggy."</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conclusion"><a class="anchor" href="#_conclusion"></a>Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you answered these correctly, you understand the fundamental shift from one-off AI deployments to an industrialized AI utility.</p>
+</div>
+<div class="paragraph">
+<p>You are ready to architect, deploy, and govern Models-as-a-Service on Red Hat OpenShift AI 3.3.</p>
+</div>
+<div class="paragraph text-center">
+<p><strong>[End of Course]</strong></p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="section5.html">New</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

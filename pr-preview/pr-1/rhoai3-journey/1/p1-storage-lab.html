@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lab: Automating the AI Data Foundation :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <link rel="prev" href="p1-storage-section3.html">
+    <link rel="next" href="p1-storage-section5.html">
+    <meta name="description" content="Automate the deployment of OpenShift AI 3.3 storage architecture, including OCI Accelerators, Pipeline Workspaces, and Universal Data Connections.">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../..">Industrialized AI Token Platform — RHOAI Journey</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai3-journey" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Industrialized AI Token Platform — Journey Map</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Journey Map</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">1: Assembling the Factory</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase1.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-storage-index.html">Storage — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section1.html">Storage — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section3.html">Storage — Data Connection Types</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="p1-storage-lab.html">Storage — Lab Exercises</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section5.html">Storage — Field Notes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-registry-home.html">Registry — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section1.html">Registry — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section2.html">Registry — QuickStart Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section3.html">Registry — Model Catalog</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-catalog-home.html">Catalog — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section1.html">Catalog — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section4.html">Catalog — Simulate the Experience</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section2.html">Catalog — Customization CLI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section3.html">Catalog — Administration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-hwprofiles.html">Hardware Profiles — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-placement.html">Hardware Profiles — Placement</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-tiering.html">Hardware Profiles — Tiering</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue.html">Hardware Profiles — Kueue</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue-lab.html">Hardware Profiles — Kueue Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-summary.html">Hardware Profiles — Summary</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-gpu-index.html">GPU as a Service — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section1.html">GPU as a Service — Section 1</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section2.html">GPU as a Service — Section 2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section3.html">GPU as a Service — Section 3</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section4.html">GPU as a Service — Section 4</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">2: Token Production Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase2.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p3-deploy-index.html">Deploy — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-gpu-arch.html">Deploy — GPU Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-kserve.html">Deploy — KServe Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vram.html">Deploy — The Sizing Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vllm.html">Deploy — vLLM</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-tuning.html">Deploy — vLLM Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-model-serving.html">Deploy a Model</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-summary.html">Deploy — Summary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3: Scaling the Utility</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase3.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p4a-vllmllmd.html">llm-d — Distributed Inference Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-llmdarch.html">llm-d — Architecture &amp; Request Lifecycle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-simulator.html">llm-d — Simulator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-labguide.html">llm-d — Lab Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-summary.html">llm-d — Summary</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-index.html">MaaS — Home</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section1.html">MaaS — Strategy Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section2.html">MaaS — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section3.html">MaaS — Lab: Build Your MaaS</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section4.html">MaaS — Day-2 Operations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-quiz.html">MaaS — Quiz</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">4: Quality and SLOs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase4.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p5-val-intro.html">Validation — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section2.html">Validation — Zero Trust Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section3.html">Validation — Deploy Guardrails</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-business.html">Validation — Business Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-roi.html">Validation — Measuring ROI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch2-index.html">Validation — Application-Specific</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-multilang.html">Validation — Multi-Language</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-perf.html">Validation — Performance</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-domain.html">Validation — Domain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-results.html">Validation — Results Analysis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch3-index.html">Validation — Deploying Services</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-service-design.html">Validation — Service Design</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-deploy-svc.html">Validation — Deploy Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-automated.html">Validation — Automated Pipeline</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Industrialized AI Token Platform — Journey Map</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-gpu-aas/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">Industrialized AI Token Platform — Journey Map</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../llmops-llmd/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-validate/1/index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-validate/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-maas/3.2/index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-maas/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-deploy/1/index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-deploy/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-storage/3.2/index.html">The Storage Strategy, Architecting for AI Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Industrialized AI Token Platform — Journey Map</a></li>
+    <li>1: Assembling the Factory</li>
+    <li><a href="p1-storage-index.html">Storage — Home</a></li>
+    <li><a href="p1-storage-lab.html">Storage — Lab Exercises</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Lab: Automating the AI Data Foundation</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>Stop clicking. Start engineering.</strong></p>
+</div>
+<div class="paragraph">
+<p>In a mature AI Factory, you do not manually type AWS keys into a web form for every new project. You build automation that governs how data is accessed and stored.</p>
+</div>
+<div class="paragraph">
+<p>In OpenShift AI 3.3, storage configuration dictates pipeline performance and model startup velocity. In this lab, you will act as the Lead Platform Engineer. You will replace manual configuration with a set of standardized deployment scripts that instantly provision the three pillars of RHOAI storage: <strong>Persistence</strong> (Pipeline Workspaces), <strong>Acceleration</strong> (OCI Modelcars), and <strong>Connectivity</strong> (S3/URI).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Access to an OpenShift cluster with <strong>OpenShift AI 3.3</strong> and <strong>OpenShift Data Foundation (ODF)</strong> installed.</p>
+</li>
+<li>
+<p><code>cluster-admin</code> privileges (required to patch Persistent Volumes).</p>
+</li>
+<li>
+<p>The <code>oc</code> CLI tool installed.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_1_set_up_your_workspace"><a class="anchor" href="#_1_set_up_your_workspace"></a>1. Set Up Your Workspace</h3>
+<div class="paragraph">
+<p>We have packaged the automation scripts into a Git repository.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Clone the automation repo
+git clone https://github.com/RedHatQuickCourses/rhoai3-storage.git
+cd rhoai3-storage/deploy
+chmod +x *.sh
+
+# Create the project for our factory
+oc new-project ai-supply-chain</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_part_1_the_foundation_pipeline_workspaces"><a class="anchor" href="#_part_1_the_foundation_pipeline_workspaces"></a>Part 1: The Foundation (Pipeline Workspaces)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In OpenShift AI 3.3, object storage (S3) is no longer required to activate AI Pipelines. Instead, Persistent Volume Claims (PVCs) act as the high-speed <strong>Pipeline Workspaces</strong>, allowing pipelines to pass massive datasets between tasks without cloud egress latency.</p>
+</div>
+<div class="paragraph">
+<p>Because this cluster uses OpenShift Data Foundation (<code>cephfs</code>), our shared workspaces bind instantly and support multi-node read/write operations out of the box.</p>
+</div>
+<div class="sect2">
+<h3 id="_action_provision_protect"><a class="anchor" href="#_action_provision_protect"></a>Action: Provision &amp; Protect</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># 1. Provision CephFS Shared Storage (10GB)
+# Usage: ./cluster-storage.sh &lt;project&gt; &lt;name&gt; &lt;size&gt;
+./cluster-storage.sh ai-supply-chain golden-dataset 10
+
+# 2. THE CRITICAL SAFETY STEP: Patch the Reclaim Policy to 'Retain'
+# Find the instantly-bound PV name
+PV_NAME=$(oc get pvc golden-dataset -n ai-supply-chain -o jsonpath='{.spec.volumeName}')
+
+# Patch the Persistent Volume
+oc patch pv $PV_NAME -p '{"spec":{"persistentVolumeReclaimPolicy":"Retain"}}'
+
+# Verify
+oc get pv $PV_NAME</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Result:</strong> You should see <code>RECLAIM POLICY: Retain</code>. Your pipeline workspace is now protected from accidental deletion.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_part_2_the_velocity_tier_oci_modelcars"><a class="anchor" href="#_part_2_the_velocity_tier_oci_modelcars"></a>Part 2: The Velocity Tier (OCI Modelcars)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next, we enable "Instant Scaling" by creating a connection to the Red Hat Modelcar registry. This tells OpenShift AI 3.3 to use the underlying CRI-O container cache rather than downloading massive files.</p>
+</div>
+<div class="sect2">
+<h3 id="_action_connect_the_accelerator"><a class="anchor" href="#_action_connect_the_accelerator"></a>Action: Connect the Accelerator</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Usage: ./modelcar.sh &lt;project&gt;
+./modelcar.sh ai-supply-chain</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Result:</strong> A Secret <code>granite-3-8b-modelcar</code> is created. Note that the script utilizes the required 3.3 backend routing annotation (<code>opendatahub.io/connection-type-protocol: oci</code>) AND the UI visibility label (<code>opendatahub.io/managed: "true"</code>).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_part_3_the_air_gap_simulation_the_helper_pod"><a class="anchor" href="#_part_3_the_air_gap_simulation_the_helper_pod"></a>Part 3: The Air-Gap Simulation (The Helper Pod)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In a highly secure enterprise, your cluster might not have internet access to download models. You need a way to "Side-Load" data directly into your PVC so you can use the OpenShift AI 3.3 <code>pvc://</code> deployment routing.</p>
+</div>
+<div class="paragraph">
+<p>We will spin up a temporary "Helper Pod" to stage data onto our <code>golden-dataset</code> volume.</p>
+</div>
+<div class="sect2">
+<h3 id="_action_side_load_the_model"><a class="anchor" href="#_action_side_load_the_model"></a>Action: Side-Load the Model</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># 1. Spin up the Data Loader Pod
+cat &lt;&lt;EOF | oc apply -n ai-supply-chain -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: data-loader
+spec:
+  containers:
+    - name: loader
+      image: registry.access.redhat.com/ubi9/ubi-minimal
+      command: ["tail", "-f", "/dev/null"]
+      volumeMounts:
+        - mountPath: "/data"
+          name: my-vol
+  volumes:
+    - name: my-vol
+      persistentVolumeClaim:
+        claimName: golden-dataset
+EOF
+
+# 2. Wait for it to be Ready
+oc wait --for=condition=Ready pod/data-loader -n ai-supply-chain --timeout=60s
+
+# 3. Simulate "Side-Loading" a Model
+echo "Simulated Model Weights v1.0" &gt; model.safetensors
+oc cp model.safetensors ai-supply-chain/data-loader:/data/model.safetensors
+
+# 4. Clean up the Helper Pod
+oc delete pod data-loader -n ai-supply-chain</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Result:</strong> You have successfully bypassed the internet and staged data directly onto a disconnected volume. Because of our <code>Retain</code> policy, deleting the pod keeps the data safe on the disk.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_part_4_the_ingestion_layer_s3_uri"><a class="anchor" href="#_part_4_the_ingestion_layer_s3_uri"></a>Part 4: The Ingestion Layer (S3 &amp; URI)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Finally, we provide the standard connections for raw data ingestion and precise external links.</p>
+</div>
+<div class="sect2">
+<h3 id="_action_connect_data_lakes_and_uris"><a class="anchor" href="#_action_connect_data_lakes_and_uris"></a>Action: Connect Data Lakes and URIs</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Connect the simulated corporate data lake
+./dataconnect.sh ai-supply-chain corporate-data-lake
+
+# Connect a precise URI to a specific external model file
+./uri.sh ai-supply-chain</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_part_5_the_3_3_payoff_deployment_routing"><a class="anchor" href="#_part_5_the_3_3_payoff_deployment_routing"></a>Part 5: The 3.3 Payoff (Deployment Routing)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You have just architected a complete storage solution via the CLI. Now, let&#8217;s see how OpenShift AI 3.3 consumes this architecture using <strong>Direct URIs</strong>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open the <strong>OpenShift AI Dashboard</strong>.</p>
+</li>
+<li>
+<p>Navigate to <strong>Data Science Projects</strong> &#8594; <strong>ai-supply-chain</strong>.</p>
+</li>
+<li>
+<p>Under the <strong>Data connections</strong> tab, verify your connections are present and labeled correctly (S3, OCI, URI).</p>
+</li>
+<li>
+<p>Click the <strong>Deployments</strong> tab, and click <strong>Deploy model</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Notice how the UI expects you to route the deployment based on the architecture you just built. You can now define your deployment locations using the exact 3.3 syntax:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>To use the S3 Connection:</strong> <code>s3://private-models/my-model</code></p>
+</li>
+<li>
+<p><strong>To use the OCI Accelerator:</strong> <code>oci://quay.io/redhat-ai-services/modelcar-catalog:granite-3.2-8b-instruct</code></p>
+</li>
+<li>
+<p><strong>To use the Air-Gapped PVC:</strong> <code>pvc://golden-dataset/model.safetensors</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="p1-storage-section3.html">Storage — Data Connection Types</a></span>
+  <span class="next"><a href="p1-storage-section5.html">Storage — Field Notes</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

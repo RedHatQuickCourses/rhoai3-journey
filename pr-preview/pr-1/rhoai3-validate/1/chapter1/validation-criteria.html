@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Creating Validation Criteria :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Industrialized AI Token Platform — RHOAI Journey</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai3-validate" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Model Validation for Business Applications</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introduction</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section2.html">Zero Trust Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section3.html">Deploy Guardrails</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="business-requirements.html">Defining Business Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="roi-measurement.html">Measuring Validation ROI</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Model Validation for Business Applications</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai-gpu-aas/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-journey/1/index.html">Industrialized AI Token Platform — Journey Map</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-journey/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../llmops-llmd/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="../index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-maas/3.2/index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-maas/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-deploy/1/index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-deploy/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-storage/3.2/index.html">The Storage Strategy, Architecting for AI Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../rhoai3-journey/1/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Model Validation for Business Applications</a></li>
+    <li><a href="validation-criteria.html">Creating Validation Criteria</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Creating Validation Criteria</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>Validation criteria turn business requirements into measurable tests.</strong></p>
+</div>
+<div class="paragraph">
+<p>Once you have business requirements, you need to translate them into specific, measurable validation criteria.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_from_requirements_to_criteria"><a class="anchor" href="#_from_requirements_to_criteria"></a>From Requirements to Criteria</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_accuracy_criteria"><a class="anchor" href="#_accuracy_criteria"></a>Accuracy Criteria</h3>
+<div class="paragraph">
+<p>Translate accuracy requirements into testable criteria:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>General Accuracy:</strong> Standard benchmark scores (MMLU, ARC, HellaSwag)</p>
+</li>
+<li>
+<p><strong>Domain Accuracy:</strong> Custom dataset accuracy scores</p>
+</li>
+<li>
+<p><strong>Use Case Accuracy:</strong> Real-world scenario success rates</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_performance_criteria"><a class="anchor" href="#_performance_criteria"></a>Performance Criteria</h3>
+<div class="paragraph">
+<p>Translate performance requirements into measurable metrics:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Latency:</strong> Time to first token (TTFT) &lt; threshold</p>
+</li>
+<li>
+<p><strong>Throughput:</strong> Requests per second (RPS) &gt; threshold</p>
+</li>
+<li>
+<p><strong>Resource Utilization:</strong> GPU and memory usage within limits</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quality_criteria"><a class="anchor" href="#_quality_criteria"></a>Quality Criteria</h3>
+<div class="paragraph">
+<p>Translate quality requirements into testable standards:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Safety:</strong> Zero harmful or inappropriate responses</p>
+</li>
+<li>
+<p><strong>Compliance:</strong> 100% adherence to regulatory requirements</p>
+</li>
+<li>
+<p><strong>Consistency:</strong> Response variance within acceptable range</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_customer_support_criteria"><a class="anchor" href="#_example_customer_support_criteria"></a>Example: Customer Support Criteria</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Based on the customer support requirements:</p>
+</div>
+<div class="sect2">
+<h3 id="_accuracy_criteria_2"><a class="anchor" href="#_accuracy_criteria_2"></a>Accuracy Criteria</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>General:</strong> MMLU score &gt; 0.60</p>
+</li>
+<li>
+<p><strong>Domain:</strong> Customer support dataset accuracy &gt; 0.90</p>
+</li>
+<li>
+<p><strong>Use Case:</strong> Real customer query success rate &gt; 0.85</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_performance_criteria_2"><a class="anchor" href="#_performance_criteria_2"></a>Performance Criteria</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Latency:</strong> TTFT &lt; 500ms for 95% of requests</p>
+</li>
+<li>
+<p><strong>Throughput:</strong> RPS &gt; 10</p>
+</li>
+<li>
+<p><strong>Resource:</strong> GPU utilization &lt; 80%</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quality_criteria_2"><a class="anchor" href="#_quality_criteria_2"></a>Quality Criteria</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Safety:</strong> Zero policy violations in 1000 test queries</p>
+</li>
+<li>
+<p><strong>Compliance:</strong> 100% adherence to data privacy requirements</p>
+</li>
+<li>
+<p><strong>Consistency:</strong> Response similarity &gt; 0.85 for similar queries</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_document_analysis_criteria"><a class="anchor" href="#_example_document_analysis_criteria"></a>Example: Document Analysis Criteria</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Based on the document analysis requirements:</p>
+</div>
+<div class="sect2">
+<h3 id="_accuracy_criteria_3"><a class="anchor" href="#_accuracy_criteria_3"></a>Accuracy Criteria</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>General:</strong> Information extraction accuracy &gt; 0.95</p>
+</li>
+<li>
+<p><strong>Domain:</strong> Legal document accuracy &gt; 0.90</p>
+</li>
+<li>
+<p><strong>Use Case:</strong> Real document processing success rate &gt; 0.92</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_performance_criteria_3"><a class="anchor" href="#_performance_criteria_3"></a>Performance Criteria</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Latency:</strong> Processing time &lt; 36 seconds per document</p>
+</li>
+<li>
+<p><strong>Throughput:</strong> Process 100 documents per hour</p>
+</li>
+<li>
+<p><strong>Resource:</strong> Memory usage &lt; 16GB per document</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quality_criteria_3"><a class="anchor" href="#_quality_criteria_3"></a>Quality Criteria</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Safety:</strong> Zero data leakage in test scenarios</p>
+</li>
+<li>
+<p><strong>Compliance:</strong> 100% adherence to legal confidentiality standards</p>
+</li>
+<li>
+<p><strong>Consistency:</strong> Extraction consistency &gt; 0.90 across similar documents</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_validation_test_design"><a class="anchor" href="#_validation_test_design"></a>Validation Test Design</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_test_dataset_creation"><a class="anchor" href="#_test_dataset_creation"></a>Test Dataset Creation</h3>
+<div class="paragraph">
+<p>Create test datasets that reflect your criteria:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>General Tests:</strong> Standard benchmark datasets</p>
+</li>
+<li>
+<p><strong>Domain Tests:</strong> Custom datasets with domain-specific scenarios</p>
+</li>
+<li>
+<p><strong>Use Case Tests:</strong> Real-world scenarios from your application</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_test_execution"><a class="anchor" href="#_test_execution"></a>Test Execution</h3>
+<div class="paragraph">
+<p>Design test execution that measures your criteria:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Accuracy Tests:</strong> Run evaluation jobs and measure accuracy scores</p>
+</li>
+<li>
+<p><strong>Performance Tests:</strong> Run performance benchmarks and measure metrics</p>
+</li>
+<li>
+<p><strong>Quality Tests:</strong> Run safety and compliance checks</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>Next Steps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Learn how to <a href="roi-measurement.html" class="xref page">measure ROI</a> of validation efforts</p>
+</li>
+<li>
+<p>Proceed to <a href="../chapter2/index.html" class="xref page">Chapter 2</a> to run application-specific validation tests</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Now let&#8217;s measure the ROI of validation efforts.</strong></p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Making RHOAI Model Inference Work for You :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <link rel="next" href="chapter1/gpu-arch.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../..">Industrialized AI Token Platform — RHOAI Journey</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai3-deploy" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Shadow-Proof AI, The Economics of Governed Serving</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="index.html">Introduction &amp; Value</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="chapter1/gpu-arch.html">GPU Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="chapter1/kserve.html">Kserve Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="chapter1/vram-calc.html">The Sizing Guide</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="chapter1/vllm-engine.html">vLLM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="chapter1/tuning-vllm.html">vLLM Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="chapter1/model-serving.html">Deploy a Model</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="chapter1/summary.html">Summary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Shadow-Proof AI, The Economics of Governed Serving</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-gpu-aas/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-journey/1/index.html">Industrialized AI Token Platform — Journey Map</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-journey/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../llmops-llmd/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-validate/1/index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-validate/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-maas/3.2/index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-maas/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-storage/3.2/index.html">The Storage Strategy, Architecting for AI Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../rhoai3-journey/1/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Shadow-Proof AI, The Economics of Governed Serving</a></li>
+    <li><a href="index.html">Introduction &amp; Value</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Making RHOAI Model Inference Work for You</h1>
+<h1 id="_shadow_proof_ai_the_economics_of_governed_serving" class="sect0"><a class="anchor" href="#_shadow_proof_ai_the_economics_of_governed_serving"></a>Shadow-Proof AI, The Economics of Governed Serving</h1>
+<div class="paragraph lead">
+<p><strong>Inference is where the bill arrives.</strong></p>
+</div>
+<div class="paragraph">
+<p>In the experimentation phase, the only metric that matters is "intelligence"—how smart is the model?
+But in the production phase, the metrics change. Suddenly, you are judged on <strong>latency</strong>, <strong>throughput</strong>, and <strong>cost per token</strong>.</p>
+</div>
+<div class="paragraph">
+<p>A developer might download a 70-billion parameter model to a laptop and be impressed by its reasoning.
+A platform engineer looks at that same model and sees a massive infrastructure bill, potential <code>out-of-memory</code> errors, and a latency bottleneck that could kill the user experience.</p>
+</div>
+<div class="paragraph">
+<p>We are moving beyond "Shadow AI", where users blindly deploy heavy models—to a governed "industrailized approach to AI" where inference is fast, efficient, and cost-effective by design.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/shadowproofai.png" alt="shadowproofai">
+</div>
+<div class="title">Figure 1. Economics of Governed Serving with Red Hat AI and vLLM</div>
+</div>
+<div class="sect1">
+<h2 id="_the_serving_workflow"><a class="anchor" href="#_the_serving_workflow"></a>The Serving Workflow</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this course, we will break down the black box of model serving into a repeatable engineering process.</p>
+</div>
+<div class="sect2">
+<h3 id="_1_smart_model_selection"><a class="anchor" href="#_1_smart_model_selection"></a>1. Smart Model Selection</h3>
+<div class="paragraph">
+<p>You don&#8217;t have to benchmark 900,000 models from scratch.
+We will explore tools like the <strong>Red Hat AI Validated Model Catalog</strong>, which acts as a shortcut. It provides pre-vetted models with known performance profiles, allowing you to skip the "guesswork" phase and select models that are guaranteed to work on your hardware.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<div class="title">Model Catalog Simulation External Link</div>
+<p><a href="https://redhatquickcourses.github.io/rhoai3-catalog/rhoai3-catalog/3.2/chapter1/section4.html" target="blank">Catalog Click Through with Arcade</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Task:</strong> Explore the Model Catalog layout, default models, and how using these are baselines can validate hardware performance expections to accelerate your AI Model inference cost-efficient deployments.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_hardware_sizing_the_math"><a class="anchor" href="#_2_hardware_sizing_the_math"></a>2. Hardware Sizing (The Math)</h3>
+<div class="paragraph">
+<p>We will teach you the formula to calculate the true cost of a model.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Weights vs. Cache:</strong> Understanding why a model that "fits" when idle crashes when under load.</p>
+</li>
+<li>
+<p><strong>Quantization:</strong> How to use formats like <code>FP8</code> or <code>INT8</code> to run massive models on smaller, cheaper GPUs without sacrificing intelligence.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_the_engine_vllm_tuning"><a class="anchor" href="#_3_the_engine_vllm_tuning"></a>3. The Engine: vLLM Tuning</h3>
+<div class="paragraph">
+<p>We will look under the hood of <strong>vLLM</strong>, the standard inference engine for OpenShift AI.
+You will learn to tune critical parameters like:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>max-model-len</code>: Managing the context window to prevent memory overflows.</p>
+</li>
+<li>
+<p><code>gpu-memory-utilization</code>: Optimizing VRAM allocation for high-throughput batching.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_4_automated_deployment_gitops"><a class="anchor" href="#_4_automated_deployment_gitops"></a>4. Automated Deployment (GitOps)</h3>
+<div class="paragraph">
+<p>Finally, we will abandon the "Click-Ops" dashboard.
+You will deploy a production-ready <strong>InferenceService</strong> using a parameterized script. This moves your infrastructure from "manual configuration" to "code," enabling reproducible and scalable deployments.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_our_laboratory_model_ibm_granite_3_3_2b_instruct"><a class="anchor" href="#_our_laboratory_model_ibm_granite_3_3_2b_instruct"></a>Our Laboratory Model: ibm-granite-3.3-2b-instruct</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To practice these concepts without requiring a massive GPU cluster, we will standardize on the <strong>granite-3.3-2b-instruct</strong> model.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Why this model?</strong></p>
+</li>
+<li>
+<p><strong>Efficiency:</strong> Its small size (3 Billion parameters) allows us to deploy it quickly and experiment with tuning parameters on standard hardware.</p>
+</li>
+<li>
+<p><strong>Modern Architecture:</strong> It uses the same underlying technology as massive 70B+ models, meaning the sizing and tuning lessons you learn here directly apply to enterprise-scale deployments.</p>
+</li>
+<li>
+<p><strong>Transparency:</strong> It is fully open-source (Apache 2.0) with disclosed training data, representing the gold standard for trusted enterprise AI.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="title">Prerequisites</div>
+<div class="paragraph">
+<p>To successfully complete the hands-on sections of this course, you need:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Access to a <strong>Red Hat OpenShift AI</strong> cluster.</p>
+</li>
+<li>
+<p>A basic understanding of Kubernetes (Pods, Services, Routes).</p>
+</li>
+<li>
+<p>The <code>oc</code> CLI tool installed in your terminal.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>The goal is efficient inference. Let&#8217;s start by calculating the cost.</strong></p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="next"><a href="chapter1/gpu-arch.html">GPU Architecture</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
