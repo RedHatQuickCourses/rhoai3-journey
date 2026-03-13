@@ -441,15 +441,15 @@
 <p>vLLM changed the industry with <strong>PagedAttention</strong>, an algorithm that manages GPU memory much like an operating system handles RAM. Instead of reserving large, contiguous blocks of memory that result in fragmentation and waste, it allocates memory on-demand.</p>
 </div>
 <div class="paragraph">
-<p>However, default settings are for tourists; engineers tune their engines. You will learn to configure critical parameters within your <code>ServingRuntime</code>:</p>
+<p>Tuning the engines. You will learn to configure key parameters within your <code>ServingRuntime</code>:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>--max-model-len</code>: Hard-limiting the context window to prevent OOM crashes.</p>
+<p><code>--max-model-len</code>: Hard-limiting the context window to the specific use case needs.</p>
 </li>
 <li>
-<p><code>--gpu-memory-utilization</code>: Optimizing the VRAM allocation (e.g., pushing it to 95%) to maximize the concurrent user batch size.</p>
+<p><code>--gpu-memory-utilization</code>: Optimizing the VRAM allocation (e.g., pushing it to 95%) to maximize the concurrent user batch size. (default is 90%)</p>
 </li>
 </ul>
 </div>
@@ -459,7 +459,7 @@
 <h2 id="_part_3_the_assembly_line_kserve_gitops"><a class="anchor" href="#_part_3_the_assembly_line_kserve_gitops"></a>Part 3: The Assembly Line (KServe &amp; GitOps)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Click-Ops does not scale. To deploy our tuned engine, we rely on <strong>KServe</strong>, a Kubernetes-native tool that provides a standardized <code>InferenceService</code>.</p>
+<p>To deploy our tuned engine, we rely on <strong>KServe</strong>, a Kubernetes-native tool that provides a standardized <code>InferenceService</code>.</p>
 </div>
 <div class="paragraph">
 <p>For enterprise LLM workloads, we abandon the default "Serverless" mode and utilize <strong>RawDeployment</strong>.</p>
