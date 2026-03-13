@@ -27,14 +27,14 @@ To bridge the gap between our hardware and our models, we use **vLLM**, the stan
 
 vLLM changed the industry with **PagedAttention**, an algorithm that manages GPU memory much like an operating system handles RAM. Instead of reserving large, contiguous blocks of memory that result in fragmentation and waste, it allocates memory on-demand.
 
-However, default settings are for tourists; engineers tune their engines. You will learn to configure critical parameters within your `ServingRuntime`:
+Tuning the engines. You will learn to configure key parameters within your `ServingRuntime`:
 
- * `--max-model-len`: Hard-limiting the context window to prevent OOM crashes.
- * `--gpu-memory-utilization`: Optimizing the VRAM allocation (e.g., pushing it to 95%) to maximize the concurrent user batch size.
+ * `--max-model-len`: Hard-limiting the context window to the specific use case needs.
+ * `--gpu-memory-utilization`: Optimizing the VRAM allocation (e.g., pushing it to 95%) to maximize the concurrent user batch size. (default is 90%)
 
 == Part 3: The Assembly Line (KServe & GitOps)
 
-Click-Ops does not scale. To deploy our tuned engine, we rely on **KServe**, a Kubernetes-native tool that provides a standardized `InferenceService`.
+To deploy our tuned engine, we rely on **KServe**, a Kubernetes-native tool that provides a standardized `InferenceService`.
 
 For enterprise LLM workloads, we abandon the default "Serverless" mode and utilize **RawDeployment**. 
 
