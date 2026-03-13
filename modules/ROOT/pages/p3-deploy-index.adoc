@@ -1,2 +1,7 @@
 :navtitle: Deploy — Introduction & Value
+
+++++
+<iframe src="https://share.synthesia.io/d29a6bd3-6328-4083-8a7c-cc8ca31524f3?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+++++
+
 include::rhoai3-deploy:ROOT:index.adoc[]
