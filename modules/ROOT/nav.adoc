@@ -2,7 +2,7 @@
 * xref:index.adoc[Journey Map]
 
 // OpenShift Ecosystem Installation
-* 0: OpenShift AI Operators
+* 0: OpenShift AI Operators (prepare)
 //** xref:p0-operators-home.adoc
 //*** xref:p0-operators-arch.adoc
 //*** xref:p0-operators-term.adoc
@@ -12,7 +12,7 @@
 //*** xref:p0-operators-maas.adoc
 //*** xref:p0-operators-other.adoc
 
-* 1: Assembling the Factory 
+* 1: Assembling the Factory (configure)
 ** xref:phase1.adoc[Overview]
 ** xref:p1-storage-index.adoc[Storage — Home]
 *** xref:p1-storage-section1.adoc[Storage — Architecture Deep Dive]
@@ -41,7 +41,7 @@
 *** xref:p2-gpu-section3.adoc[GPU as a Service — Section 3]
 *** xref:p2-gpu-section4.adoc[GPU as a Service — Section 4]
 
-* 2: Token Production Engine
+* 2: Token Production Engine (serve)
 ** xref:phase2.adoc[Overview]
 ** xref:p3-deploy-index.adoc[Deploy — Home]
 *** xref:p3-deploy-gpu-arch.adoc[Deploy — GPU Architecture]
@@ -52,7 +52,7 @@
 *** xref:p3-deploy-model-serving.adoc[Deploy a Model]
 *** xref:p3-deploy-summary.adoc[Deploy — Summary]
 
-* 3: Scaling the Utility
+* 3: Scaling the Utility (scale)
 ** xref:phase3.adoc[Overview]
 ** xref:p4a-vllmllmd.adoc[llm-d — Distributed Inference Home]
 *** xref:p4a-llmdarch.adoc[llm-d — Architecture & Request Lifecycle]
@@ -67,7 +67,7 @@
 *** xref:p4b-maas-section4.adoc[MaaS — Day-2 Operations]
 *** xref:p4b-maas-quiz.adoc[MaaS — Quiz]
 
-* 4: Quality and SLOs
+* 4: Quality and SLOs (validate and eval)
 ** xref:phase4.adoc[Overview]
 ** xref:p5-val-intro.adoc[Validation — Home]
 *** xref:p5-val-section2.adoc[Validation — Zero Trust Architecture]
