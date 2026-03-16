@@ -57,3 +57,9 @@ llm-d is required for MaaS: MaaS content assumes distributed inference concepts 
 - Nav links must stay **within** the journey component so the URL goes to a real page (e.g. `rhoai3-journey/1/p1-storage-index.html`). Cross-component xref in the nav was producing fragment-only URLs that didn’t load content.
 - **Approach:** Each “link” in the combined course is a **shell page** in the journey repo (e.g. `p1-storage-index.adoc`) that contains only a navtitle and an **include** of the source page: `include::rhoai3-storage::chapter1:index.adoc[]`. The nav points to these shell pages (same component), so every click loads a journey page whose content is the included module page. Same pattern as registry’s ROOT index that does `include::chapter1:index.adoc[]`, but cross-component.
 - Shell files are named by phase and module (p1-storage-*, p1-registry-*, p2-hw-*, p3-deploy-*, p4a-*, p4b-maas-*, p5-val-*). The playbook must still pull in all nine content sources so the include directive can resolve at build time.
+
+---
+
+## custom-journey-course skill
+
+- Use-case-driven customization is done by **subsetting** content sources in `antora-playbook.yml` and the corresponding branches in `modules/ROOT/nav.adoc`; no new content is created. Two repos use a different Antora component name than repo name (rhoai3-hwprofiles → rhoai-hwprofiles, rhoai3-gpu-aas → rhoai-gpu-aas); the skill documents this so playbook and shell includes stay correct when customizing.

@@ -1,6 +1,16 @@
 // Nav points to shell pages (same component); each shell includes content from source modules.
 * xref:index.adoc[Journey Map]
 
+* 0: OpenShift AI Operators
+** xref:p0-operators-home.adoc
+*** xref:p0-operators-arch.adoc
+*** xref:p0-operators-term.adoc
+*** xref:p0-operators-lab.adoc
+*** xref:p0-operators-lab2.adoc
+*** xref:p0-operators-lab3.adoc
+*** xref:p0-operators-maas.adoc
+*** xref:p0-operators-other.adoc
+
 * 1: Assembling the Factory 
 ** xref:phase1.adoc[Overview]
 ** xref:p1-storage-index.adoc[Storage — Home]

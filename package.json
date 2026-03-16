@@ -9,5 +9,9 @@
     "build": "antora antora-playbook.yml",
     "watch:adoc": "watch 'npx antora antora-playbook.yml' ./modules",
     "serve": "npx http-server build/site -c-1"
+  },
+  "dependencies": {
+    "@antora/pdf-extension": "^1.0.0-beta.19",
+    "asciidoctor-pdf": "^1.0.0-alpha.16"
   }
 }

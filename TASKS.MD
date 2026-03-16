@@ -40,3 +40,9 @@ Tasks for the unified course repo `rhoai3-journey`. Mark complete with date and 
 ## 5. Document build and consumption
 
 - [x] README with build instructions (Docker and NPM), prerequisite (clone all repos as siblings), and note on replacing local URLs with git URLs for CI. **2025-03-10** — Done.
+
+---
+
+## 6. Cursor skill: custom-journey-course
+
+- [x] Create Cursor skill to build a customized course from use case and audience using existing rhoai3-* modules. **2025-03-15** — Done. Skill at `.cursor/skills/custom-journey-course/` (SKILL.md + reference.md). Use when user provides use case/audience/outcome; edits playbook and nav to subset modules; supports adding new modules over time.

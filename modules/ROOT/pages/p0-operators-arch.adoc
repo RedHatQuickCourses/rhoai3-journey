@@ -1,0 +1,62 @@
+= Operator Architecture & Ecosystem
+:navtitle: Architecture & Ecosystem
+:toc: macro
+
+// Antora metadata
+:page-role: architecture-concept
+:description: Understanding how OpenShift AI 3 operators map to the four phases of token production, from physical hardware discovery to Models-as-a-Service governance.
+
+[.lead]
+*Before you can operate the machinery, you must understand how it is built. In OpenShift, the machinery is the Operator.*
+
+Currently, the market often forces enterprises into a "token-consumption" model—renting intelligence from external providers, which leads to unpredictable costs and data risks. Your business mandate is to flip that narrative: to move from consuming tokens to generating them. 
+
+To successfully build and troubleshoot this AI Factory, a Platform Engineer must understand the underlying ecosystem: how operators are delivered, how they establish trust, and how they map directly to your four-phase production line.
+
+== 1. The Engine Room: Operator Lifecycle Manager (OLM)
+
+You do not install OpenShift AI components using simple static scripts. The platform relies on the **Operator Lifecycle Manager (OLM)**. 
+
+
+
+OLM is the engine room. It oversees the installation, dependency resolution, and over-the-air updates for every operator running in your cluster. When a patch is released for the OpenShift AI Operator or the NVIDIA GPU Operator, OLM manages the subscription channels (e.g., `stable-3.x`) to orchestrate the upgrade securely. Furthermore, if you attempt to install an AI component that requires a specific routing mesh, OLM flags the missing dependency, ensuring your architecture remains intact.
+
+== 2. The Meta-Operator & Namespace Isolation
+
+A common misconception is that installing the OpenShift AI operator immediately spins up your factory. Instead, it employs a **Meta-Operator Pattern**. 
+
+When installed, the Red Hat OpenShift AI Operator acts as the factory manager. It waits for you to define your `DataScienceCluster` custom resource, and then it orchestrates the deployment of specific components across isolated namespaces:
+* **`redhat-ods-applications`**: Where the core UI and dashboard components run, including the Model Catalog.
+* **`rhoai-model-registries`**: The isolated namespace specifically targeted for the Model Registry components (your AI "Title Office".
+
+== 3. Mapping Operators to the Four Architectural Planes
+
+To build a highly efficient, cost-effective token generation platform, we must align our operator installations to the four distinct phases of our journey.
+
+=== Plane 1: The Physical & Supply Plane (Phase 1)
+Before you can manufacture intelligence, you have to organize the supply chain and calibrate the machinery.
+* **The Operators:** `Node Feature Discovery (NFD)`, `NVIDIA/AMD GPU Operators`, `Red Hat build of Kueue`.
+* **The Architecture:** NFD scans the cluster to detect physical hardware. The GPU operators then provide the drivers, enabling Multi-Instance GPU (MIG) for sharing. `Kueue` manages work prioritization to ensure your hardware is saturated and shared securely. Concurrently, this plane supports your Model Registry, backed by databases like MySQL 8+ or Postgres.
+
+=== Plane 2: The Inference Engine Plane (Phase 2)
+Inference is where the bill arrives. This plane is about high-throughput, governed token production.
+* **The Operators:** `cert-manager`.
+* **The Architecture:** We rely on **vLLM** and **KServe**. To avoid 30-60 second "cold starts" that are unacceptable in production, we abandon Serverless mode and utilize **RawDeployment** to ensure the model is always on. This requires strict VRAM calculation formulas: Total VRAM = (Weights x 1.2) + (KV Cache)
+
+=== Plane 3: The Scaled Utility Plane (Phase 3)
+Dedicated hardware per project destroys ROI. We must scale the operation using distributed inference and internal APIs.
+* **The Operators:** `Leader Worker Set`, `Connectivity Link (v1.2+)`.
+* **The Architecture:** We pool resources using **Distributed Inference (`llm-d`)** for massive workloads. We then wrap these endpoints using the **Gateway API** and **Kuadrant** for authentication and strict rate-limiting, protecting the cluster from noisy-neighbor disruptions. *(Note: Models-as-a-Service is currently a Technology Preview ).*
+
+=== Plane 4: The Governance Plane (Phase 4)
+The final step is validating the production line.
+* **The Operators:** `TrustyAI`, `Service Mesh`.
+* **The Architecture:** We lock down the served models using TrustyAI and Guardrails to ensure safety, fairness, and compliance. This governed environment becomes the launchpad for autonomous Agentic applications and Compound AI Systems.
+
+---
+
+== Next Steps
+
+You now understand how the ecosystem maps directly to the business value of generating tokens. You know how OLM manages the lifecycle and how these operators support vLLM, KServe, Kueue, and Kuadrant across our four phases.
+
+It is time to log into the system and set up your control room. In the next section, **Lab 0: Establishing the Command Center**, you will deploy the Web Terminal Operator to begin issuing declarative commands securely from your browser.

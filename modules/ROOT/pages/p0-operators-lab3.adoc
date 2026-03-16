@@ -1,0 +1,131 @@
+= Lab 3: Activating the AI Factory
+:navtitle: Lab 3: DataScienceCluster
+:toc: macro
+
+// Antora metadata
+:page-role: hands-on-lab
+:description: How to declaratively configure the DataScienceCluster custom resource to activate Models-as-a-Service, KServe, and the Model Registry while optimizing cluster resources.
+
+[.lead]
+*Operators provide the potential. The DataScienceCluster provides the reality.*
+
+In the previous labs, you successfully installed the Red Hat OpenShift AI meta-operator and its critical dependencies (`NFD`, `cert-manager`, and `Connectivity Link`). However, as discussed in the Architecture section, the platform uses a Meta-Operator pattern. Right now, those operators are sitting idle in their respective namespaces. 
+
+To actually bring your token factory online, you must provide the blueprint. You do this by configuring the **DataScienceCluster (DSC)** custom resource.
+
+Think of the DSC as the master control panel for your platform. By explicitly declaring which components are `Managed` (turned on) and which are `Removed` (turned off), you ensure that your cluster's valuable compute and memory resources are dedicated solely to token generation, rather than running idle background services you do not intend to use.
+
+== 1. The Strategy: Selective Component Activation
+
+To build our 4-Phase AI Factory, we will configure the DSC to activate only the essential token-production and governance engines:
+
+* **Dashboard (Phase 1):** Required. This provides the UI for the Model Catalog, acting as the "showroom" where data scientists can discover and evaluate models.
+* **Model Registry (Phase 1):** Required. This acts as the central repository or "title office" for administrators to register, version, and manage AI assets before deployment.
+* **KServe (Phase 2 & 3):** Required. This is the core model serving engine for standard and distributed inference. By activating the modern serving stack, you enable the delivery of Red Hat Validated models as OCI-based container images (ModelCars) for rapid scaling.
+* **Resource Optimization:** Components that are not strictly necessary for a pure GenAI/MaaS platform (such as legacy `modelmeshserving` or standalone `codebases`) will be explicitly set to `Removed`.
+
+== 2. Procedure: The Declarative Blueprint
+
+Ensure your Web Terminal (`>_`) is open. You will apply a YAML manifest to define the exact state of your AI Factory. 
+
+Execute the following command in your terminal to create and configure the `DataScienceCluster` object:
+
+[source,bash]
+----
+cat <<EOF | oc apply -f -
+apiVersion: datasciencecluster.opendatahub.io/v1
+kind: DataScienceCluster
+metadata:
+  name: default-dsc
+spec:
+  components:
+    # 1. The Showroom & Governance UI
+    dashboard:
+      managementState: Managed
+    
+    # 2. The Title Office (Asset Management)
+    modelregistry:
+      managementState: Managed
+      registriesNamespace: rhoai-model-registries
+    
+    # 3. The Inference Engine (Token Generation)
+    kserve:
+      managementState: Managed
+      serving:
+        managementState: Managed
+        name: knative-serving
+    
+    # 4. Resource Optimization (Turn off unused legacy components)
+    modelmeshserving:
+      managementState: Removed
+    codebases:
+      managementState: Removed
+    ray:
+      managementState: Removed
+EOF
+----
+
+== 3. Verification & Day 2 Readiness
+
+The OpenShift AI meta-operator will now read this configuration and begin spinning up the requested control planes. This process orchestrates pods across multiple namespaces and can take several minutes.
+
+=== Step 1: Check the DSC Status
+Verify that the components have successfully initialized by querying the phase of the `DataScienceCluster`:
+
+[source,bash]
+----
+oc get datasciencecluster default-dsc -o jsonpath='{.status.phase}{"\n"}'
+----
+
+You should eventually see the output return as `Ready`.
+
+=== Step 2: Locate the Gateway Dashboard
+Next, verify that the dashboard route is actively serving traffic. Note that the transition to using the Gateway API in version 3.x changed the underlying URL structure. The dashboard URL subdomain changed from the legacy format to `data-science-gateway.apps.<cluster>`. 
+
+Retrieve your specific Gateway URL by running:
+
+[source,bash]
+----
+oc get route -n redhat-ods-applications | grep data-science-gateway
+----
+
+Click the resulting URL to access your newly minted AI Factory UI.
+
+---
+
+== UI Simulation: The Factory Comes Online
+
+While declarative GitOps is the standard for infrastructure engineers, the OpenShift AI dashboard provides a clear visual representation of your cluster's initialization. 
+
+[NOTE]
+.Simulation: Verifying Component Activation
+====
+* **Click through the simulation below.**
+* Observe the OpenShift web console as the `DataScienceCluster` resource transitions from `Progressing` to `Ready`.
+* Watch the user navigate to the newly generated `data-science-gateway` URL to access the OpenShift AI dashboard for the first time.
+* Verify that the **Model Catalog** and **Model Registry** tabs are now active and available in the UI.
+====
+
+// ARCADE EMBED (DSC Activation Simulation Async URL)
+++++
+<iframe src="[INSERT_ARCADE_DSC_ACTIVATION_URL_ASYNC]" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+++++
+
+---
+
+== Course Conclusion & Next Steps
+
+Congratulations. You have successfully designed and built the foundational infrastructure for an industrialized AI Factory. 
+
+You started with a blank cluster and methodically layered the required capabilities:
+* You established a zero-install Command Center using the **Web Terminal Operator**.
+* You laid the orchestrational groundwork and mapped physical GPUs using the **OpenShift AI** and **NFD** operators.
+* You injected security and API routing with **cert-manager** and **Connectivity Link**.
+* You officially activated the token engines by configuring the **DataScienceCluster**.
+
+**The foundation is poured. It is time to organize the supply chain.**
+
+You are now ready to begin **Phase 1: Assembling the Factory**. Proceed to the `rhoai3-storage` and `rhoai3-registry` modules to connect your data buckets and establish your governed Model Registry. 
+
+[.text-center]
+*Operator Foundation Course Complete*

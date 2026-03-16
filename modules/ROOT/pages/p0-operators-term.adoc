@@ -1,0 +1,110 @@
+= Lab 0: Establishing the Command Center
+:navtitle: Lab 0: Web Terminal Setup
+:toc: macro
+
+// Antora metadata
+:page-role: hands-on-lab
+:description: Bootstrapping your AI Factory by installing the OpenShift Web Terminal Operator via the UI or CLI to enable zero-install engineering.
+
+[.lead]
+*Before you can build the factory, you need a control room. Leave your local development environment behind.*
+
+Building a reproducible Models-as-a-Service (MaaS) platform requires strict, declarative execution. However, forcing every platform engineer to install local CLI tools, manage `kubeconfig` files, and handle VPN routing introduces unnecessary friction. 
+
+In this course, we are standardizing on the **OpenShift Web Terminal Operator**. This operator provides a fully authenticated, native command-line interface directly within the OpenShift console. You will use this terminal to execute all GitOps and CLI commands for the remainder of this course.
+
+== The Bootstrapping Paradox
+
+To use a declarative CLI, you first need a CLI. 
+If you are starting from a completely fresh machine with no local OpenShift tools installed, use **Method 1 (The UI Bootstrap)** to get your terminal running directly from the browser. 
+
+If you already have your local `oc` client authenticated to the cluster and strictly prefer Infrastructure-as-Code, use **Method 2 (The CLI Alternative)**.
+
+---
+
+== Method 1: The UI Bootstrap (Recommended)
+
+This is the fastest path to "Zero-Install Engineering." You will install the terminal directly from the OpenShift OperatorHub ecosystem.
+
+=== Step 1: Locate and Install
+1. Log into your OpenShift Container Platform console as a Cluster Administrator.
+2. In the left-hand navigation menu, expand **Ecosystem** and click **Software Catalog**.
+3. In the search bar, type `terminal`.
+4. Click on the **Web Terminal** tile (provided by Red Hat).
+5. Click **Install**. Leave the default installation settings and approve the InstallPlan if your cluster requires manual approval.
+
+[NOTE]
+.Simulation: Installing the Web Terminal
+====
+* **Click through the simulation below.**
+* Watch how to navigate the Software Catalog, locate the Web Terminal Operator, and approve the installation.
+* Notice where the `>_` command line icon appears in the top navigation bar once the operator is successfully deployed.
+====
+
+// ARCADE EMBED (Web Terminal Installation Video Walkthrough)
+++++
+<iframe src="[INSERT_ARCADE_WEB_TERMINAL_URL_ASYNC]" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+++++
+
+---
+
+== Method 2: The CLI Alternative (GitOps)
+
+If you are incorporating the Web Terminal into your automated cluster bootstrapping scripts, you can deploy it declaratively. Ensure you are authenticated to your cluster via your local terminal.
+
+=== Step 1: Apply the Operator Manifests
+
+The Web Terminal operator is typically installed globally so all authorized users can access it. Apply the following `Subscription`:
+
+[source,bash]
+----
+cat <<EOF | oc apply -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: web-terminal
+  namespace: openshift-operators
+spec:
+  channel: fast
+  name: web-terminal
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF
+----
+
+=== Step 2: Verify the Installation
+
+Check the ClusterServiceVersion (CSV) to ensure the operator successfully deployed:
+
+[source,bash]
+----
+oc get csv -n openshift-operators | grep web-terminal
+----
+*Expected Result:* You should see the `web-terminal` operator listed with a `Succeeded` phase.
+
+---
+
+== 3. Initialization & Verification
+
+Regardless of which method you used to install the operator, it is time to initialize your Command Center.
+
+1. Look at the top-right header of the OpenShift web console. Click the new command-line terminal icon (`>_`).
+2. The terminal initialization window will appear at the bottom of your screen. Select a project (e.g., `openshift-terminal`) and click **Start**.
+3. Wait a few moments for the underlying DevWorkspace container to provision. 
+
+Once the terminal connects, you are dropped into a fully authenticated bash shell. Test your access:
+
+[source,bash]
+----
+oc project
+----
+
+*Expected Result:* The terminal will return your current active namespace, confirming your browser-based `oc` CLI is authenticated and ready to interact with the cluster.
+
+---
+
+== Next Steps
+
+Your Command Center is online. You have bypassed local machine dependencies and are ready to deploy infrastructure as code. 
+
+Keep this terminal open. In the next module, **Lab 1: Assembling the Foundation**, you will paste your first set of declarative YAML manifests into this exact shell to install the core Red Hat OpenShift AI Operator and map your physical GPU hardware.

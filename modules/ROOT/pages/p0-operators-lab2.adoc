@@ -1,0 +1,116 @@
+= Lab 2: Deploying the Governance Dependencies
+:navtitle: Lab 2: Governance Dependencies
+:toc: macro
+
+// Antora metadata
+:page-role: hands-on-lab
+:description: Step-by-step guide to installing cert-manager and the Connectivity Link Operator to enable secure model serving and Models-as-a-Service (MaaS) API governance.
+
+[.lead]
+*An unmanaged model is a liability. A governed model is a product.*
+
+In Lab 1, you laid the physical and orchestrational foundation of the AI Factory. However, if you simply deploy models onto that raw infrastructure, you risk creating "Shadow AI"—where usage is untracked, proprietary data is exposed, and hardware costs spiral out of control.
+
+Before we activate the inference engines in Phase 2, we must deploy the routing meshes and governance layers. In this lab, you will use your Web Terminal to deploy two critical dependency operators:
+
+1.  **cert-manager Operator:** Required for Phase 2. It handles the internal TLS certificates needed to secure KServe `InferenceServices`.
+2.  **Red Hat Connectivity Link Operator:** Required for Phase 3. It deploys the Kuadrant engine, which integrates with the Gateway API to provide strict API rate-limiting and authentication for your Models-as-a-Service (MaaS) endpoints.
+
+Ensure your OpenShift Web Terminal (`>_`) is open and you are logged in as a Cluster Administrator.
+
+== 1. The Inference Security Layer: cert-manager
+
+The `cert-manager` operator is a hard requirement for the KServe model serving platform used in OpenShift AI. It automates the management and issuance of TLS certificates, ensuring that data flowing into and out of your Large Language Models is encrypted in transit.
+
+=== Procedure: Apply the cert-manager Manifest
+
+Deploy the operator globally by applying the following `Subscription` directly in your Web Terminal:
+
+[source,bash]
+----
+cat <<EOF | oc apply -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: openshift-cert-manager-operator
+  namespace: cert-manager-operator
+spec:
+  channel: stable-v1
+  name: openshift-cert-manager-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF
+----
+
+* **The GenAI Value:** Without this operator, KServe cannot secure the `RawDeployment` pods that serve your models, stalling your Phase 2 production line before it even begins.
+
+== 2. The MaaS Gateway Engine: Connectivity Link
+
+To transition your business from consuming public AI to becoming an internal AI provider, you must govern your endpoints. The old "ticket-based" workflow for provisioning dedicated GPUs is an operational bottleneck. 
+
+By deploying the **Connectivity Link Operator (v1.2+)**, you unlock the Kuadrant engine. This allows you to apply strict requests-per-minute (RPM) quotas and require API keys for all deployed models. 
+
+=== Procedure: Apply the Connectivity Link Manifest
+
+This operator is installed into the global `openshift-operators` namespace. Execute the following manifest in your terminal:
+
+[source,bash]
+----
+cat <<EOF | oc apply -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: connectivity-link-operator
+  namespace: openshift-operators
+spec:
+  channel: stable-v1
+  name: connectivity-link-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF
+----
+
+* **The GenAI Value:** This is the secret weapon for Phase 3: Scaling the Utility. It prevents "noisy neighbors" from monopolizing your massive LLMs and allows you to enforce tiered access (e.g., Free vs. Premium tiers) for internal development teams.
+
+== 3. Verification & Day 2 Readiness
+
+Wait a few moments for OLM to process the subscriptions, download the containers, and start the operators. 
+
+You can verify that both operators are successfully installed and running by querying the ClusterServiceVersions (CSVs) in their respective namespaces:
+
+[source,bash]
+----
+oc get csv -n cert-manager-operator | grep cert-manager
+oc get csv -n openshift-operators | grep connectivity-link
+----
+
+*Expected Result:* Both commands should return an output showing the operator versions and a phase of `Succeeded`.
+
+---
+
+== UI Simulation (Optional)
+
+[NOTE]
+.Simulation: Verifying Governance Operators
+====
+* **Click through the simulation below.**
+* Navigate back to **Operators → Installed Operators** in the OpenShift console.
+* Filter by the `openshift-operators` and `cert-manager-operator` namespaces.
+* Observe that the **cert-manager Operator for Red Hat OpenShift** and the **Red Hat Connectivity Link Operator** are active, proving your GitOps deployment was successful.
+====
+
+// ARCADE EMBED (Verifying Governance Operators Async URL)
+++++
+<iframe src="[INSERT_ARCADE_VERIFY_GOV_OPERATORS_URL_ASYNC]" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+++++
+
+---
+
+== Next Steps
+
+Your AI Factory infrastructure is fully provisioned. 
+* The physical hardware is mapped (NFD).
+* The routing meshes are secured (`cert-manager`).
+* The API governance engine is waiting (`Connectivity Link`).
+
+However, the OpenShift AI meta-operator is currently sitting idle. In the next module, **Lab 3: Activating the DataScienceCluster**, you will provide the blueprint. You will declaratively instruct the operator to spin up the Model Catalog , the Model Registry, and the KServe engines to finalize the construction of your token production platform.

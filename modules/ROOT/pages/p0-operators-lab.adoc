@@ -1,0 +1,170 @@
+= Lab 1: Assembling the Foundation
+:navtitle: Lab 1: Core & Hardware Discovery
+:toc: macro
+
+// Antora metadata
+:page-role: hands-on-lab
+:description: Step-by-step guide to installing the Red Hat OpenShift AI Operator and Node Feature Discovery (NFD) using the Web Terminal.
+
+[.lead]
+*Before you can manufacture intelligence, you have to organize the supply chain and calibrate the machinery. Let's pour the concrete.*
+
+With your Web Terminal Command Center online, you are ready to begin Phase 1: Assembling the Factory. You will not be clicking through wizards; you will be acting as a true Platform Engineer, deploying the foundation of your token generation platform declaratively.
+
+In this lab, you will deploy two critical components:
+1.  **The Meta-Operator:** The core Red Hat OpenShift AI Operator.
+2.  **The Hardware Scout:** The Node Feature Discovery (NFD) Operator, which is the mandatory prerequisite for identifying your cluster's physical GPUs.
+
+Open your Web Terminal (`>_`) at the bottom of your OpenShift console. Ensure you are logged in as a Cluster Administrator.
+
+== 1. The Core: Red Hat OpenShift AI Operator
+
+The Red Hat OpenShift AI Operator is the control plane that manages the lifecycle of all subsequent data science and model serving components.
+
+=== Procedure: Apply the Operator Manifests
+
+Execute the following block directly in your terminal to create the dedicated namespace, the `OperatorGroup`, and the `Subscription`. We are targeting the `stable-3.x` channel to ensure we receive the latest architectural updates for our factory.
+
+[source,bash]
+----
+cat <<EOF | oc apply -f -
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: redhat-ods-operator
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: rhods-operator
+  namespace: redhat-ods-operator
+spec:
+  targetNamespaces:
+  - redhat-ods-operator
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: rhods-operator
+  namespace: redhat-ods-operator
+spec:
+  name: rhods-operator
+  channel: stable-3.x
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF
+----
+
+=== Verification & Value Context
+
+Wait a few moments for Operator Lifecycle Manager (OLM) to pull the images and start the pods. Then, verify the ClusterServiceVersion (CSV) has reached the `Succeeded` phase:
+
+[source,bash]
+----
+oc get csv -n redhat-ods-operator
+----
+
+* **The GenAI Value:** This operator is the master orchestrator. While it isn't serving models yet, it is waiting for your command (via the `DataScienceCluster` resource we will configure later) to spin up the Model Catalog, the Model Registry, and the KServe engines.
+
+== 2. The Compute Prerequisite: Node Feature Discovery (NFD)
+
+You cannot right-size a factory if you do not understand the manufacturing requirements of your product. Similarly, you cannot schedule a massive LLM if your Kubernetes cluster is blind to the physical GPUs attached to its worker nodes. 
+
+
+
+The NFD operator scans your nodes and applies specific hardware labels (e.g., highlighting that a node has an NVIDIA H100 or an AMD MI300X). The GPU operators rely entirely on these labels to know where to install their drivers.
+
+=== Procedure: Install the NFD Operator
+
+Deploy the NFD operator into its own dedicated namespace:
+
+[source,bash]
+----
+cat <<EOF | oc apply -f -
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-nfd
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: openshift-nfd
+  namespace: openshift-nfd
+spec:
+  targetNamespaces:
+  - openshift-nfd
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: nfd
+  namespace: openshift-nfd
+spec:
+  channel: stable
+  name: nfd
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF
+----
+
+=== Procedure: Activate the Hardware Scan
+
+Installing the NFD operator simply deploys the controller. To actually initiate the hardware scan across your cluster, you must create the `NodeFeatureDiscovery` custom resource.
+
+[source,bash]
+----
+cat <<EOF | oc apply -f -
+apiVersion: nfd.openshift.io/v1
+kind: NodeFeatureDiscovery
+metadata:
+  name: nfd-instance
+  namespace: openshift-nfd
+spec:
+  operand:
+    image: registry.redhat.io/openshift4/ose-node-feature-discovery:v4.14
+  workerConfig:
+    configData: |
+      core:
+        sleepInterval: 60s
+EOF
+----
+
+=== Verification & Value Context
+
+Check that the NFD worker pods are successfully running on your nodes:
+
+[source,bash]
+----
+oc get pods -n openshift-nfd -l app=nfd-worker
+----
+
+* **The GenAI Value:** NFD is the foundation of hardware governance. By labeling your nodes, NFD allows you to subsequently deploy the NVIDIA or AMD operators and configure precise Hardware Profiles. This prevents developers from accidentally scheduling an expensive H100 GPU for a simple CPU-bound data preprocessing task.
+
+---
+
+== UI Verification (Optional)
+
+While you executed these commands declaratively via the Web Terminal, the results are fully visible within the OpenShift console. 
+
+[NOTE]
+.Simulation: Verifying Operator Installations
+====
+* **Click through the simulation below.**
+* Navigate to **Operators → Installed Operators**.
+* Select `All Projects` from the namespace dropdown.
+* Observe that both the `Red Hat OpenShift AI` and `Node Feature Discovery` operators are now listed with a status of **Succeeded**.
+====
+
+// ARCADE EMBED (Verifying Installed Operators Async URL)
+++++
+<iframe src="[INSERT_ARCADE_VERIFY_OPERATORS_URL_ASYNC]" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+++++
+
+---
+
+== Next Steps
+
+The foundation is poured. Your cluster now has the meta-operator ready to build the AI supply chain, and your nodes are actively broadcasting their physical hardware capabilities.
+
+Next, we must prepare the routing meshes and governance layers required for Phase 2 and Phase 3. In **Lab 2: Deploying the Governance Dependencies**, you will use the Web Terminal to install `cert-manager` and the `Connectivity Link Operator`, unlocking secure model serving and Models-as-a-Service (MaaS) API rate limiting.

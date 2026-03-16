@@ -1,0 +1,105 @@
+= Lab 4: Scaling the Utility (llm-d & MaaS)
+:navtitle: Lab 4: Advanced Operators
+:toc: macro
+
+// Antora metadata
+:page-role: hands-on-lab
+:description: Deploying the advanced operators required for Phase 3 of the AI Factory: the Leader Worker Set for Distributed Inference (llm-d) and verifying the MaaS Gateway.
+
+[.lead]
+*A single GPU is a bottleneck. A distributed, governed network of GPUs is an AI Factory.*
+
+As you progress toward **Phase 3: Scaling the Utility** in your learning journey, the requirements of your token engine will change drastically. You will no longer be serving small, quantized models on single nodes. You will be asked to serve massive, 70B+ parameter models that require sharding across multiple physical GPUs or even multiple nodes. 
+
+Furthermore, you will need to expose these massive models as governed APIs (Models-as-a-Service) to internal development teams. 
+
+In this final advanced lab, you will use your Web Terminal to deploy the operators required for Distributed Inference (`llm-d`) and verify your MaaS gateway readiness.
+
+== 1. The Distributed Engine: Leader Worker Set Operator
+
+Standard KServe deployments use a single Pod to run a model. **Distributed Inference (`llm-d`)** breaks this paradigm. It shards a massive model (like Llama 3 70B) across multiple "Worker" pods that continuously communicate with a single "Leader" pod to generate a single, unified response.
+
+Kubernetes does not natively understand this complex Leader/Worker orchestration. To unlock this capability, we must deploy the **Red Hat Leader Worker Set Operator**.
+
+=== Procedure: Apply the Operator Manifest
+
+Ensure your Web Terminal (`>_`) is open. Deploy the operator globally by applying the following `Subscription`:
+
+[source,bash]
+----
+cat <<EOF | oc apply -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: leader-worker-set
+  namespace: openshift-operators
+spec:
+  channel: stable
+  name: leader-worker-set
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF
+----
+
+=== Verification & Value Context
+
+Verify the installation using the CLI:
+
+[source,bash]
+----
+oc get csv -n openshift-operators | grep leader-worker-set
+----
+
+* **The GenAI Value:** Without this operator, you cannot scale horizontally. By installing the Leader Worker Set, you enable `vLLM` to shard its tensor parallel (TP) and pipeline parallel (PP) operations across your entire GPU fleet, drastically increasing your token throughput and lowering latency for massive models.
+
+== 2. Verifying the MaaS Gateway (Kuadrant)
+
+In Lab 2, you installed the **Red Hat Connectivity Link Operator**. This operator is the secret weapon for Models-as-a-Service (MaaS). 
+
+By deploying it, you injected the **Kuadrant** engine into your cluster. Kuadrant attaches directly to the OpenShift Gateway API. Instead of application traffic hitting your GPU directly, it must first pass through this gateway, where Kuadrant evaluates your custom `AuthPolicy` (API Keys) and `RateLimitPolicy` (Tokens per Minute).
+
+=== Procedure: Verify Kuadrant Readiness
+
+While the actual configuration of MaaS policies will be covered deeply in the `rhoai3-maas` module, you must ensure the foundation is ready. 
+
+Check that the Connectivity Link operator has successfully instantiated the Kuadrant control plane:
+
+[source,bash]
+----
+oc get pods -n kuadrant-system
+----
+*(Note: Depending on your specific OpenShift AI 3.x initialization sequence, Kuadrant may deploy in `kuadrant-system` or be managed directly within the `redhat-ods-applications` gateway space).*
+
+* **The GenAI Value:** This infrastructure prevents a single "noisy neighbor" development team from crashing your inference nodes with runaway scripts. It allows the business to offer tiered access (Free vs. Premium SLAs) and internally bill departments for exact token consumption.
+
+---
+
+== UI Simulation: The Invisible Dependency Chain
+
+[NOTE]
+.Simulation: Visualizing the Gateway
+====
+* **Click through the simulation below.**
+* See how a Platform Engineer uses the OpenShift console to view the `Gateway` resources.
+* Observe the Kuadrant controllers actively monitoring traffic before it routes to the backend KServe `InferenceServices`.
+====
+
+// ARCADE EMBED (MaaS Gateway Architecture Async URL)
+++++
+<iframe src="[INSERT_ARCADE_MAAS_GATEWAY_URL_ASYNC]" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+++++
+
+---
+
+== Final Architecture Checkpoint
+
+You have now completely mapped the required OpenShift AI infrastructure to the business journey:
+
+1.  **Phase 1 (The Factory):** Powered by the Red Hat OpenShift AI Operator and NFD.
+2.  **Phase 2 (The Engine):** Secured by the cert-manager Operator.
+3.  **Phase 3 (Scaled Utility):** Distributed by the Leader Worker Set and Governed by Connectivity Link.
+
+You are fully prepared to tackle the advanced deployment methodologies in the `llmops-llmd` and `rhoai3-maas` modules.
+
+[.text-center]
+*Advanced Operator Course Complete*
