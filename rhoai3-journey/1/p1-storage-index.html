@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>The Storage Strategy: Architecting for AI Scale :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <title>Architecting AI Storage Logistics in OpenShift AI :: Industrialized AI Token Platform — RHOAI Journey</title>
     <link rel="prev" href="phase1.html">
     <link rel="next" href="p1-storage-section1.html">
     <meta name="description" content="Moving beyond connectivity to designing a high-performance, resilient AI storage layer for OpenShift AI 3.3.">
@@ -42,6 +42,39 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="index.html">Journey Map</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">0: OpenShift AI Operators</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">xref:p0-operators-home.adoc</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-arch.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-term.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-lab.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-lab2.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-lab3.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-maas.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-other.adoc</span>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -292,6 +325,14 @@
   </div>
   <ul class="components">
     <li class="component">
+      <a class="title" href="../../rhoai3-storage/3.2/index.html">Architecting AI Storage Logistics in OpenShift AI</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
       <a class="title" href="../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
       <ul class="versions">
         <li class="version is-latest">
@@ -363,14 +404,6 @@
         </li>
       </ul>
     </li>
-    <li class="component">
-      <a class="title" href="../../rhoai3-storage/3.2/index.html">The Storage Strategy, Architecting for AI Scale</a>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../rhoai3-storage/3.2/index.html">3.2</a>
-        </li>
-      </ul>
-    </li>
   </ul>
 </div>
     </div>
@@ -393,7 +426,7 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">The Storage Strategy: Architecting for AI Scale</h1>
+<h1 class="page">Architecting AI Storage Logistics in OpenShift AI</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph lead">
@@ -418,6 +451,7 @@
 </li>
 <li>
 <p><strong>The Failure:</strong> If you rely on ephemeral storage for production serving, a single node reboot can take down your service for 20 minutes while it re-downloads assets.</p>
+<hr>
 </li>
 </ul>
 </div>

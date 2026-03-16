@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lab 2: Deploying the Governance Dependencies :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../..">Industrialized AI Token Platform — RHOAI Journey</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai3-journey" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Industrialized AI Token Platform — Journey Map</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Journey Map</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">0: OpenShift AI Operators</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">xref:p0-operators-home.adoc</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-arch.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-term.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-lab.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-lab2.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-lab3.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-maas.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-other.adoc</span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">1: Assembling the Factory</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase1.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-storage-index.html">Storage — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section1.html">Storage — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section3.html">Storage — Data Connection Types</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-lab.html">Storage — Lab Exercises</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section5.html">Storage — Field Notes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-registry-home.html">Registry — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section1.html">Registry — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section2.html">Registry — QuickStart Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section3.html">Registry — Model Catalog</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-catalog-home.html">Catalog — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section1.html">Catalog — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section4.html">Catalog — Simulate the Experience</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section2.html">Catalog — Customization CLI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section3.html">Catalog — Administration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-hwprofiles.html">Hardware Profiles — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-placement.html">Hardware Profiles — Placement</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-tiering.html">Hardware Profiles — Tiering</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue.html">Hardware Profiles — Kueue</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue-lab.html">Hardware Profiles — Kueue Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-summary.html">Hardware Profiles — Summary</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-gpu-index.html">GPU as a Service — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section1.html">GPU as a Service — Section 1</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section2.html">GPU as a Service — Section 2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section3.html">GPU as a Service — Section 3</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section4.html">GPU as a Service — Section 4</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">2: Token Production Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase2.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p3-deploy-index.html">Deploy — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-gpu-arch.html">Deploy — GPU Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-kserve.html">Deploy — KServe Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vram.html">Deploy — The Sizing Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vllm.html">Deploy — vLLM</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-tuning.html">Deploy — vLLM Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-model-serving.html">Deploy a Model</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-summary.html">Deploy — Summary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3: Scaling the Utility</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase3.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p4a-vllmllmd.html">llm-d — Distributed Inference Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-llmdarch.html">llm-d — Architecture &amp; Request Lifecycle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-simulator.html">llm-d — Simulator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-labguide.html">llm-d — Lab Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-summary.html">llm-d — Summary</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p4b-maas-index.html">MaaS — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section1.html">MaaS — Strategy Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section2.html">MaaS — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section3.html">MaaS — Lab: Build Your MaaS</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section4.html">MaaS — Day-2 Operations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-quiz.html">MaaS — Quiz</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">4: Quality and SLOs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase4.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p5-val-intro.html">Validation — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section2.html">Validation — Zero Trust Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section3.html">Validation — Deploy Guardrails</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-business.html">Validation — Business Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-roi.html">Validation — Measuring ROI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch2-index.html">Validation — Application-Specific</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-multilang.html">Validation — Multi-Language</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-perf.html">Validation — Performance</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-domain.html">Validation — Domain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-results.html">Validation — Results Analysis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch3-index.html">Validation — Deploying Services</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-service-design.html">Validation — Service Design</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-deploy-svc.html">Validation — Deploy Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-automated.html">Validation — Automated Pipeline</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Industrialized AI Token Platform — Journey Map</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../rhoai3-storage/3.2/index.html">Architecting AI Storage Logistics in OpenShift AI</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-gpu-aas/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">Industrialized AI Token Platform — Journey Map</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../llmops-llmd/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-validate/1/index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-validate/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-maas/3.2/index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-maas/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-deploy/1/index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-deploy/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Industrialized AI Token Platform — Journey Map</a></li>
+    <li><a href="p0-operators-lab2.html">Lab 2: Deploying the Governance Dependencies</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Lab 2: Deploying the Governance Dependencies</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>An unmanaged model is a liability. A governed model is a product.</strong></p>
+</div>
+<div class="paragraph">
+<p>In Lab 1, you laid the physical and orchestrational foundation of the AI Factory. However, if you simply deploy models onto that raw infrastructure, you risk creating "Shadow AI"—where usage is untracked, proprietary data is exposed, and hardware costs spiral out of control.</p>
+</div>
+<div class="paragraph">
+<p>Before we activate the inference engines in Phase 2, we must deploy the routing meshes and governance layers. In this lab, you will use your Web Terminal to deploy two critical dependency operators:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>cert-manager Operator:</strong> Required for Phase 2. It handles the internal TLS certificates needed to secure KServe <code>InferenceServices</code>.</p>
+</li>
+<li>
+<p><strong>Red Hat Connectivity Link Operator:</strong> Required for Phase 3. It deploys the Kuadrant engine, which integrates with the Gateway API to provide strict API rate-limiting and authentication for your Models-as-a-Service (MaaS) endpoints.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Ensure your OpenShift Web Terminal (<code>&gt;_</code>) is open and you are logged in as a Cluster Administrator.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_the_inference_security_layer_cert_manager"><a class="anchor" href="#_1_the_inference_security_layer_cert_manager"></a>1. The Inference Security Layer: cert-manager</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>cert-manager</code> operator is a hard requirement for the KServe model serving platform used in OpenShift AI. It automates the management and issuance of TLS certificates, ensuring that data flowing into and out of your Large Language Models is encrypted in transit.</p>
+</div>
+<div class="sect2">
+<h3 id="_procedure_apply_the_cert_manager_manifest"><a class="anchor" href="#_procedure_apply_the_cert_manager_manifest"></a>Procedure: Apply the cert-manager Manifest</h3>
+<div class="paragraph">
+<p>Deploy the operator globally by applying the following <code>Subscription</code> directly in your Web Terminal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF | oc apply -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: openshift-cert-manager-operator
+  namespace: cert-manager-operator
+spec:
+  channel: stable-v1
+  name: openshift-cert-manager-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The GenAI Value:</strong> Without this operator, KServe cannot secure the <code>RawDeployment</code> pods that serve your models, stalling your Phase 2 production line before it even begins.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_the_maas_gateway_engine_connectivity_link"><a class="anchor" href="#_2_the_maas_gateway_engine_connectivity_link"></a>2. The MaaS Gateway Engine: Connectivity Link</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To transition your business from consuming public AI to becoming an internal AI provider, you must govern your endpoints. The old "ticket-based" workflow for provisioning dedicated GPUs is an operational bottleneck.</p>
+</div>
+<div class="paragraph">
+<p>By deploying the <strong>Connectivity Link Operator (v1.2+)</strong>, you unlock the Kuadrant engine. This allows you to apply strict requests-per-minute (RPM) quotas and require API keys for all deployed models.</p>
+</div>
+<div class="sect2">
+<h3 id="_procedure_apply_the_connectivity_link_manifest"><a class="anchor" href="#_procedure_apply_the_connectivity_link_manifest"></a>Procedure: Apply the Connectivity Link Manifest</h3>
+<div class="paragraph">
+<p>This operator is installed into the global <code>openshift-operators</code> namespace. Execute the following manifest in your terminal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF | oc apply -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: connectivity-link-operator
+  namespace: openshift-operators
+spec:
+  channel: stable-v1
+  name: connectivity-link-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The GenAI Value:</strong> This is the secret weapon for Phase 3: Scaling the Utility. It prevents "noisy neighbors" from monopolizing your massive LLMs and allows you to enforce tiered access (e.g., Free vs. Premium tiers) for internal development teams.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_verification_day_2_readiness"><a class="anchor" href="#_3_verification_day_2_readiness"></a>3. Verification &amp; Day 2 Readiness</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Wait a few moments for OLM to process the subscriptions, download the containers, and start the operators.</p>
+</div>
+<div class="paragraph">
+<p>You can verify that both operators are successfully installed and running by querying the ClusterServiceVersions (CSVs) in their respective namespaces:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get csv -n cert-manager-operator | grep cert-manager
+oc get csv -n openshift-operators | grep connectivity-link</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Expected Result:</strong> Both commands should return an output showing the operator versions and a phase of <code>Succeeded</code>.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ui_simulation_optional"><a class="anchor" href="#_ui_simulation_optional"></a>UI Simulation (Optional)</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Simulation: Verifying Governance Operators</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Click through the simulation below.</strong></p>
+</li>
+<li>
+<p>Navigate back to <strong>Operators → Installed Operators</strong> in the OpenShift console.</p>
+</li>
+<li>
+<p>Filter by the <code>openshift-operators</code> and <code>cert-manager-operator</code> namespaces.</p>
+</li>
+<li>
+<p>Observe that the <strong>cert-manager Operator for Red Hat OpenShift</strong> and the <strong>Red Hat Connectivity Link Operator</strong> are active, proving your GitOps deployment was successful.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<iframe src="[INSERT_ARCADE_VERIFY_GOV_OPERATORS_URL_ASYNC]" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>Next Steps</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Your AI Factory infrastructure is fully provisioned.
+* The physical hardware is mapped (NFD).
+* The routing meshes are secured (<code>cert-manager</code>).
+* The API governance engine is waiting (<code>Connectivity Link</code>).</p>
+</div>
+<div class="paragraph">
+<p>However, the OpenShift AI meta-operator is currently sitting idle. In the next module, <strong>Lab 3: Activating the DataScienceCluster</strong>, you will provide the blueprint. You will declaratively instruct the operator to spin up the Model Catalog , the Model Registry, and the KServe engines to finalize the construction of your token production platform.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

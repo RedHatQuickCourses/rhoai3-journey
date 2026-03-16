@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lab 3: Activating the AI Factory :: Industrialized AI Token Platform — RHOAI Journey</title>
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../..">Industrialized AI Token Platform — RHOAI Journey</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai3-journey" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Industrialized AI Token Platform — Journey Map</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Journey Map</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">0: OpenShift AI Operators</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">xref:p0-operators-home.adoc</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-arch.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-term.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-lab.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-lab2.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-lab3.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-maas.adoc</span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-text">xref:p0-operators-other.adoc</span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">1: Assembling the Factory</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase1.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-storage-index.html">Storage — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section1.html">Storage — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section3.html">Storage — Data Connection Types</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-lab.html">Storage — Lab Exercises</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-storage-section5.html">Storage — Field Notes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-registry-home.html">Registry — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section1.html">Registry — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section2.html">Registry — QuickStart Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-registry-section3.html">Registry — Model Catalog</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p1-catalog-home.html">Catalog — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section1.html">Catalog — Architecture Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section4.html">Catalog — Simulate the Experience</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section2.html">Catalog — Customization CLI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p1-catalog-section3.html">Catalog — Administration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-hwprofiles.html">Hardware Profiles — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-placement.html">Hardware Profiles — Placement</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-tiering.html">Hardware Profiles — Tiering</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue.html">Hardware Profiles — Kueue</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-kueue-lab.html">Hardware Profiles — Kueue Lab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-hw-summary.html">Hardware Profiles — Summary</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p2-gpu-index.html">GPU as a Service — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section1.html">GPU as a Service — Section 1</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section2.html">GPU as a Service — Section 2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section3.html">GPU as a Service — Section 3</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p2-gpu-section4.html">GPU as a Service — Section 4</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">2: Token Production Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase2.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p3-deploy-index.html">Deploy — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-gpu-arch.html">Deploy — GPU Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-kserve.html">Deploy — KServe Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vram.html">Deploy — The Sizing Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-vllm.html">Deploy — vLLM</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-tuning.html">Deploy — vLLM Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-model-serving.html">Deploy a Model</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p3-deploy-summary.html">Deploy — Summary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3: Scaling the Utility</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase3.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p4a-vllmllmd.html">llm-d — Distributed Inference Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-llmdarch.html">llm-d — Architecture &amp; Request Lifecycle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-simulator.html">llm-d — Simulator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-labguide.html">llm-d — Lab Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-summary.html">llm-d — Summary</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p4b-maas-index.html">MaaS — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section1.html">MaaS — Strategy Guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section2.html">MaaS — Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section3.html">MaaS — Lab: Build Your MaaS</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-section4.html">MaaS — Day-2 Operations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4b-maas-quiz.html">MaaS — Quiz</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">4: Quality and SLOs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phase4.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="p5-val-intro.html">Validation — Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section2.html">Validation — Zero Trust Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-section3.html">Validation — Deploy Guardrails</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-business.html">Validation — Business Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-roi.html">Validation — Measuring ROI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch2-index.html">Validation — Application-Specific</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-multilang.html">Validation — Multi-Language</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-perf.html">Validation — Performance</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-domain.html">Validation — Domain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-results.html">Validation — Results Analysis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-ch3-index.html">Validation — Deploying Services</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-service-design.html">Validation — Service Design</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-deploy-svc.html">Validation — Deploy Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p5-val-automated.html">Validation — Automated Pipeline</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Industrialized AI Token Platform — Journey Map</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../rhoai3-storage/3.2/index.html">Architecting AI Storage Logistics in OpenShift AI</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-storage/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-gpu-aas/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">Industrialized AI Token Platform — Journey Map</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../llmops-llmd/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-validate/1/index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-validate/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-maas/3.2/index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-maas/3.2/index.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../rhoai3-deploy/1/index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../rhoai3-deploy/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Industrialized AI Token Platform — Journey Map</a></li>
+    <li><a href="p0-operators-lab3.html">Lab 3: Activating the AI Factory</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Lab 3: Activating the AI Factory</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>Operators provide the potential. The DataScienceCluster provides the reality.</strong></p>
+</div>
+<div class="paragraph">
+<p>In the previous labs, you successfully installed the Red Hat OpenShift AI meta-operator and its critical dependencies (<code>NFD</code>, <code>cert-manager</code>, and <code>Connectivity Link</code>). However, as discussed in the Architecture section, the platform uses a Meta-Operator pattern. Right now, those operators are sitting idle in their respective namespaces.</p>
+</div>
+<div class="paragraph">
+<p>To actually bring your token factory online, you must provide the blueprint. You do this by configuring the <strong>DataScienceCluster (DSC)</strong> custom resource.</p>
+</div>
+<div class="paragraph">
+<p>Think of the DSC as the master control panel for your platform. By explicitly declaring which components are <code>Managed</code> (turned on) and which are <code>Removed</code> (turned off), you ensure that your cluster&#8217;s valuable compute and memory resources are dedicated solely to token generation, rather than running idle background services you do not intend to use.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_the_strategy_selective_component_activation"><a class="anchor" href="#_1_the_strategy_selective_component_activation"></a>1. The Strategy: Selective Component Activation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To build our 4-Phase AI Factory, we will configure the DSC to activate only the essential token-production and governance engines:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Dashboard (Phase 1):</strong> Required. This provides the UI for the Model Catalog, acting as the "showroom" where data scientists can discover and evaluate models.</p>
+</li>
+<li>
+<p><strong>Model Registry (Phase 1):</strong> Required. This acts as the central repository or "title office" for administrators to register, version, and manage AI assets before deployment.</p>
+</li>
+<li>
+<p><strong>KServe (Phase 2 &amp; 3):</strong> Required. This is the core model serving engine for standard and distributed inference. By activating the modern serving stack, you enable the delivery of Red Hat Validated models as OCI-based container images (ModelCars) for rapid scaling.</p>
+</li>
+<li>
+<p><strong>Resource Optimization:</strong> Components that are not strictly necessary for a pure GenAI/MaaS platform (such as legacy <code>modelmeshserving</code> or standalone <code>codebases</code>) will be explicitly set to <code>Removed</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_procedure_the_declarative_blueprint"><a class="anchor" href="#_2_procedure_the_declarative_blueprint"></a>2. Procedure: The Declarative Blueprint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ensure your Web Terminal (<code>&gt;_</code>) is open. You will apply a YAML manifest to define the exact state of your AI Factory.</p>
+</div>
+<div class="paragraph">
+<p>Execute the following command in your terminal to create and configure the <code>DataScienceCluster</code> object:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF | oc apply -f -
+apiVersion: datasciencecluster.opendatahub.io/v1
+kind: DataScienceCluster
+metadata:
+  name: default-dsc
+spec:
+  components:
+    # 1. The Showroom &amp; Governance UI
+    dashboard:
+      managementState: Managed
+
+    # 2. The Title Office (Asset Management)
+    modelregistry:
+      managementState: Managed
+      registriesNamespace: rhoai-model-registries
+
+    # 3. The Inference Engine (Token Generation)
+    kserve:
+      managementState: Managed
+      serving:
+        managementState: Managed
+        name: knative-serving
+
+    # 4. Resource Optimization (Turn off unused legacy components)
+    modelmeshserving:
+      managementState: Removed
+    codebases:
+      managementState: Removed
+    ray:
+      managementState: Removed
+EOF</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_verification_day_2_readiness"><a class="anchor" href="#_3_verification_day_2_readiness"></a>3. Verification &amp; Day 2 Readiness</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The OpenShift AI meta-operator will now read this configuration and begin spinning up the requested control planes. This process orchestrates pods across multiple namespaces and can take several minutes.</p>
+</div>
+<div class="sect2">
+<h3 id="_step_1_check_the_dsc_status"><a class="anchor" href="#_step_1_check_the_dsc_status"></a>Step 1: Check the DSC Status</h3>
+<div class="paragraph">
+<p>Verify that the components have successfully initialized by querying the phase of the <code>DataScienceCluster</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get datasciencecluster default-dsc -o jsonpath='{.status.phase}{"\n"}'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should eventually see the output return as <code>Ready</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_2_locate_the_gateway_dashboard"><a class="anchor" href="#_step_2_locate_the_gateway_dashboard"></a>Step 2: Locate the Gateway Dashboard</h3>
+<div class="paragraph">
+<p>Next, verify that the dashboard route is actively serving traffic. Note that the transition to using the Gateway API in version 3.x changed the underlying URL structure. The dashboard URL subdomain changed from the legacy format to <code>data-science-gateway.apps.&lt;cluster&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>Retrieve your specific Gateway URL by running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route -n redhat-ods-applications | grep data-science-gateway</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Click the resulting URL to access your newly minted AI Factory UI.</p>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ui_simulation_the_factory_comes_online"><a class="anchor" href="#_ui_simulation_the_factory_comes_online"></a>UI Simulation: The Factory Comes Online</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While declarative GitOps is the standard for infrastructure engineers, the OpenShift AI dashboard provides a clear visual representation of your cluster&#8217;s initialization.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Simulation: Verifying Component Activation</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Click through the simulation below.</strong></p>
+</li>
+<li>
+<p>Observe the OpenShift web console as the <code>DataScienceCluster</code> resource transitions from <code>Progressing</code> to <code>Ready</code>.</p>
+</li>
+<li>
+<p>Watch the user navigate to the newly generated <code>data-science-gateway</code> URL to access the OpenShift AI dashboard for the first time.</p>
+</li>
+<li>
+<p>Verify that the <strong>Model Catalog</strong> and <strong>Model Registry</strong> tabs are now active and available in the UI.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<iframe src="[INSERT_ARCADE_DSC_ACTIVATION_URL_ASYNC]" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_course_conclusion_next_steps"><a class="anchor" href="#_course_conclusion_next_steps"></a>Course Conclusion &amp; Next Steps</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Congratulations. You have successfully designed and built the foundational infrastructure for an industrialized AI Factory.</p>
+</div>
+<div class="paragraph">
+<p>You started with a blank cluster and methodically layered the required capabilities:
+* You established a zero-install Command Center using the <strong>Web Terminal Operator</strong>.
+* You laid the orchestrational groundwork and mapped physical GPUs using the <strong>OpenShift AI</strong> and <strong>NFD</strong> operators.
+* You injected security and API routing with <strong>cert-manager</strong> and <strong>Connectivity Link</strong>.
+* You officially activated the token engines by configuring the <strong>DataScienceCluster</strong>.</p>
+</div>
+<div class="paragraph">
+<p><strong>The foundation is poured. It is time to organize the supply chain.</strong></p>
+</div>
+<div class="paragraph">
+<p>You are now ready to begin <strong>Phase 1: Assembling the Factory</strong>. Proceed to the <code>rhoai3-storage</code> and <code>rhoai3-registry</code> modules to connect your data buckets and establish your governed Model Registry.</p>
+</div>
+<div class="paragraph text-center">
+<p><strong>Operator Foundation Course Complete</strong></p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
