@@ -3,7 +3,7 @@
 # For local build with sibling clones, you can temporarily replace url with ../<repo-name>.
 
 site:
-  title: Industrialized AI Token Platform — RHOAI Journey
+  title: Red Hat AI 3x Foundations for Scalable AI
   start_page: rhoai3-journey::index.adoc
 
 content:
