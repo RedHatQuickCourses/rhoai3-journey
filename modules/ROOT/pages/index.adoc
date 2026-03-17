@@ -1,5 +1,5 @@
-= Industrialized AI Token Platform — Journey Map
-:navtitle: Journey Map
+= Making Red Hat OpenShift AI 3.3 Work for You
+:navtitle: Overview of the Journey
 :toc: macro
 :description: A practitioner's journey to deploying an industrialized AI token generation utility on Red Hat OpenShift AI. Optimized for value, simplified deployment, and scale.
 
