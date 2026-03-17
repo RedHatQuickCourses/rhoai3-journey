@@ -1,16 +1,15 @@
 // Nav points to shell pages (same component); each shell includes content from source modules.
 * xref:index.adoc[Journey Map]
 
-// OpenShift Ecosystem Installation
 * 0: OpenShift AI Operators (prepare)
-** xref:p0-operators-home.adoc
-*** xref:p0-operators-arch.adoc
-*** xref:p0-operators-term.adoc
-*** xref:p0-operators-lab.adoc
-*** xref:p0-operators-lab2.adoc
-*** xref:p0-operators-lab3.adoc
-*** xref:p0-operators-maas.adoc
-*** xref:p0-operators-other.adoc
+** xref:p0-operators-home.adoc[]
+*** xref:p0-operators-arch.adoc[]
+*** xref:p0-operators-term.adoc[]
+*** xref:p0-operators-lab.adoc[]
+*** xref:p0-operators-lab2.adoc[]
+*** xref:p0-operators-lab3.adoc[]
+*** xref:p0-operators-maas.adoc[]
+*** xref:p0-operators-other.adoc[]
 
 * 1: Assembling the Factory (configure)
 ** xref:phase1.adoc[Overview]
