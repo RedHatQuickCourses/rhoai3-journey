@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Building the Foundation &amp; Request Lifecycle :: Red Hat AI 3x Foundations for Scalable AI</title>
+    <title>Untitled :: Red Hat AI 3x Foundations for Scalable AI</title>
     <link rel="prev" href="p4a-vllmllmd.html">
     <link rel="next" href="p4a-simulator.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -204,6 +204,12 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="p4a-summary.html">llm-d — Summary</a>
   </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-llmdlab2.html">llm-d — Lab 2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#p4a-llmd-sumamry.adoc">llm-d — Summary</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
@@ -397,198 +403,8 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Building the Foundation &amp; Request Lifecycle</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="imageblock text-left">
-<div class="content">
-<img src="_images/llmd-banner.png" alt="Red Hat OpenShift AI" width="200">
-</div>
-</div>
 <div class="paragraph">
-<p><strong>Role:</strong> Platform Engineer<br>
-<strong>Technical Objective:</strong> Master the component prerequisites and visualize the six-step "Intelligent Routing" lifecycle that occurs for every inference request.</p>
-</div>
-<hr>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_1_the_foundation_prerequisites"><a class="anchor" href="#_1_the_foundation_prerequisites"></a>1. The Foundation: Prerequisites</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Before deploying the <code>llm-d</code> stack, specific infrastructure components must be present. Failure to meet these requirements is the primary cause of implementation issues.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 40%;">
-<col style="width: 40%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Component</strong></th>
-<th class="tableblock halign-left valign-top"><strong>Requirement</strong></th>
-<th class="tableblock halign-left valign-top"><strong>The "Why"</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kubernetes</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OpenShift 4.19+</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A modern stack relying on up-to-date features and the Gateway API.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Gateway API</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Compliant implementation (e.g., OpenShift Service Mesh or kGateway)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as the "front door" for all traffic and the required integration point for the smart scheduler.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Hardware</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Data Center GPUs (H100, A100, L40S)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The vLLM engine is optimized specifically for these architectures, not consumer cards.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Operators</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NVIDIA GPU Operator &amp; Node Feature Discovery (NFD)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Manages drivers and advertises GPU features to the Kubernetes scheduler.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="title">Critical: Network Fabric Requirements</div>
-<div class="paragraph">
-<p><strong>Do not underestimate the network.</strong><br>
-High-performance "East-West" cache sharing requires a low-latency fabric (InfiniBand or RoCE). A standard 10GbE TCP/IP network will be a bottleneck and is <strong>not supported</strong> for advanced features like Mixture-of-Experts (MoE).</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_2_the_core_components"><a class="anchor" href="#_2_the_core_components"></a>2. The Core Components</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The <code>llm-d</code> architecture orchestrates several specialized controllers and routing logic.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Gateway API + Inference Extension (Envoy):</strong> The "Smart Router" living in the <code>openshift-ingress</code> namespace. It intercepts user <code>HTTPRoute</code> requests and queries the scheduler.</p>
-</li>
-<li>
-<p><strong>Inference Scheduler (EPP):</strong> The "Brain." It maintains a real-time view of all vLLM pods and runs "Filter-and-Score" logic to select the best destination.</p>
-</li>
-<li>
-<p><strong>vLLM Pods (Workers):</strong> The execution engines running in the user namespace. In advanced setups, these are split into <strong>Prefill</strong> (compute-optimized) and <strong>Decode</strong> (memory-optimized) pools.</p>
-</li>
-<li>
-<p><strong>KServe GenAI Controller:</strong> The "Orchestrator" within the Red Hat OpenShift AI Operator. It watches for a <code>ModelService</code> CRD and builds the underlying Deployment, Service, and Route objects.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_3_the_data_flow_the_request_lifecycle"><a class="anchor" href="#_3_the_data_flow_the_request_lifecycle"></a>3. The Data Flow: The Request Lifecycle</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Understanding this six-step flow is critical for troubleshooting connectivity and routing behavior. The Scheduler makes the decision, but the Gateway moves the data.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Request In:</strong> A user sends an OpenAI-compatible request (e.g., <code>/v1/chat/completions</code>) to the defined <code>HTTPRoute</code>.</p>
-</li>
-<li>
-<p><strong>Gateway Intercepts:</strong> The Gateway API (Envoy) in <code>openshift-ingress</code> receives the traffic.</p>
-</li>
-<li>
-<p><strong>The "Brain" is Called:</strong> The Gateway forwards the <strong>request metadata</strong> to the Inference Scheduler (EPP), effectively asking: <strong>"Where should this go?"</strong>.</p>
-</li>
-<li>
-<p><strong>Scheduler Decides (Filter &amp; Score):</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Filter:</strong> The scheduler removes unhealthy, overloaded, or incompatible pods from the list.</p>
-</li>
-<li>
-<p><strong>Score:</strong> It scores remaining pods based on queue length and <strong>KV Cache Affinity</strong> (checking if a pod already holds the conversation context).</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Instruction Issued (Control Plane):</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Cache Hit (Fast Path):</strong> The Scheduler <strong>instructs the Gateway</strong> to route traffic to the specific Decode pod holding the cache.</p>
-</li>
-<li>
-<p><strong>Cache Miss (Slow Path):</strong> The Scheduler <strong>instructs the Gateway</strong> to route traffic to a Prefill pod first.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Gateway Execution (Data Plane):</strong> The Gateway receives the instruction and forwards the actual data payload to the chosen pod. The pod generates the response and streams it back through the Gateway to the user.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_4_observability_proving_it_works"><a class="anchor" href="#_4_observability_proving_it_works"></a>4. Observability: Proving It Works</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To demonstrate ROI, you must track the "Golden Signals" of inference performance.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Business Goal</strong></th>
-<th class="tableblock halign-left valign-top"><strong>Prometheus Metric</strong></th>
-<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Prove Responsiveness</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vllm_llmd_time_to_first_token_seconds</code> (TTFT)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The primary measure of perceived speed. Keep this low and stable.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Prove Throughput</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vllm_llmd_time_per_output_token_seconds</code> (TPOT)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The "generation speed" metric.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Prove Cost Savings (TCO)</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vllm_llmd_kv_cache_hit_rate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Your #1 ROI Metric.</strong> A 90% hit rate means you are skipping expensive Prefill compute 90% of the time.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Prove Efficiency</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vllm_llmd_gpu_utilization_seconds</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Confirms expensive GPUs are active and not idling.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
+<p>Unresolved include directive in modules/ROOT/pages/p4a-llmdarch.adoc - include::rhoai3-llmd:chapter1:section1.adoc[]</p>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p4a-vllmllmd.html">llm-d — Distributed Inference Home</a></span>

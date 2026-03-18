@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Simulator: Distributed Inference Operations :: Red Hat AI 3x Foundations for Scalable AI</title>
+    <title>Untitled :: Red Hat AI 3x Foundations for Scalable AI</title>
     <link rel="prev" href="p4a-llmdarch.html">
     <link rel="next" href="p4a-labguide.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -204,6 +204,12 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="p4a-summary.html">llm-d — Summary</a>
   </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-llmdlab2.html">llm-d — Lab 2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#p4a-llmd-sumamry.adoc">llm-d — Summary</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
@@ -397,111 +403,8 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Simulator: Distributed Inference Operations</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="imageblock text-left">
-<div class="content">
-<img src="_images/llmd-banner.png" alt="Red Hat OpenShift AI" width="200">
-</div>
-</div>
 <div class="paragraph">
-<p><strong>Role:</strong> All Personas (No Lab Required)<br>
-<strong>Objective:</strong> Execute a complete end-to-end deployment cycle—from infrastructure provisioning to validation—in a guided, risk-free simulation.</p>
-</div>
-<hr>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_the_interactive_experience"><a class="anchor" href="#_the_interactive_experience"></a>The Interactive Experience</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Welcome to the <strong>Distributed Inference Simulator</strong>. This module provides a high-speed, guided tour of the entire <code>llm-d</code> workflow on Red Hat OpenShift AI 3.0.</p>
-</div>
-<div class="paragraph">
-<p>Use this simulator if:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>You do not have access to a GPU-enabled OpenShift cluster today.</p>
-</li>
-<li>
-<p>You need to validate the "ClickOps" workflow before building automation.</p>
-</li>
-<li>
-<p>You want to see the "Big Picture" operations without waiting for provisioning times.</p>
-</li>
-</ul>
-</div>
-<hr>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_phase_1_infrastructure_provisioning"><a class="anchor" href="#_phase_1_infrastructure_provisioning"></a>Phase 1: Infrastructure Provisioning</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Before we deploy models, we must secure the OpenShift AI 3.0 Environment. This simulations use Red Hat demo plaform to provision a RHOAI 3.0 platform.</p>
-</div>
-<div class="sect2">
-<h3 id="_1_1_access_hardware_verification"><a class="anchor" href="#_1_1_access_hardware_verification"></a>1.1 Access &amp; Hardware Verification</h3>
-<div class="paragraph">
-<p><strong>Task:</strong> Log in to the RHOAI console, review the dashboard menus, inspect the settings for "Hardware Profiles" to understand how allocate physical GPUs for inference, then deploy a model from the RHOAI Model Catalog.</p>
-</div>
-<iframe src="https://demo.arcade.software/GfqvGnWw1uQdlBhkLhy9?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
-</div>
-<div class="sect2">
-<h3 id="_1_2_operator_health_check"><a class="anchor" href="#_1_2_operator_health_check"></a>1.2 Operator Health Check</h3>
-<div class="paragraph">
-<p><strong>Task:</strong> From the Openshift Dashboard install the "Leader Worker Set (LWS)" Operator. This is the secret sauce <code>llm-d</code> uses to manage pod fleets.  Next, explore the OpenShift console to validate, OCP version of 4.19 or greater, with 4.20 recommended.  Install the Terminal Operator to interact with our cluster via the command line.</p>
-</div>
-<iframe src="https://demo.arcade.software/S1dHIjii1Vjkqi0phdSd?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
-<hr>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_phase_2_the_distributed_inference_deployment"><a class="anchor" href="#_phase_2_the_distributed_inference_deployment"></a>Phase 2: The Distributed Inference Deployment</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Now that the foundation is solid, we execute the deployment. These simulations show the transition from "Config" to "Running Service."</p>
-</div>
-<div class="sect2">
-<h3 id="_2_1_deploying_with_llm_d"><a class="anchor" href="#_2_1_deploying_with_llm_d"></a>2.1 Deploying with llm-d</h3>
-<div class="paragraph">
-<p><strong>Task:</strong> Configure the <code>llm-d</code> Serving Runtime, attach the Granite model, and select the distributed hardware profile.</p>
-</div>
-<iframe src="https://demo.arcade.software/WDbYI8agiNhgCIfYPLp9?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
-</div>
-<div class="sect2">
-<h3 id="_2_2_observability_topology"><a class="anchor" href="#_2_2_observability_topology"></a>2.2 Observability &amp; Topology</h3>
-<div class="paragraph">
-<p><strong>Task:</strong> Inspect the OpenShift Topology view to confirm the separation of the <strong>Inference Scheduler</strong> (Control Plane) and <strong>vLLM Pods</strong> (Engine). Explore the pods state during the llm-d inference deployment via the OpenShift console.</p>
-</div>
-<iframe src="https://demo.arcade.software/z3WQEOr7Vd1QrGmxVRQf?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true"  width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
-<hr>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_phase_3_validation_the_test"><a class="anchor" href="#_phase_3_validation_the_test"></a>Phase 3: Validation (The Test)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>A deployment is only successful if it answers questions.</p>
-</div>
-<div class="sect2">
-<h3 id="_3_1_inference_validation"><a class="anchor" href="#_3_1_inference_validation"></a>3.1 Inference Validation</h3>
-<div class="paragraph">
-<p><strong>Task:</strong> Launch a Jupyter Notebook, connect to the new inference endpoint, and validate the response and percieved latency.</p>
-</div>
-<iframe src="https://demo.arcade.software/cKkaV0pgSsSJnRM0wRsj?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" width="100%" height="500px" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="clipboard-write" muted> </iframe>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs"></code></pre>
-</div>
-</div>
-</div>
-</div>
+<p>Unresolved include directive in modules/ROOT/pages/p4a-simulator.adoc - include::rhoai3-llmd:chapter1:section2.adoc[]</p>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p4a-llmdarch.html">llm-d — Architecture &amp; Request Lifecycle</a></span>

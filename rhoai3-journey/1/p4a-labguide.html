@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Deploying Distributed Inference :: Red Hat AI 3x Foundations for Scalable AI</title>
+    <title>Untitled :: Red Hat AI 3x Foundations for Scalable AI</title>
     <link rel="prev" href="p4a-simulator.html">
     <link rel="next" href="p4a-summary.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -204,6 +204,12 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="p4a-summary.html">llm-d — Summary</a>
   </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="p4a-llmdlab2.html">llm-d — Lab 2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#p4a-llmd-sumamry.adoc">llm-d — Summary</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
@@ -397,269 +403,8 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Deploying Distributed Inference</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="imageblock text-left">
-<div class="content">
-<img src="_images/llmd-banner.png" alt="Red Hat OpenShift AI" width="200">
-</div>
-</div>
 <div class="paragraph">
-<p><strong>Role:</strong> Platform Engineer<br>
-<strong>Objective:</strong> Deploy a cache-aware inference service, expose it via the Gateway, and verify intelligent routing.</p>
-</div>
-<hr>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_deploy_using_distributed_inference_with_llm_d"><a class="anchor" href="#_deploy_using_distributed_inference_with_llm_d"></a>Deploy using Distributed Inference with llm-d</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We will deploy a super small Qwen/Qwen3-0.6B model for quick loading using the <code>LLMInferenceService</code> CR. This resource tells the operator to spin up the vLLM pods and the Inference Scheduler.</p>
-</div>
-<div class="listingblock">
-<div class="title">Step 1: Create the Project</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc new-project my-ai-lab</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Step 2: Apply the LLMInferenceService</div>
-<p>Save the following as <code>llm-inference-service.yaml</code> and apply it.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: serving.kserve.io/v1alpha1
-kind: LLMInferenceService
-metadata:
-  name: qwen
-  namespace: my-api-lab
-  annotations:
-    opendatahub.io/hardware-profile-name: gpu-profile
-    opendatahub.io/hardware-profile-namespace: redhat-ods-applications
-    opendatahub.io/model-type: generative
-    openshift.io/display-name: qwen
-    security.opendatahub.io/enable-auth: 'false'
-spec:
-  replicas: 1
-  model:
-    uri: hf://Qwen/Qwen3-0.6B
-    name: Qwen/Qwen3-0.6B
-  router:
-    scheduler:
-      template:
-        containers:
-          - name: main
-            env:
-              - name: TOKENIZER_CACHE_DIR
-                value: /tmp/tokenizer-cache
-              - name: HF_HOME
-                value: /tmp/tokenizer-cache
-              - name: TRANSFORMERS_CACHE
-                value: /tmp/tokenizer-cache
-              - name: XDG_CACHE_HOME
-                value: /tmp
-            args:
-              - --pool-group
-              - inference.networking.x-k8s.io
-              - '--pool-name'
-              - '{{ ChildName .ObjectMeta.Name `-inference-pool` }}'
-              - '--pool-namespace'
-              - '{{ .ObjectMeta.Namespace }}'
-              - '--zap-encoder'
-              - json
-              - '--grpc-port'
-              - '9002'
-              - '--grpc-health-port'
-              - '9003'
-              - '--secure-serving'
-              - '--model-server-metrics-scheme'
-              - https
-              - '--config-text'
-              - |
-                apiVersion: inference.networking.x-k8s.io/v1alpha1
-                kind: EndpointPickerConfig
-                plugins:
-                - type: single-profile-handler
-                - type: queue-scorer
-                - type: kv-cache-utilization-scorer
-                - type: prefix-cache-scorer
-                schedulingProfiles:
-                - name: default
-                  plugins:
-                  - pluginRef: queue-scorer
-                    weight: 2
-                  - pluginRef: kv-cache-utilization-scorer
-                    weight: 2
-                  - pluginRef: prefix-cache-scorer
-                    weight: 3
-            volumeMounts:
-              - name: tokenizer-cache
-                mountPath: /tmp/tokenizer-cache
-              - name: cachi2-cache
-                mountPath: /cachi2
-        volumes:
-          - name: tokenizer-cache
-            emptyDir: {}
-          - name: cachi2-cache
-            emptyDir: {}
-    route: { }
-    gateway: { }
-  template:
-    tolerations:
-      - key: "nvidia.com/gpu"
-        operator: "Exists"
-        effect: "NoSchedule"
-    containers:
-      - name: main
-        env:
-          - name: VLLM_ADDITIONAL_ARGS
-            value: "--disable-uvicorn-access-log --max-model-len=16000"
-        resources:
-          limits:
-            cpu: '1'
-            memory: 8Gi
-            nvidia.com/gpu: "1"
-          requests:
-            cpu: '1'
-            memory: 8Gi
-            nvidia.com/gpu: "1"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8000
-            scheme: HTTPS
-          initialDelaySeconds: 120
-          periodSeconds: 30
-          timeoutSeconds: 30
-          failureThreshold: 5</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f llm-inference-service.yaml</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="title">Status Check</div>
-<div class="paragraph">
-<p>The status may briefly show <strong>Failed</strong> in the dashboard while images pull.
-Check the pods: <code>oc get pods -n my-ai-lab</code>
-Wait for <code>model and inference kserve pods</code> to be <code>Running</code>.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_phase_2_expose_and_secure_the_gateway"><a class="anchor" href="#_phase_2_expose_and_secure_the_gateway"></a>Phase 2: Expose and Secure (The Gateway)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In OpenShift AI 3.0, you must explicitly configure the route if the UI didn&#8217;t auto-associate it.</p>
-</div>
-<div class="listingblock">
-<div class="title">Step 1: Verify the HTTPRoute</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get httproute -n my-ai-lab</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Ensure the route points to the <code>openshift-ai-inference</code> gateway.</strong></p>
-</div>
-<div class="listingblock">
-<div class="title">Step 3: Get the Inference URL</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export INFERENCE_URL=$(oc get gateway openshift-ai-inference -n openshift-ingress -o jsonpath='{.status.addresses[0].value}')
-echo "Targeting: http://$INFERENCE_URL/my-ai-lab/qwen/v1"</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_phase_3_verify_intelligent_routing_the_test"><a class="anchor" href="#_phase_3_verify_intelligent_routing_the_test"></a>Phase 3: Verify Intelligent Routing (The Test)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We will prove that the scheduler is routing based on cache affinity.</p>
-</div>
-<div class="paragraph">
-<div class="title">Step 1: The "Cold" Request (Baseline)</div>
-<p>Send a request with a unique system prompt. Measure the total time.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">time curl -k -X POST "http://$INFERENCE_URL/my-ai-lab/qwen/v1/chat/completions" \
-  -H "{}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "Qwen/Qwen3-0.6B",
-    "messages": [
-      {"role": "system", "content": "You are a helpful assistant talking about OpenShift AI."},
-      {"role": "user", "content": "Explain Kubernetes in 50 words."}
-    ]
-  }'</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Step 2: The "Warm" Request (Cache Hit)</div>
-<p>Send the <strong>exact same</strong> request immediately. The Scheduler should recognize the prefix hash and route to the same pod.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Run the exact same command again.
-# Compare the 'real' time. The second request should be significantly faster (lower TTFT).</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_phase_4_observability_golden_signals"><a class="anchor" href="#_phase_4_observability_golden_signals"></a>Phase 4: Observability (Golden Signals)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Validate your test using the Dashboard metrics.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Navigate to <strong>OpenShift &#8594; Observe</strong> &#8594; <strong>Dashboards</strong>.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Networking/Ingress</p>
-</li>
-<li>
-<p>Prometheus</p>
-</li>
-<li>
-<p>NVIDIA DCGM Exporter Dashboard</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Look for:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Request Count:</strong> You should see your 2 spikes.</p>
-</li>
-<li>
-<p><strong>Avg Response Time:</strong> The second spike should be lower than the first.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</div>
+<p>Unresolved include directive in modules/ROOT/pages/p4a-labguide.adoc - include::rhoai3-llmd:chapter1:index.adoc[]</p>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p4a-simulator.html">llm-d — Simulator</a></span>
