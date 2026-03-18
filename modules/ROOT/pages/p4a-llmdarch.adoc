@@ -1,2 +1,2 @@
 :navtitle: llm-d — Architecture & Request Lifecycle
-include::llmops-llmd:chapter1:llmdarch.adoc[]
+include::rhoai3-llmd:chapter1:section1.adoc[]

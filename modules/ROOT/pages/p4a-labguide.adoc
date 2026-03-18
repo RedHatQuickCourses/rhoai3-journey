@@ -1,2 +1,2 @@
 :navtitle: llm-d — Lab Guide
-include::llmops-llmd:chapter1:labguide.adoc[]
+include::rhoai3-llmd:chapter1:index.adoc[]

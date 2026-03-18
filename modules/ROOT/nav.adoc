@@ -58,6 +58,8 @@
 *** xref:p4a-simulator.adoc[llm-d — Simulator]
 *** xref:p4a-labguide.adoc[llm-d — Lab Guide]
 *** xref:p4a-summary.adoc[llm-d — Summary]
+*** xref:p4a-llmdlab2.adoc[llm-d — Lab 2]
+*** xref:p4a-llmd-sumamry.adoc[llm-d — Summary]
 //** xref:phase4b.adoc[Phase 3 Overview]
 ** xref:p4b-maas-index.adoc[MaaS — Home]
 *** xref:p4b-maas-section1.adoc[MaaS — Strategy Guide]

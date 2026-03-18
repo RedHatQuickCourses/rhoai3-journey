@@ -1,2 +1,2 @@
 :navtitle: llm-d — vLLM and Distributed Inference
-include::rhoai3-llmd:chapter1:section4.adoc[]
+include::rhoai3-llmd:chapter1:section6.adoc[]
