@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Red Hat AI 3x Foundations for Scalable AI</title>
+    <title>Architecture: The Distributed Inference Stack &amp; Request Lifecycle :: Red Hat AI 3x Foundations for Scalable AI</title>
     <link rel="prev" href="p4a-llmdarch.html">
     <link rel="next" href="p4a-labguide.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -333,10 +333,10 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <a class="title" href="../../rhoai3-llmd/3.3/index.html">Industrializing Inference Maximizing GPU ROI with llm-d</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../llmops-llmd/1/index.html">1</a>
+          <a href="../../rhoai3-llmd/3.3/index.html">3.3</a>
         </li>
       </ul>
     </li>
@@ -403,8 +403,211 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Architecture: The Distributed Inference Stack &amp; Request Lifecycle</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>A monolithic deployment is an operational liability. To scale enterprise intelligence, you must decouple orchestration from execution.</strong></p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p4a-simulator.adoc - include::rhoai3-llmd:chapter1:section2.adoc[]</p>
+<p>In the previous module, we explored the vast toolkit <code>llm-d</code> provides—from cache-aware routing to disaggregated serving. But how do these features actually function inside a Kubernetes cluster?</p>
+</div>
+<div class="paragraph">
+<p>Industrial-grade Generative AI requires two distinct layers of optimization. You need a high-performance engine to manage raw math and memory at the GPU level, and an intelligent control plane to manage traffic and efficiency across the entire cluster.</p>
+</div>
+<div class="paragraph">
+<p>Red Hat OpenShift AI 3.3 combines the industry-standard <strong>vLLM</strong> engine with the Kubernetes-native <strong>llm-d</strong> framework to create this unified, split-plane stack.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_core_concept_decoupling_control_vs_execution"><a class="anchor" href="#_the_core_concept_decoupling_control_vs_execution"></a>The Core Concept: Decoupling Control vs. Execution</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In a traditional microservices setup, an ingress controller blindly round-robins traffic. In the AI Factory, we use a "split-plane" design to ensure expensive requests are routed with surgical precision.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>The Control Plane (<code>llm-d</code>):</strong> This is the orchestrator. It acts as the "Traffic Cop" for your compute network. It maintains a real-time view of the health, queue length, and KV cache status of every worker pod, but it <strong>does not</strong> process the prompts itself.</p>
+</li>
+<li>
+<p><strong>The Execution Plane (vLLM):</strong> This is the high-throughput worker engine running inside the pods. It utilizes <strong>PagedAttention</strong> to maximize GPU memory and handles the actual matrix multiplication required to generate text.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">The Logistics Analogy</div>
+<div class="paragraph">
+<p>Think of running an LLM at scale like managing a global logistics network:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>llm-d is the Air Traffic Control Tower:</strong> It observes the skies, optimizes routes, and manages the fleet.</p>
+</li>
+<li>
+<p><strong>vLLM is the Jet Engine on each plane:</strong> It ensures maximum speed, fuel efficiency, and thrust for the individual unit.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_component_breakdown"><a class="anchor" href="#_component_breakdown"></a>Component Breakdown</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To build this architecture, four specialized components must work in perfect unison.</p>
+</div>
+<div class="sect2">
+<h3 id="_1_the_gateway_api_the_smart_router"><a class="anchor" href="#_1_the_gateway_api_the_smart_router"></a>1. The Gateway API (The "Smart Router")</h3>
+<div class="paragraph">
+<p>Standard Kubernetes networking is insufficient for distributed AI. We rely on a compliant Gateway API (Envoy) acting as the front door. Typically deployed in the <code>openshift-ingress</code> namespace as <code>openshift-ai-inference</code>, this Gateway intercepts incoming user requests and pauses to query the scheduler before forwarding the data.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Design Note:</strong> Because <code>llm-d</code> relies heavily on native Gateway API routing, you must ensure legacy or conflicting service meshes (like OpenShift Service Mesh v2) do not override these specific routing paths.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_the_inference_scheduler_the_brain"><a class="anchor" href="#_2_the_inference_scheduler_the_brain"></a>2. The Inference Scheduler (The "Brain")</h3>
+<div class="paragraph">
+<p>Also known as the Endpoint Picker Protocol (EPP), this component is the mastermind behind the <strong>Intelligent Inference Scheduling</strong> capability we discussed earlier. It runs continuous "Filter-and-Score" logic to select the absolute best destination for every single request.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Filter:</strong> It instantly removes unhealthy, overloaded, or updating pods from the candidate list.</p>
+</li>
+<li>
+<p><strong>Score:</strong> It scores the remaining pods based on queue length and <strong>KV Cache Affinity</strong>. If a pod already holds the conversation history in its memory, it scores higher.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_kserve_genai_controller_the_factory_builder"><a class="anchor" href="#_3_kserve_genai_controller_the_factory_builder"></a>3. KServe GenAI Controller (The "Factory Builder")</h3>
+<div class="paragraph">
+<p>This is the operator that watches for your declarative configurations. When you submit an <code>LLMInferenceService</code> custom resource, this controller automatically builds the underlying Kubernetes Deployments, Services, and Route objects required to wire the Gateway to the Scheduler and the Workers.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_4_vllm_worker_pods_the_engine"><a class="anchor" href="#_4_vllm_worker_pods_the_engine"></a>4. vLLM Worker Pods (The "Engine")</h3>
+<div class="paragraph">
+<p>These are the heavy lifters running in your user namespace. Managed seamlessly by the <strong>Leader Worker Set (LWS)</strong> Operator, these pods pull the model weights from your secure vault (MinIO/S3), hold them in GPU memory, and wait for the Gateway to hand them a prompt.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_deployment_strategy_the_recreate_trap"><a class="anchor" href="#_5_deployment_strategy_the_recreate_trap"></a>5. Deployment Strategy: The "Recreate" Trap</h3>
+<div class="paragraph">
+<p>When applying updates to traditional stateless web applications, Kubernetes engineers rely on a "Rolling Update" strategy to maintain zero downtime.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="title">Architectural Reality: Expect Downtime on Updates</div>
+<div class="paragraph">
+<p>When you select the <code>llm-d</code> runtime for a model, the OpenShift AI deployment strategy defaults to <strong>Recreate</strong>, and other options are not supported.</p>
+</div>
+<div class="paragraph">
+<p>Because massive Large Language Models consume so much VRAM, the system must completely terminate the old pod and release the GPU memory <strong>before</strong> spinning up the new pod. <strong>Updating a model via <code>llm-d</code> guarantees temporary downtime.</strong> As a Platform Architect, you must plan maintenance windows for model updates rather than expecting seamless, zero-downtime rolling deployments.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_data_flow_lifecycle_of_a_request"><a class="anchor" href="#_the_data_flow_lifecycle_of_a_request"></a>The Data Flow: Lifecycle of a Request</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Understanding this six-step flow is critical for troubleshooting connectivity and explaining the architecture to downstream developers. <strong>The Scheduler makes the decision, but the Gateway moves the data.</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Request In:</strong> A user application sends an OpenAI-compatible request (e.g., <code>/v1/chat/completions</code>) to the defined Gateway <code>HTTPRoute</code>.</p>
+</li>
+<li>
+<p><strong>Gateway Intercepts:</strong> The Envoy Gateway receives the traffic and pauses the payload.</p>
+</li>
+<li>
+<p><strong>The "Brain" is Called:</strong> The Gateway forwards the <strong>request metadata</strong> (not the full prompt) to the Inference Scheduler, effectively asking: <strong>"Where should this go?"</strong>.</p>
+</li>
+<li>
+<p><strong>Scheduler Decides:</strong> The Scheduler runs its Filter-and-Score logic. It identifies the pod with the shortest queue and the best cache match.</p>
+</li>
+<li>
+<p><strong>Instruction Issued:</strong> The Scheduler instructs the Gateway on exactly which vLLM worker pod should handle the request.</p>
+</li>
+<li>
+<p><strong>Gateway Execution:</strong> The Gateway receives the instruction and forwards the full prompt payload to the chosen vLLM pod. The pod generates the response and streams it back through the Gateway to the user.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_observability_proving_the_architecture_works"><a class="anchor" href="#_observability_proving_the_architecture_works"></a>Observability: Proving the Architecture Works</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To demonstrate the value of this architecture back to the business, Platform Engineers must track the "Golden Signals" of inference via Prometheus.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Business Goal</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Prometheus Metric</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Prove Responsiveness</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vllm_llmd_time_to_first_token_seconds</code> (TTFT)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The primary measure of perceived speed. The scheduler directly lowers this by finding the least-busy pod.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Prove Cost Savings (TCO)</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vllm_llmd_kv_cache_hit_rate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your primary ROI metric. A 90% hit rate means cache-aware routing is working, allowing you to skip expensive compute cycles 90% of the time.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Prove Efficiency</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vllm_llmd_gpu_utilization_seconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Confirms that expensive Data Center GPUs are actively processing math and not sitting idle due to poor load balancing.</p></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<div class="paragraph">
+<p><strong>Now that you understand the blueprint and the data flow, it is time to build it. Next, we will automate the deployment of this architecture using a declarative GitOps approach.</strong></p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p4a-llmdarch.html">llm-d — Architecture &amp; Request Lifecycle</a></span>

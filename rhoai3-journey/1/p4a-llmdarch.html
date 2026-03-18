@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Red Hat AI 3x Foundations for Scalable AI</title>
+    <title>Capabilities &amp; Features: The llm-d Toolkit :: Red Hat AI 3x Foundations for Scalable AI</title>
     <link rel="prev" href="p4a-vllmllmd.html">
     <link rel="next" href="p4a-simulator.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -333,10 +333,10 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../llmops-llmd/1/index.html">Maximize Your GPU ROI, Scaling LLM Inference llm-d</a>
+      <a class="title" href="../../rhoai3-llmd/3.3/index.html">Industrializing Inference Maximizing GPU ROI with llm-d</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../llmops-llmd/1/index.html">1</a>
+          <a href="../../rhoai3-llmd/3.3/index.html">3.3</a>
         </li>
       </ul>
     </li>
@@ -403,8 +403,134 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Capabilities &amp; Features: The llm-d Toolkit</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p><strong>A factory requires different tools for different production lines. llm-d provides the complete toolkit.</strong></p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p4a-llmdarch.adoc - include::rhoai3-llmd:chapter1:section1.adoc[]</p>
+<p>In the previous module, we established <strong>why</strong> the business needs distributed inference: to drive down costs and guarantee performance. But how exactly does <code>llm-d</code> achieve this state-of-the-art performance on Kubernetes?</p>
+</div>
+<div class="paragraph">
+<p><code>llm-d</code> is not a single feature; it is a comprehensive suite of optimizations designed to squeeze every ounce of value out of modern hardware accelerators. As a Platform Engineer, you must understand the available tools in this framework to design the right architecture for your specific Compound AI Systems.</p>
+</div>
+<div class="paragraph">
+<p>Here are the five core capabilities of Red Hat OpenShift AI 3.3&#8217;s distributed inference stack, and the strategic design decisions around when to use them.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_intelligent_inference_scheduling_cache_aware_routing"><a class="anchor" href="#_1_intelligent_inference_scheduling_cache_aware_routing"></a>1. Intelligent Inference Scheduling (Cache-Aware Routing)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the bread and butter of <code>llm-d</code>. Instead of a standard Kubernetes ingress controller blindly round-robining traffic, <code>llm-d</code> deploys vLLM behind a smart Envoy load balancer.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>How it works:</strong> The scheduler actively monitors the cluster. It routes traffic based on utilization (who is least busy), fairness (preventing starvation), and <strong>prefix-cache awareness</strong>. If User A asks a question about a 10-page document, and User B asks a follow-up question about that <strong>same</strong> document, the scheduler knows which specific GPU already has that document loaded in its KV cache and routes User B there instantly.</p>
+</li>
+<li>
+<p><strong>When to use it:</strong> <strong>Always.</strong> This is the foundational capability that enables high-density sharing and turns a standard endpoint into a Model-as-a-Service (MaaS) offering.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_disaggregated_serving_separating_read_from_write"><a class="anchor" href="#_2_disaggregated_serving_separating_read_from_write"></a>2. Disaggregated Serving (Separating Read from Write)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>LLM inference consists of two distinct phases: <strong>Prefill</strong> (reading and processing the user&#8217;s prompt) and <strong>Decode</strong> (generating the response token-by-token). Prefill is highly compute-intensive, while Decode is highly memory-bandwidth intensive.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>How it works:</strong> Disaggregated serving allows you to physically split these workloads. You assign specific GPUs purely to be "Prefill Servers" and others to be "Decode Servers." The Prefill server reads the massive prompt, calculates the KV cache, and transmits it over a high-speed network (like RoCE) to the Decode server to stream the response.</p>
+</li>
+<li>
+<p><strong>When to use it:</strong> In heavy Retrieval-Augmented Generation (RAG) workloads. If your users are uploading massive legal contracts (which cause huge prefill spikes that block decode generation), separating the phases ensures that heavy readers never interrupt fast writers, dramatically lowering Time-To-First-Token (TTFT).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_wide_expert_parallelism_multi_node_scaling"><a class="anchor" href="#_3_wide_expert_parallelism_multi_node_scaling"></a>3. Wide Expert-Parallelism (Multi-Node Scaling)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Traditional tensor parallelism shards a model across multiple GPUs <strong>within the same physical server</strong>. But what happens when the model is bigger than the server itself?</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>How it works:</strong> <code>llm-d</code> supports distributing massive Mixture-of-Experts (MoE) models across multiple physical nodes. It leverages technologies like NVSHMEM and high-speed network fabrics to allow GPUs on different physical machines to act as a single, unified accelerator brain.</p>
+</li>
+<li>
+<p><strong>When to use it:</strong> When you are deploying "Trillion Parameter" scale models (e.g., massive DeepSeek or Llama 405B variants) that simply exceed the VRAM of a single 8-GPU node, even with quantization.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_4_tiered_kv_prefix_caching"><a class="anchor" href="#_4_tiered_kv_prefix_caching"></a>4. Tiered KV Prefix Caching</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The KV cache is the memory the model uses to "remember" the conversation. VRAM (GPU memory) is the fastest, but it is incredibly expensive and limited.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>How it works:</strong> <code>llm-d</code> can intelligently offload KV cache entries from precious GPU VRAM down to cheaper CPU system RAM, or even further down to local NVMe SSDs or remote storage. When that context is needed again, it is pulled back up the tier.</p>
+</li>
+<li>
+<p><strong>When to use it:</strong> In high-concurrency environments where system prompts, standard operating procedures, or large document contexts are frequently reused. This allows you to serve massive effective context windows without constantly hitting "Out of Memory" (OOM) errors on the GPU.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_5_workload_autoscaling"><a class="anchor" href="#_5_workload_autoscaling"></a>5. Workload Autoscaling</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Static sizing is dangerous. If you over-provision, you waste money. If you under-provision, your application crashes.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>How it works:</strong> Integrating seamlessly with the Kubernetes Horizontal Pod Autoscaler (HPA) or customized variant autoscalers, <code>llm-d</code> can dynamically scale your vLLM worker pods up and down based on real-time metrics (like queue depth or KV cache utilization).</p>
+</li>
+<li>
+<p><strong>When to use it:</strong> Handling variable enterprise traffic patterns. You can scale your IT Helpdesk copilot down to zero at night, returning those valuable GPUs to the Kueue quota pool so the Data Science team can use them for overnight model training, and scale back up in the morning before business hours.</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">The Crawl, Walk, Run Approach</div>
+<div class="paragraph">
+<p>While features like Disaggregated Serving and Tiered Caching are incredibly powerful, they require precise network tuning (like RoCE) and deep architectural planning.</p>
+</div>
+<div class="paragraph">
+<p>In this course, we will focus on establishing the foundation. Our upcoming hands-on labs will center entirely on <strong>Intelligent Inference Scheduling</strong> to ensure you can confidently deploy, route, and observe a distributed model before adding advanced complexity.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Now that we know what tools are in the box, let&#8217;s look at how they are wired together. Next, we will dive into the architecture and the lifecycle of a routed request.</strong></p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p4a-vllmllmd.html">llm-d — Distributed Inference Home</a></span>
