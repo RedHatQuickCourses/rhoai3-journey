@@ -53,7 +53,7 @@
 
 * 3: Scaling the Utility (scale)
 ** xref:phase3.adoc[Overview]
-** xref:p4a-llmd-index.adoc[llm-d — Introduction]
+** xref:p4a-llmd-index.adoc[llm-d — Home]
 *** xref:p4a-llmd-section1.adoc[llm-d — Capabilities & Features]
 *** xref:p4a-llmd-section2.adoc[llm-d — Distributed Inference Stack]
 *** xref:p4a-llmd-section3.adoc[llm-d — Cluster Bootstrapping]
