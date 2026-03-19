@@ -15,7 +15,7 @@
 ** xref:phase1.adoc[Overview]
 ** xref:p1-storage-index.adoc[Storage — Home]
 *** xref:p1-storage-section1.adoc[Storage — Architecture Deep Dive]
-*** xref:p1-storage-section3.adoc[Storage — Data Connection Types]
+*** xref:p1-storage-section2.adoc[Storage — Data Connection Types]
 *** xref:p1-storage-lab.adoc[Storage — Lab Exercises]
 *** xref:p1-storage-section5.adoc[Storage — Field Notes]
 ** xref:p1-registry-home.adoc[Registry — Home]

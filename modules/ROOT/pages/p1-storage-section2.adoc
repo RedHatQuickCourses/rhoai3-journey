@@ -1,0 +1,2 @@
+:navtitle: Storage — Data Connection Types
+include::rhoai3-storage:chapter1:section2.adoc[]
