@@ -6,7 +6,7 @@
     <title>Architecting AI Storage Logistics in OpenShift AI :: Red Hat AI 3x Foundations for Scalable AI</title>
     <link rel="prev" href="phase1.html">
     <link rel="next" href="p1-storage-section1.html">
-    <meta name="description" content="Moving beyond connectivity to designing a high-performance, resilient AI storage layer for OpenShift AI 3.3.">
+    <meta name="description" content="Moving beyond basic connectivity to designing a high-performance, resilient AI storage layer for OpenShift AI 3.3 to maximize GPU ROI.">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script>var uiRootPath = '../../_'</script>
@@ -62,7 +62,7 @@
     <a class="nav-link" href="p1-storage-section1.html">Storage — Architecture Deep Dive</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="p1-storage-section3.html">Storage — Data Connection Types</a>
+    <a class="nav-link" href="p1-storage-section2.html">Storage — Data Connection Types</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="p1-storage-lab.html">Storage — Lab Exercises</a>
@@ -302,10 +302,10 @@
   </div>
   <ul class="components">
     <li class="component">
-      <a class="title" href="../../rhoai3-storage/3.2/index.html">Architecting AI Storage Logistics in OpenShift AI</a>
+      <a class="title" href="../../rhoai3-storage/3.3/index.html">Architecting AI Storage Logistics in OpenShift AI</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../rhoai3-storage/3.2/index.html">3.2</a>
+          <a href="../../rhoai3-storage/3.3/index.html">3.3</a>
         </li>
       </ul>
     </li>
@@ -410,120 +410,74 @@
 <p><strong>Connectivity is easy. Performance is engineering.</strong></p>
 </div>
 <div class="paragraph">
-<p>In the early stages of AI adoption, the primary challenge is simply <strong>access</strong>: <strong>"How do I connect my Jupyter Notebook to an S3 bucket?"</strong></p>
+<p>In the early stages of AI adoption, the primary challenge for Platform Engineers was simply access: "How do I connect my data scientist&#8217;s Jupyter Notebook to an S3 bucket without exposing the root password?"</p>
 </div>
 <div class="paragraph">
-<p>But as you move from "Science Project" to "Production Service," the challenges shift dramatically. You are no longer moving 1GB CSV files; you are serving <strong>70GB Large Language Models (LLMs)</strong> to thousands of concurrent users, and automating complex AI Pipelines.</p>
+<p>But as your organization moves from a "Science Project" to a "Production Service," the challenges shift dramatically. You are no longer moving 1GB CSV files; you are serving 70GB Large Language Models (LLMs) to thousands of concurrent users, and automating complex, multi-stage AI Pipelines.</p>
 </div>
 <div class="paragraph">
-<p>At this scale, storage is no longer just a place to keep files—it becomes the <strong>primary bottleneck</strong> of your entire platform.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>The Risk:</strong> If every pod downloads a 50GB model on startup, you flood the network and stall your rollout.</p>
-</li>
-<li>
-<p><strong>The Cost:</strong> If your automated AI pipelines pass massive intermediate datasets back and forth to an external S3 bucket, your cloud egress bills explode and your pipelines crawl.</p>
-</li>
-<li>
-<p><strong>The Failure:</strong> If you rely on ephemeral storage for production serving, a single node reboot can take down your service for 20 minutes while it re-downloads assets.</p>
-<hr>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>In this course, you will evolve from managing "Disks" to architecting "Strategies."</strong></p>
-</div>
-<div class="imageblock text-center">
-<div class="content">
-<img src="_images/storage-connv2.png" alt="storage connv2">
-</div>
-<div class="title">Figure 1. Storage Types and Protocols AI Models for Generative AI</div>
+<p>At this scale, storage is no longer just a place to keep files—it becomes the primary bottleneck of your entire platform.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_three_pillars_of_ai_storage"><a class="anchor" href="#_the_three_pillars_of_ai_storage"></a>The Three Pillars of AI Storage</h2>
+<h2 id="_the_cost_of_shadow_ai_storage"><a class="anchor" href="#_the_cost_of_shadow_ai_storage"></a>The Cost of "Shadow AI" Storage</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We will replace the "One-Size-Fits-All" approach with a tiered strategy specifically designed for OpenShift AI 3.3 workloads.</p>
+<p>When data scientists operate outside of a governed architecture, they default to what is easiest. While fine for a laptop, this ad-hoc "Shadow AI" approach is disastrous for production Kubernetes clusters and destroys your GPU Return on Investment (ROI).</p>
 </div>
-<div class="sect2">
-<h3 id="_1_the_velocity_tier_oci_modelcars"><a class="anchor" href="#_1_the_velocity_tier_oci_modelcars"></a>1. The Velocity Tier (OCI Modelcars)</h3>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>The Challenge:</strong> Initialization Latency. Waiting 15 minutes for a model to download before a pod becomes "Ready."</p>
+<p><strong>The Network Flood:</strong> If every pod downloads a massive foundation model on startup to a local ephemeral disk (emptyDir), you trigger severe network saturation and node bandwidth exhaustion.</p>
 </li>
 <li>
-<p><strong>The Solution:</strong> <strong>Boot-from-Registry.</strong> By packaging models as OCI images (Modelcars), you leverage the cluster&#8217;s native container image puller.</p>
+<p><strong>The Egress Cost:</strong> If your automated AI pipelines pass massive intermediate datasets back and forth to an external S3 bucket between every single task, your cloud egress bills explode and your pipeline execution crawls to a halt.</p>
 </li>
 <li>
-<p><strong>The Outcome:</strong> <strong>Instant Scaling.</strong> The underlying layers are cached on the node. Scaling from 1 replica to 50 takes seconds, not hours, because the data is already there.</p>
+<p><strong>The Uptime Threat:</strong> If you rely on ephemeral storage for production serving, a single node reboot can take down your inference service for 20 minutes while it re-downloads assets. Every minute your expensive GPUs sit idle waiting for a storage download is burned capital.</p>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_2_the_persistence_tier_dual_storage_pipelines"><a class="anchor" href="#_2_the_persistence_tier_dual_storage_pipelines"></a>2. The Persistence Tier (Dual-Storage Pipelines)</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>The Challenge:</strong> S3 Ping-Ponging and Data Duplication. How do you share massive datasets efficiently between pipeline tasks without losing your execution logs?</p>
-</li>
-<li>
-<p><strong>The Solution:</strong> <strong>The Hybrid Architecture.</strong> OpenShift AI 3.3 pipelines require a dual-storage approach. We use <strong>S3-compatible Object Storage</strong> as the permanent archive for artifacts and logs, paired with high-speed <strong>Persistent Volume Claims (PVCs)</strong> for ephemeral pipeline workspaces.</p>
-</li>
-<li>
-<p><strong>The Outcome:</strong> <strong>High-Speed Transit.</strong> Pipeline components exchange massive datasets directly via the local cluster disk during execution, while the final results and logs are safely committed to the cloud archive.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_the_abstraction_tier_data_connections_gitops"><a class="anchor" href="#_3_the_abstraction_tier_data_connections_gitops"></a>3. The Abstraction Tier (Data Connections &amp; GitOps)</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>The Challenge:</strong> Governance and Lock-in. Preventing hardcoded credentials and fragile database dependencies.</p>
-</li>
-<li>
-<p><strong>The Solution:</strong> <strong>Kubernetes-Native Abstraction.</strong> We use the new Connections API to inject standard URIs (<code>s3://</code>, <code>pvc://</code>, <code>oci://</code>) via Kubernetes Secrets. Furthermore, OpenShift AI 3.3 moves pipeline storage out of internal databases and into Kubernetes API Custom Resources.</p>
-</li>
-<li>
-<p><strong>The Outcome:</strong> <strong>Complete Portability.</strong> Your storage connections, model URIs, and entire pipeline definitions can now be fully managed by GitOps tools (like Argo CD), ensuring environment parity between Dev and Prod.</p>
-</li>
-</ul>
-</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_your_mission_the_ai_factory_blueprint"><a class="anchor" href="#_your_mission_the_ai_factory_blueprint"></a>Your Mission: The "AI Factory" Blueprint</h2>
+<h2 id="_the_three_pillars_of_the_ai_storage_factory"><a class="anchor" href="#_the_three_pillars_of_the_ai_storage_factory"></a>The Three Pillars of the AI Storage Factory</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You are not just learning to run <code>oc create secret</code>. You are learning to build the <strong>Data Supply Chain</strong> that powers the AI Factory.</p>
+<p>To build a stable platform, you must respect the physics of the underlying infrastructure. In this course, we replace the manual, "One-Size-Fits-All" storage approach with a tiered, GitOps-driven strategy specifically engineered for OpenShift AI 3.x workloads.</p>
 </div>
-<div class="paragraph">
-<p>In the upcoming modules, you will:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Analyze the Physics:</strong> Understand why downloading models to <code>emptyDir</code> kills production stability, and how to architect the Hybrid Pipeline storage model.</p>
-</li>
-<li>
-<p><strong>Build the Highway:</strong> Deploy <strong>OCI Data Connections</strong> and master the specific URI routing formats required by RHOAI 3.3.</p>
-</li>
-<li>
-<p><strong>Secure the Vault:</strong> Provision <strong>Shared Storage</strong> that supports both high-speed pipelines and air-gapped model hosting.</p>
-</li>
-<li>
-<p><strong>Automate the Floor:</strong> Learn the "Sharp Edges" of UI visibility labels, external databases, and GitOps pipelines.</p>
-</li>
-</ol>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">The Pillar</th>
+<th class="tableblock halign-left valign-top">The Shadow AI Problem</th>
+<th class="tableblock halign-left valign-top">The Factory Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>The Velocity Tier</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Initialization Latency: Waiting 15 minutes for a model to download over the network before a pod becomes "Ready".</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boot-from-Registry (OCI Modelcars): By packaging models as OCI images, you leverage the cluster&#8217;s native container runtime (CRI-O) cache. Scaling from 1 to 50 replicas takes seconds, not hours, because the data layers are already on the node.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>The Persistence Tier</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S3 Ping-Ponging: Constantly uploading and downloading intermediate datasets between tasks causes severe latency and high cloud costs.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dual-Storage Pipelines: OpenShift AI 3.3 introduces a hybrid architecture. We use S3 strictly as the permanent archive for logs/artifacts, paired with high-speed Persistent Volume Claims (PVCs) for ephemeral workspaces. Data moves directly via the local cluster disk.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>The Abstraction Tier</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fragile Governance: Hardcoded AWS keys in Jupyter notebooks and manual UI configuration.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kubernetes-Native Abstraction: We utilize the Connections API to inject standard URIs (s3://, pvc://, oci://) via Kubernetes Secrets. Your entire data foundation is managed by GitOps (e.g., Argo CD), ensuring perfect environment parity.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -532,15 +486,11 @@
 </td>
 <td class="content">
 <div class="title">The Shift in Mindset</div>
-<div class="paragraph">
-<p>We are stopping the practice of treating models like "files." In OpenShift AI 3.3, we treat models and pipelines like <strong>software artifacts</strong>—versioned, immutable, and natively integrated into Kubernetes.</p>
-</div>
+We are stopping the practice of treating models like loose "files." In the industrialized AI Factory, we treat models, datasets, and pipelines like software artifacts—versioned, immutable, and natively integrated into the Kubernetes control plane.
+Your mission is to build the Data Supply Chain. In the next sections, we will architect the highway, secure the vault, and automate deployment using provided scripts.
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p><strong>Ready to architect the solution? Let&#8217;s examine the blueprint.</strong></p>
 </div>
 </div>
 </div>
