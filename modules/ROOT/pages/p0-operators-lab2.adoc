@@ -1,2 +1,2 @@
 :navtitle: Operators — DataScienceCluster Configuration
-include::rhoai3-operators:ROOT:lab3-dsc.adoc[]
+include::rhoai3-operators:chapter1:lab3-dsc.adoc[]

@@ -1,2 +1,2 @@
 :navtitle: Operators — Architecture & data flow
-include::rhoai3-operators:ROOT:architecture.adoc[]
+include::rhoai3-operators:chapter1:architecture.adoc[]

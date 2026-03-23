@@ -1,2 +1,2 @@
 :navtitle: Operators — Summary
-include::rhoai3-operators:ROOT:summary.adoc[]
+include::rhoai3-operators:chapter1:summary.adoc[]

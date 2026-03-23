@@ -1,2 +1,2 @@
 :navtitle: Operators — Assembling the AI Engine Room
-include::rhoai3-operators:ROOT:lab0.adoc[]
+include::rhoai3-operators:chapter1:lab0.adoc[]
