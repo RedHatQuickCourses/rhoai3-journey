@@ -10,6 +10,8 @@ content:
   sources:
   # Journey map and phase overview (this repo)
   - url: ./
+  # Phase 0: Operators
+  - url: https://github.com/RedHatQuickCourses/rhoai3-operators.git
   # Phase 1: Foundation
   - url: https://github.com/RedHatQuickCourses/rhoai3-storage.git
   - url: https://github.com/RedHatQuickCourses/rhoai3-registry.git

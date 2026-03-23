@@ -2,4 +2,4 @@ name: rhoai3-journey
 title: Red Hat AI 3x Foundations for Scalable AI
 version: 1
 nav:
-- modules/ROOT/nav.adoc
+- modules/ROOT/nav2.adoc

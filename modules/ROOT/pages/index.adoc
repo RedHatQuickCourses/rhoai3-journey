@@ -6,7 +6,7 @@
 [.lead]
 *One capability. One course. One clear outcome.*
 
-Welcome to the journey of building an **Industrialized AI** token generation platform. 
+Welcome to the journey of building a scalable AI generation engine. 
 
 In this series, we deliberately opted for business value and simplified deployment over exhaustive technical depth. By the time you finish, you won't just know what the buttons do; you will have reverse-engineered a working, production-grade token utility.
 
