@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Red Hat AI 3x Foundations for Scalable AI</title>
+    <title>Architecture &amp; Strategy: The MaaS Operator Fleet :: Red Hat AI 3x Foundations for Scalable AI</title>
     <link rel="prev" href="p0-operators-home.html">
     <link rel="next" href="p0-operators-lab.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -434,8 +434,162 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Architecture &amp; Strategy: The MaaS Operator Fleet</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p>You cannot just click "Install" and expect magic. A factory requires an assembly line.</p>
+</div>
 <div class="paragraph">
-<p>Unresolved include directive in modules/ROOT/pages/p0-operators-arch.adoc - include::rhoai3-operators:ROOT:architecture.adoc[]</p>
+<p>In the previous module, we identified the distinct Operators required to build a Models-as-a-Service (MaaS) platform. However, Operators in OpenShift AI are not standalone, isolated applications; they are deeply intertwined controllers that rely on one another.</p>
+</div>
+<div class="paragraph">
+<p>This module combines the Architecture (where components live and how they communicate) with the Strategy (the strict order of operations required to activate them).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_strategy_order_of_operations"><a class="anchor" href="#_the_strategy_order_of_operations"></a>The Strategy: Order of Operations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Building the MaaS foundation is a sequence of unlocking capabilities. Each Operator lays the groundwork for the next layer up the stack.</p>
+</div>
+<div class="paragraph">
+<p>To avoid race conditions and deployment errors, follow a similar order of operations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Discovery (NFD):</strong> The cluster must inspect the bare metal or cloud instances.</p>
+</li>
+<li>
+<p><strong>Accelerators (Hardware Operators):</strong> The cluster must load drivers for the discovered hardware.</p>
+</li>
+<li>
+<p><strong>Networking &amp; Security (Cert-Manager &amp; Connectivity Link):</strong> The cluster must establish secure ingress routing and authorization gateways.</p>
+</li>
+<li>
+<p><strong>Workload Coordination (LeaderWorkerSet &amp; Kueue):</strong> The cluster must prepare to handle distributed pod architectures.</p>
+</li>
+<li>
+<p><strong>The Meta-Orchestrator (OpenShift AI):</strong> The overarching AI platform is deployed and configured to consume the underlying infrastructure.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_architecture_namespaces_and_custom_resources"><a class="anchor" href="#_the_architecture_namespaces_and_custom_resources"></a>The Architecture: Namespaces and Custom Resources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To activate an Operator&#8217;s logic, you must supply it a configuration file called a Custom Resource (CR). The Architecture of your fleet is defined by which CRs you create and the specific namespaces they target.</p>
+</div>
+<div class="sect2">
+<h3 id="_1_the_hardware_layer"><a class="anchor" href="#_1_the_hardware_layer"></a>1. The Hardware Layer</h3>
+<div class="paragraph">
+<p><strong>Node Feature Discovery (NFD) Operator</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Namespace: openshift-nfd</p>
+</li>
+<li>
+<p>The Activation: You deploy a NodeFeatureDiscovery CR.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>How it works: This CR spins up daemonsets across your worker nodes to scan their PCIe buses and CPU flags. When it finds a GPU, it adds a specific Kubernetes label (e.g., feature.node.kubernetes.io/pci-10de.present=true) to that specific node.</p>
+</div>
+<div class="paragraph">
+<p><strong>NVIDIA GPU Operator</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Namespace: nvidia-gpu-operator</p>
+</li>
+<li>
+<p>The Activation: You deploy a ClusterPolicy CR.</p>
+</li>
+<li>
+<p>How it works: The GPU operator watches for NFD&#8217;s node labels. When the ClusterPolicy is applied, the Operator injects the specific NVIDIA driver daemonsets, the container runtime toolkit, and the device plugins onto those labeled nodes. This is exactly why NFD must come first.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_the_serving_governance_layer"><a class="anchor" href="#_2_the_serving_governance_layer"></a>2. The Serving &amp; Governance Layer</h3>
+<div class="paragraph">
+<p>To prevent "Denial of Wallet" attacks—where a threat actor or runaway script spams your expensive GPU-backed endpoints with massive inference requests—we must wrap the AI models in strict networking policies before they are deployed.</p>
+</div>
+<div class="paragraph">
+<p><strong>Cert-manager Operator</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Namespace: cert-manager</p>
+</li>
+<li>
+<p>How it works: Automatically provisions and rotates TLS certificates. KServe requires this to secure the internal gRPC and REST endpoints of your model serving pods.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Red Hat Connectivity Link Operator (Kuadrant)</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Namespace: kuadrant-system</p>
+</li>
+<li>
+<p>The Activation: You deploy a Kuadrant CR.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>How it works: This implements the Kubernetes Gateway API and Kuadrant authorization. When external traffic enters the cluster, this layer intercepts it, validates the user&#8217;s JSON Web Token (JWT), and enforces rate limits before the request ever reaches the OpenShift AI model controller.</p>
+</div>
+<div class="paragraph">
+<p><strong>LeaderWorkerSet (LWS) Operator</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Namespace: lws-system</p>
+</li>
+<li>
+<p>How it works: Large models (like Llama-3-70B) cannot fit on a single GPU. LWS allows high-performance runtimes like llm-d to split the model across multiple pods and GPUs. It designates one "Leader" pod to receive the API request and multiple "Worker" pods to execute the distributed tensor calculations in parallel.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_the_orchestration_layer"><a class="anchor" href="#_3_the_orchestration_layer"></a>3. The Orchestration Layer</h3>
+<div class="paragraph">
+<p><strong>Red Hat OpenShift AI Operator</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Namespace (Control Plane): redhat-ods-operator</p>
+</li>
+<li>
+<p>Namespace (Data Plane): redhat-ods-applications</p>
+</li>
+<li>
+<p>The Activation: You deploy the DataScienceCluster (DSC) CR.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>How it works: The DSC is the master switchboard. It contains a list of platform components (like kserve, dashboard, modelregistry). By setting a component&#8217;s management state to Managed inside the DSC YAML file, the OpenShift AI Operator automatically reaches out and configures everything needed in the data plane namespace.</p>
+</div>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="p0-operators-home.html">Why operators &amp; the dependency matrix</a></span>
