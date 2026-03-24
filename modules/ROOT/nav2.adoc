@@ -5,10 +5,10 @@
 * 0: Operator foundation
 ** xref:p0-operators-home.adoc[Operators - OpenShift Ecosystem ]
 *** xref:p0-operators-arch.adoc[Architecture and Strategy]
-*** xref:p0-operators-term.adoc[Lab 0 — Operators]
-*** xref:p0-operators-lab0.adoc[Lab 1 — OpenShift AI & NFD]
+//*** xref:p0-operators-term.adoc[Lab 0 — Operators]
+*** xref:p0-operators-lab0.adoc[Lab 1 — Installing Operators]
 // *** xref:p0-operators-lab2.adoc[Lab 2 — cert-manager & Connectivity Link]
-*** xref:p0-operators-lab2.adoc[Lab 2 — DataScienceCluster]
+*** xref:p0-operators-lab2.adoc[Lab 2 — Configuire the Cluster]
 // *** xref:p0-operators-maas.adoc[Lab 4 — Leader Worker Set & MaaS readiness]
 *** xref:p0-operators-other.adoc[Summary]
 
