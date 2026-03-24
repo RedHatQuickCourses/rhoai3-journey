@@ -436,7 +436,7 @@
 <p><strong>Welcome to the journey of building a scalable AI generation engine.</strong></p>
 </div>
 <div class="paragraph">
-<p>In this series, we deliberately opted for business value and simplified deployment over exhaustive technical depth. By the time you finish, you won&#8217;t just know what the buttons do; you will have reverse-engineered a working, production-grade token utility.</p>
+<p>In this series, we deliberately opted for business value and simplified deployment over technical depth. By the time you finish, you won&#8217;t just know what the buttons do; you will have deployed and engineered a working, scalable token utility.</p>
 </div>
 </div>
 </div>
@@ -450,7 +450,7 @@
 <p>This journey assumes you are a platform engineer starting with a greenfield Red Hat OpenShift AI environment equipped with multiple GPUs. Your business mandate is to flip that narrative: to move from consuming tokens to generating them.</p>
 </div>
 <div class="paragraph">
-<p>By treating RHOAI as the AI plaform for an on-premise industrial plant, we focus on saturating your hardware for maximum ROI. We are building a secure, governed foundation that can support everything from basic inference to complex Compound AI Systems and Agentic workflows.</p>
+<p>By treating RHOAI as the AI plaform for an on-premise industrial token plant, we focus on saturating your hardware for maximum ROI. We are building a secure, governed foundation that can support everything from basic inference to complex Compound AI Systems and Agentic workflows.</p>
 </div>
 </div>
 </div>
@@ -476,23 +476,29 @@
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Phase 0:</strong> OpenShift Operator Ecosystem</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Installation and configuiration</strong> Before you can use OpenShift AI, we must install the dependant and Openshift AI Operators. Once the operators are install, we&#8217;ll configuire the policies, configurations, and settings to insure OpenShift AI is ready for the journey to come.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Phase 1:</strong> Assembling the Factory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Installation and configuiration</strong> Before you can use OpenShift AI, we must install the dependent infrastructure operators and the core OpenShift AI Operator. Once the operators are installed, we’ll configure the cluster policies and settings to ensure the platform is fully ready for the journey to come.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Red Hat OpenShift AI Operator, Node Feature Discovery (NFD) Operator, NVIDIA GPU Operator, cert-manager Operator, Leader Worker Set Operator, Red Hat Connectivity Link Operator, Kueue Operator (RHBOK),</p>
+<p class="tableblock">Self-Review: Job-set-operator, openshift-custom-metrics-autoscaler-operator, SR-IOV Operator, OpenTelemetry, Tempo, Cluster Observability Operator.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Phase 1:</strong> Assembling the Factory</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Configuring and connecting resources.</strong> We start by abstracting the infrastructure so GPUs can be shared and queued efficiently. Then, we establish the model inventory, connecting storage solutions and setting up the databases (like MySQL 8+ or Postgres) required to run the Model Registry.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Hardware Profiles, Kueue, Model Registry, Model Catalog, Data Connections, Model Storage</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Phase 2:</strong> Token Production Engine</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Phase 2:</strong> Token Production Engine</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Single-model high-throughput serving.</strong> With the foundation set, we focus on the engine room. You will deploy your selected models for inference using vLLM. This phase also introduces cost-optimization strategies, such as using LLM Compressor to serve lower precision models to save resources.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">vLLM, LLM Compressor, Inference Services</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Phase 3:</strong> Scaling the Utility</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Phase 3:</strong> Scaling the Utility</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Distributed Inference, MaaS, and Observability.</strong> Here, we scale the operation. We move to distributed inference using llm-d to handle massive workloads. We also expose these models via Model-as-a-Service (MaaS) API endpoints for internal consumption, and implement observability metrics to monitor the health and throughput of the token factory.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">llm-d, MaaS APIs, AI Gateway, Prometheus/Grafana</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Phase 4:</strong> Governance &amp; Compound Systems</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Locking down models and enabling Agents.</strong> The final step is validating the production line. We lock down the served models using TrustyAI and Guardrails to ensure safety, fairness, and compliance. This governed environment becomes the trusted launchpad for developing autonomous Agentic applications and Compound AI Systems.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TrustyAI, Guardrails</p></td>
 </tr>
 </tbody>
 </table>
@@ -508,8 +514,10 @@
 <p>Follow the phases sequentially to build your platform from the ground up, or jump directly into a specific module if you are looking to deploy a targeted capability.</p>
 </div>
 <div class="paragraph">
-<p><strong>Ready to start building?</strong> Proceed to <strong> #1: Assembling the Factory</strong>.
-*Need more details on RHOAI installation or Operator setup Proceed to #0: Operators and Ecosystems</p>
+<p><strong>Ready to start building?</strong> Proceed to <strong> #1: Assembling the Factory</strong>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Need more details on RHOAI installation or Operator setup?</strong> Proceed to <strong> #0: Operators and Ecosystems</strong>.</p>
 </div>
 </div>
 </div>
