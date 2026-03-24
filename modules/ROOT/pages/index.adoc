@@ -6,7 +6,7 @@
 [.lead]
 *Welcome to the journey of building a scalable AI generation engine.*
 
-In this series, we deliberately opted for business value and simplified deployment over exhaustive technical depth. By the time you finish, you won't just know what the buttons do; you will have reverse-engineered a working, production-grade token utility.
+In this series, we deliberately opted for business value and simplified deployment over technical depth. By the time you finish, you won't just know what the buttons do; you will have deployed and engineered a working, scalable token utility.
 
 == Why This Approach?
 
@@ -14,7 +14,7 @@ Currently, the market often forces enterprises into a "token-consumption" modelâ
 
 This journey assumes you are a platform engineer starting with a greenfield Red Hat OpenShift AI environment equipped with multiple GPUs. Your business mandate is to flip that narrative: to move from consuming tokens to generating them. 
 
-By treating RHOAI as the AI plaform for an on-premise industrial plant, we focus on saturating your hardware for maximum ROI. We are building a secure, governed foundation that can support everything from basic inference to complex Compound AI Systems and Agentic workflows.
+By treating RHOAI as the AI plaform for an on-premise industrial token plant, we focus on saturating your hardware for maximum ROI. We are building a secure, governed foundation that can support everything from basic inference to complex Compound AI Systems and Agentic workflows.
 
 == The Journey Phases
 
@@ -25,7 +25,10 @@ This modular path is designed to reflect the actual experience of standing up a 
 | Phase | Focus & Outcome | Key Components
 
 | *Phase 0:* OpenShift Operator Ecosystem
-| **Installation and configuiration** Before you can use OpenShift AI, we must install the dependant and Openshift AI Operators. Once the operators are install, we'll configuire the policies, configurations, and settings to insure OpenShift AI is ready for the journey to come. 
+| **Installation and configuiration** Before you can use OpenShift AI, we must install the dependent infrastructure operators and the core OpenShift AI Operator. Once the operators are installed, weâ€™ll configure the cluster policies and settings to ensure the platform is fully ready for the journey to come.
+| Red Hat OpenShift AI Operator, Node Feature Discovery (NFD) Operator, NVIDIA GPU Operator, cert-manager Operator, Leader Worker Set Operator, Red Hat Connectivity Link Operator, Kueue Operator (RHBOK),
+
+Self-Review: Job-set-operator, openshift-custom-metrics-autoscaler-operator, SR-IOV Operator, OpenTelemetry, Tempo, Cluster Observability Operator.
 
 | *Phase 1:* Assembling the Factory
 | **Configuring and connecting resources.** We start by abstracting the infrastructure so GPUs can be shared and queued efficiently. Then, we establish the model inventory, connecting storage solutions and setting up the databases (like MySQL 8+ or Postgres) required to run the Model Registry. 
@@ -51,4 +54,6 @@ This is an applied learning path. We provide the context needed to make informed
 Follow the phases sequentially to build your platform from the ground up, or jump directly into a specific module if you are looking to deploy a targeted capability.
 
 *Ready to start building?* Proceed to ** #1: Assembling the Factory**.
-*Need more details on RHOAI installation or Operator setup Proceed to #0: Operators and Ecosystems
+
+
+*Need more details on RHOAI installation or Operator setup?* Proceed to ** #0: Operators and Ecosystems**.
