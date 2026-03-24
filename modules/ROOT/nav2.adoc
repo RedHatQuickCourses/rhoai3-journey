@@ -3,14 +3,14 @@
 * xref:index.adoc[Start here — journey map & outcomes]
 
 * 0: Operator foundation
-** xref:p0-operators-home.adoc[Why operators & the dependency matrix]
-*** xref:p0-operators-arch.adoc[Architecture: OLM, meta-operator, planes]
-*** xref:p0-operators-term.adoc[Lab 0 — Operators
-*** xref:p0-operators-lab.adoc[Lab 1 — OpenShift AI & NFD]
+** xref:p0-operators-home.adoc[Operators - OpenShift Ecosystem ]
+*** xref:p0-operators-arch.adoc[Architecture and Strategy]
+*** xref:p0-operators-term.adoc[Lab 0 — Operators]
+*** xref:p0-operators-lab0.adoc[Lab 1 — OpenShift AI & NFD]
 // *** xref:p0-operators-lab2.adoc[Lab 2 — cert-manager & Connectivity Link]
 *** xref:p0-operators-lab2.adoc[Lab 2 — DataScienceCluster]
 // *** xref:p0-operators-maas.adoc[Lab 4 — Leader Worker Set & MaaS readiness]
-*** xref:p0-operators-other.adoc[CSummary]
+*** xref:p0-operators-other.adoc[Summary]
 
 * 1: Assembling the Factory (configure)
 ** xref:phase1.adoc[Phase overview — supply chain & machinery]
