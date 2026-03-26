@@ -1,14 +1,14 @@
 // Learner-oriented navigation (v2). Same xrefs as nav.adoc; labels emphasize outcomes and journey language.
 // To use this file, point antora.yml nav at modules/ROOT/nav2.adoc (or merge entries you prefer into nav.adoc).
-* xref:index.adoc[Start here — journey map & outcomes]
+* xref:index.adoc[Overview of the Journey]
 
-* 0: Operator foundation
+* 0: Operator Ecosystem
 ** xref:p0-operators-home.adoc[Operators - OpenShift Ecosystem ]
 *** xref:p0-operators-arch.adoc[Architecture and Strategy]
 //*** xref:p0-operators-term.adoc[Lab 0 — Operators]
-*** xref:p0-operators-lab0.adoc[Lab 1 — Installing Operators]
+*** xref:p0-operators-lab0.adoc[Hands-on — Installing Operators]
 // *** xref:p0-operators-lab2.adoc[Lab 2 — cert-manager & Connectivity Link]
-*** xref:p0-operators-lab2.adoc[Lab 2 — Configuire the Cluster]
+*** xref:p0-operators-lab2.adoc[Hands-on— Configuire the Cluster]
 // *** xref:p0-operators-maas.adoc[Lab 4 — Leader Worker Set & MaaS readiness]
 *** xref:p0-operators-other.adoc[Summary]
 
@@ -17,7 +17,7 @@
 ** xref:p1-storage-index.adoc[Data & storage — introduction]
 *** xref:p1-storage-section1.adoc[Architecture — PVCs, classes & data paths]
 *** xref:p1-storage-section2.adoc[Data connections & credentials]
-*** xref:p1-storage-lab.adoc[Hands-on — storage lab exercises]
+*** xref:p1-storage-lab.adoc[Hands-on — Storage lab exercises]
 *** xref:p1-storage-section5.adoc[Field notes — production realities]
 ** xref:p1-registry-home.adoc[Model registry — introduction]
 *** xref:p1-registry-section1.adoc[Architecture — registry on the platform]
