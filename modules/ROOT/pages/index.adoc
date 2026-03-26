@@ -6,7 +6,7 @@
 [.lead]
 *Welcome to the journey of building a scalable AI generation engine.*
 
-In this series, we deliberately opted for business value and simplified deployment over technical depth. By the time you finish, you won't just know what the buttons do; you will have deployed and engineered a working, scalable token utility.
+In this series, we deliberately opted for business value and simplified deployment over technical depth. By the time you finish, you won't just know what the buttons do; you will have deployed and engineered a working, scalable token generating platform.  
 
 == Why This Approach?
 
@@ -14,11 +14,11 @@ Currently, the market often forces enterprises into a "token-consumption" model�
 
 This journey assumes you are a platform engineer starting with a greenfield Red Hat OpenShift AI environment equipped with multiple GPUs. Your business mandate is to flip that narrative: to move from consuming tokens to generating them. 
 
-By treating RHOAI as the AI plaform for an on-premise industrial token plant, we focus on saturating your hardware for maximum ROI. We are building a secure, governed foundation that can support everything from basic inference to complex Compound AI Systems and Agentic workflows.
+By treating RHOAI as the AI plaform for an on-premise industrial token plant, we focus on saturating GPU hardware for maximum ROI. We are building a secure, governed foundation that can support everything from basic inference to complex Compound AI Systems and Agentic workflows.
 
 == The Journey Phases
 
-This modular path is designed to reflect the actual experience of standing up a generative token utility from scratch. 
+This modular path provided an opinated process of building a generative token utility from the ground up. Each phase—and its constituent modules—functions as a standalone lesson, focusing on a specific RHOAI capability and its command-line deployment and configuration.
 
 [cols="1,3,2"]
 |===
@@ -26,9 +26,9 @@ This modular path is designed to reflect the actual experience of standing up a 
 
 | *Phase 0:* OpenShift Operator Ecosystem
 | **Installation and configuiration** Before you can use OpenShift AI, we must install the dependent infrastructure operators and the core OpenShift AI Operator. Once the operators are installed, we’ll configure the cluster policies and settings to ensure the platform is fully ready for the journey to come.
-| Red Hat OpenShift AI Operator, Node Feature Discovery (NFD) Operator, NVIDIA GPU Operator, cert-manager Operator, Leader Worker Set Operator, Red Hat Connectivity Link Operator, Kueue Operator (RHBOK),
+| *Covered:* Red Hat OpenShift AI Operator, Node Feature Discovery (NFD) Operator, NVIDIA GPU Operator, cert-manager Operator, Leader Worker Set Operator, Red Hat Connectivity Link Operator, Kueue Operator (RHBOK),
 
-Self-Review: Job-set-operator, openshift-custom-metrics-autoscaler-operator, SR-IOV Operator, OpenTelemetry, Tempo, Cluster Observability Operator.
+*Self-study:* Job-set-operator, openshift-custom-metrics-autoscaler-operator, SR-IOV Operator, OpenTelemetry, Tempo, Cluster Observability Operator.
 
 | *Phase 1:* Assembling the Factory
 | **Configuring and connecting resources.** We start by abstracting the infrastructure so GPUs can be shared and queued efficiently. Then, we establish the model inventory, connecting storage solutions and setting up the databases (like MySQL 8+ or Postgres) required to run the Model Registry. 
