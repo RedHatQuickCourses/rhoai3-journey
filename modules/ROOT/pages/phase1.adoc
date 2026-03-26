@@ -6,7 +6,7 @@
 [.lead]
 *Before you can manufacture intelligence, you have to organize the supply chain and calibrate the machinery.*
 
-You are starting with a greenfield Red Hat OpenShift AI environment equipped with multiple GPUs. In a traditional, experimental AI setup, resources are often hoarded by individual teams, data is scattered, and "Shadow AI" thrives without central governance. 
+In a traditional, experimental AI setup, resources are often hoarded by individual teams, data is scattered, and "Shadow AI" thrives without central governance. 
 
 In **Phase 1**, your mandate as a platform engineer is to build a highly efficient, cost-effective token generation platform. We achieve this by locking down the raw materials (Data and Models) and industrializing the machinery (Compute and GPUs).
 

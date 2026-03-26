@@ -31,7 +31,7 @@ This modular path provided an opinated process of building a generative token ut
 *Self-study:* Job-set-operator, openshift-custom-metrics-autoscaler-operator, SR-IOV Operator, OpenTelemetry, Tempo, Cluster Observability Operator.
 
 | *Phase 1:* Assembling the Factory
-| **Configuring and connecting resources.** We start by abstracting the infrastructure so GPUs can be shared and queued efficiently. Then, we establish the model inventory, connecting storage solutions and setting up the databases (like MySQL 8+ or Postgres) required to run the Model Registry. 
+| **Configuring and connecting resources.** We start by establishing the model inventory, connecting storage solutions and setting up the databases (like MySQL 8+ or Postgres) required to run the Model Registry. Then, abstracting the infrastructure so GPUs can be shared and queued efficiently.
 | Hardware Profiles, Kueue, Model Registry, Model Catalog, Data Connections, Model Storage
 
 | *Phase 2:* Token Production Engine
