@@ -1,2 +1,2 @@
 :navtitle: Operators — Home
-include::rhoai3-operators:ROOT:index.adoc[]
+include::rhoai3-operators:chapter1:intro.adoc[]
