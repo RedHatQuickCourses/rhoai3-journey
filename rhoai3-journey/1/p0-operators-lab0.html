@@ -690,11 +690,20 @@ EOF</code></pre>
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get csv -n nvidia-gpu-operator</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><em>Do not proceed to Part 3 until the CSV phase shows as <code>Succeeded</code>.</em></p>
-</div>
 </li>
 </ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Do not proceed until the CSV phase shows as <code>Succeeded</code>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -996,30 +1005,23 @@ EOF</code></pre>
 <div class="sect2">
 <h3 id="_installing_the_operator_3"><a class="anchor" href="#_installing_the_operator_3"></a>Installing the Operator</h3>
 <div class="sect3">
-<h4 id="_create_the_dedicated_namespace_3"><a class="anchor" href="#_create_the_dedicated_namespace_3"></a>Create the Dedicated Namespace</h4>
+<h4 id="_switch_to_the_global_operators_namespace"><a class="anchor" href="#_switch_to_the_global_operators_namespace"></a>Switch to the Global Operators Namespace</h4>
 <div class="paragraph">
-<p>Red Hat recommends installing the Connectivity Link operator and its subsequent Kuadrant resources into a dedicated <code>kuadrant-system</code> namespace.</p>
+<p>Red Hat&#8217;s default namespace for cluster-wide operators is <code>openshift-operators</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc create namespace kuadrant-system</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc project openshift-operators</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p><strong>[IMPORTANT]</strong></p>
 </div>
-<div class="sect3">
-<h4 id="_create_the_operatorgroup_5"><a class="anchor" href="#_create_the_operatorgroup_5"></a>Create the OperatorGroup</h4>
-<div class="listingblock">
+<div class="exampleblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF | oc create -f -
-apiVersion: operators.coreos.com/v1
-kind: OperatorGroup
-metadata:
-  generateName: rhcl-operator-
-  namespace: kuadrant-system
-spec:
-  targetNamespaces:
-  - kuadrant-system
-EOF</code></pre>
+<div class="paragraph">
+<p><strong>Do not create an OperatorGroup.</strong> Because <code>openshift-operators</code> is a default system namespace, OpenShift has already provisioned a global <code>OperatorGroup</code> for it. Creating a second one will cause the Operator Lifecycle Manager (OLM) to freeze the installation.</p>
+</div>
 </div>
 </div>
 </div>
@@ -1039,7 +1041,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: rhcl-operator
-  namespace: kuadrant-system
+  namespace: openshift-operators
 spec:
   channel: "${CHANNEL}"
   installPlanApproval: Automatic
@@ -1060,7 +1062,7 @@ EOF</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get csv -n kuadrant-system</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get csv -n openshift-operators | grep rhcl</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1079,7 +1081,7 @@ apiVersion: kuadrant.io/v1beta1
 kind: Kuadrant
 metadata:
   name: kuadrant
-  namespace: kuadrant-system
+  namespace: openshift-operators
 spec: {}
 EOF</code></pre>
 </div>
@@ -1096,7 +1098,7 @@ EOF</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get pods -n kuadrant-system -w</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get pods -n openshift-operators -w</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1104,7 +1106,7 @@ EOF</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc wait kuadrant/kuadrant --for="condition=Ready=true" -n kuadrant-system --timeout=300s</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc wait kuadrant/kuadrant --for="condition=Ready=true" -n openshift-operators --timeout=300s</code></pre>
 </div>
 </div>
 <hr>
@@ -1122,7 +1124,7 @@ EOF</code></pre>
 <div class="sect2">
 <h3 id="_installing_the_operator_4"><a class="anchor" href="#_installing_the_operator_4"></a>Installing the Operator</h3>
 <div class="sect3">
-<h4 id="_create_the_dedicated_namespace_4"><a class="anchor" href="#_create_the_dedicated_namespace_4"></a>Create the Dedicated Namespace</h4>
+<h4 id="_create_the_dedicated_namespace_3"><a class="anchor" href="#_create_the_dedicated_namespace_3"></a>Create the Dedicated Namespace</h4>
 <div class="paragraph">
 <p>Red Hat&#8217;s official tracking namespace for the Kueue controller is <code>openshift-kueue-operator</code>.</p>
 </div>
@@ -1205,8 +1207,17 @@ apiVersion: kueue.openshift.io/v1
 kind: Kueue
 metadata:
   name: cluster
-  namespace: openshift-kueue-operator
-spec: {}
+  labels:
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: kueue-operator
+spec:
+  config:
+    integrations:
+      frameworks:
+        - BatchJob
+  logLevel: Normal
+  operatorLogLevel: Normal
+  managementState: Managed
 EOF</code></pre>
 </div>
 </div>
@@ -1231,9 +1242,9 @@ EOF</code></pre>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_install_the_meta_orchestrator_openshift_ai"><a class="anchor" href="#_install_the_meta_orchestrator_openshift_ai"></a>Install the Meta-Orchestrator (OpenShift AI)</h3>
+<h3 id="_install_openshift_ai_operator"><a class="anchor" href="#_install_openshift_ai_operator"></a>Install OpenShift AI Operator</h3>
 <div class="paragraph">
-<p>This guide walks through deploying the core Red Hat OpenShift AI Operator. This is the final step in the prerequisites phase for building a Models-as-a-Service (MaaS) solution.</p>
+<p>This section walks through deploying the core Red Hat OpenShift AI Operator. This is the final step in the prerequisites phase for building a Models-as-a-Service (MaaS) solution.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -1251,7 +1262,7 @@ This guide intentionally stops after installing the Operator. It does <strong>no
 <div class="sect2">
 <h3 id="_installing_the_operator_5"><a class="anchor" href="#_installing_the_operator_5"></a>Installing the Operator</h3>
 <div class="sect3">
-<h4 id="_create_the_dedicated_namespace_5"><a class="anchor" href="#_create_the_dedicated_namespace_5"></a>Create the Dedicated Namespace</h4>
+<h4 id="_create_the_dedicated_namespace_4"><a class="anchor" href="#_create_the_dedicated_namespace_4"></a>Create the Dedicated Namespace</h4>
 <div class="paragraph">
 <p>Red Hat OpenShift AI requires its operator controller to be installed in the <code>redhat-ods-operator</code> namespace.</p>
 </div>
@@ -1262,7 +1273,7 @@ This guide intentionally stops after installing the Operator. It does <strong>no
 </div>
 </div>
 <div class="sect3">
-<h4 id="_create_the_operatorgroup_6"><a class="anchor" href="#_create_the_operatorgroup_6"></a>Create the OperatorGroup</h4>
+<h4 id="_create_the_operatorgroup_5"><a class="anchor" href="#_create_the_operatorgroup_5"></a>Create the OperatorGroup</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF | oc create -f -

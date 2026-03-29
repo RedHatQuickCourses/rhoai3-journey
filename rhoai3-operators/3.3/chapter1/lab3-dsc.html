@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Activating OpenShift AI: DSCI and DataScienceCluster Configuration :: Red Hat AI 3x Foundations for Scalable AI</title>
+    <title>Activating DSCI and DataScienceCluster :: Red Hat AI 3x Foundations for Scalable AI</title>
     <link rel="prev" href="lab0.html">
     <link rel="next" href="summary.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -47,16 +47,16 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="architecture.html">Architecture &amp; data flow</a>
+    <a class="nav-link" href="architecture.html">Operator architecture</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="lab0.html">Lab 1 — Operator installation</a>
+    <a class="nav-link" href="lab0.html">Hands-on — Operator installation</a>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="lab3-dsc.html">Lab 2 — DataScienceCluster</a>
+    <a class="nav-link" href="lab3-dsc.html">Hands-on — DataScienceCluster</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="summary.html">Summary &amp; troubleshooting</a>
+    <a class="nav-link" href="summary.html">Summary</a>
   </li>
 </ul>
   </li>
@@ -169,7 +169,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">OpenShift Ecosystem & RHOAI 3x Control Plane</a></li>
-    <li><a href="lab3-dsc.html">Lab 2 — DataScienceCluster</a></li>
+    <li><a href="lab3-dsc.html">Hands-on — DataScienceCluster</a></li>
   </ul>
 </nav>
 </div>
@@ -178,7 +178,7 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Activating OpenShift AI: DSCI and DataScienceCluster Configuration</h1>
+<h1 class="page">Activating DSCI and DataScienceCluster</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -187,7 +187,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_part_1_understanding_dscinitialization_dsci"><a class="anchor" href="#_part_1_understanding_dscinitialization_dsci"></a>Part 1: Understanding DSCInitialization (DSCI)</h2>
+<h2 id="_understanding_dscinitialization_dsci"><a class="anchor" href="#_understanding_dscinitialization_dsci"></a>Understanding DSCInitialization (DSCI)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When the RHOAI Operator spins up, it automatically creates a default <code>DSCInitialization</code> resource named <code>default-dsci</code>.</p>
@@ -219,26 +219,54 @@
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_configuring_the_datasciencecluster_dsc"><a class="anchor" href="#_configuring_the_datasciencecluster_dsc"></a>Configuring the DataScienceCluster (DSC)</h3>
-<div class="paragraph">
-<p>The <code>DataScienceCluster</code> is the master toggle switch for your AI platform. By default, the operator might create a basic one, but for a true Models-as-a-Service (MaaS) architecture leveraging the advanced operators we installed earlier, we need to apply a highly specific configuration.</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_the_datasciencecluster_dsc"><a class="anchor" href="#_configuring_the_datasciencecluster_dsc"></a>Configuring the DataScienceCluster (DSC)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>DataScienceCluster</code> is the master toggle switch for your AI platform. By default, the operator creates a basic one, but for a true Models-as-a-Service (MaaS) architecture leveraging the advanced operators we installed earlier, we need to apply a highly specific configuration to update the existing cluster state.</p>
 </div>
 <div class="sect2">
 <h3 id="_the_maas_configuration_strategy"><a class="anchor" href="#_the_maas_configuration_strategy"></a>The MaaS Configuration Strategy</h3>
 <div class="paragraph">
-<p>For a modern MaaS stack, we need to ensure the following components are strictly managed:
-* <strong>KServe:</strong> The core model-serving engine.
-* <strong>CodeFlare &amp; Kueue:</strong> For distributed workload and job queue management.
-* <strong>Dashboard:</strong> The UI for your data scientists.
-* <strong>Ray:</strong> For distributed compute execution.</p>
+<p>For a modern MaaS stack in OpenShift AI 3.3, we need to ensure the following components are strictly managed to match our infrastructure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>KServe:</strong> The core model-serving engine. We set <code>modelsAsService</code> to Managed to activate our Kuadrant integration, and use <code>Headless</code> raw deployment for modern routing without Serverless.</p>
+</li>
+<li>
+<p><strong>Kueue:</strong> Set to <code>Unmanaged</code>. <strong>Why?</strong> Because we manually installed the Red Hat build of Kueue via OLM in the previous section. This tells RHOAI to use our cluster-wide instance instead of deploying a conflicting internal one.</p>
+</li>
+<li>
+<p><strong>Dashboard:</strong> The UI for your data scientists.</p>
+</li>
+<li>
+<p><strong>Training Operator:</strong> Replaces legacy components for distributed compute execution and natively hooks into the LeaderWorkerSet operator we installed earlier.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_applying_the_maas_datasciencecluster"><a class="anchor" href="#_applying_the_maas_datasciencecluster"></a>Applying the MaaS DataScienceCluster</h3>
+<h3 id="_applying_the_maas_datasciencecluster_update"><a class="anchor" href="#_applying_the_maas_datasciencecluster_update"></a>Applying the MaaS DataScienceCluster Update</h3>
 <div class="paragraph">
-<p>This YAML configuration enables the required MaaS components while safely ignoring legacy or unused tools (like ModelMesh, which is typically for smaller, edge-scale models).</p>
+<p>Running this <code>oc apply</code> command will merge these new, production-ready settings into your existing <code>default-dsc</code> resource, activating the new features.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>DataScienceCluster</code> is a <strong>cluster-scoped</strong> resource. You do not need to switch to a specific namespace (like <code>redhat-ods-operator</code>) to run this command. You can apply it from anywhere in your CLI.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -256,29 +284,47 @@ spec:
     # 2. Modern Model Serving (MaaS Core)
     kserve:
       managementState: Managed
-      serving:
+      modelsAsService:
+        managementState: Removed
+      nim:
         managementState: Managed
-        name: knative-serving
+      rawDeploymentServiceConfig: Headless
 
-    # 3. Distributed Workload Management
-    codeflare:
+    # 3. Model Management &amp; Pipelines
+    modelregistry:
       managementState: Managed
+      registriesNamespace: rhoai-model-registries
+    aipipelines:
+      managementState: Managed
+
+    # 4. Distributed Workloads &amp; Training
     kueue:
-      managementState: Managed
+      defaultClusterQueueName: default
+      defaultLocalQueueName: default
+      managementState: Unmanaged
     ray:
       managementState: Managed
+    trainingoperator:
+      managementState: Managed
+    llamastackoperator:
+      managementState: Managed
 
-    # 4. Standard Developer Environments
+    # 5. Data Science Environments
     workbenches:
       managementState: Managed
+      workbenchNamespace: rhods-notebooks
 
-    # 5. Legacy/Optional Components (Set to Removed if unused to save resources)
-    modelmeshserving:
-      managementState: Removed
-    datasciencepipelines:
+    # 6. Additional Integrations
+    feastoperator:
       managementState: Managed
     trustyai:
+      eval:
+        lmeval:
+          permitCodeExecution: deny
+          permitOnline: deny
       managementState: Managed
+    mlflowoperator: {}
+    trainer: {}
 EOF</code></pre>
 </div>
 </div>
@@ -286,15 +332,15 @@ EOF</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_part_3_verification"><a class="anchor" href="#_part_3_verification"></a>Part 3: Verification</h2>
+<h2 id="_verification"><a class="anchor" href="#_verification"></a>Verification</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Applying the <code>DataScienceCluster</code> triggers the RHOAI operator to orchestrate a massive rollout across your cluster. It will create new namespaces (like <code>redhat-ods-applications</code>), configure the Service Mesh control plane, and spin up the KServe and Kuadrant integrations.</p>
+<p>Applying the updated <code>DataScienceCluster</code> triggers the RHOAI operator to orchestrate a rollout across your cluster. It will configure the Service Mesh control plane and spin up the KServe and Kuadrant integrations.</p>
 </div>
 <div class="sect2">
 <h3 id="_1_monitor_the_rollout"><a class="anchor" href="#_1_monitor_the_rollout"></a>1. Monitor the Rollout</h3>
 <div class="paragraph">
-<p>This process can take 5 to 10 minutes. Watch the status of the DataScienceCluster:</p>
+<p>This process can take a few minutes as the operator reconciles the new state. Watch the status of the DataScienceCluster:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -308,7 +354,7 @@ EOF</code></pre>
 <div class="sect2">
 <h3 id="_2_verify_the_rhoai_applications"><a class="anchor" href="#_2_verify_the_rhoai_applications"></a>2. Verify the RHOAI Applications</h3>
 <div class="paragraph">
-<p>Check the newly created applications namespace to ensure the core MaaS pods (Dashboard, KServe controller, CodeFlare) are running:</p>
+<p>Check the newly created applications namespace to ensure the core MaaS pods (Dashboard, KServe controller, etc.) are running:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -330,8 +376,8 @@ EOF</code></pre>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="lab0.html">Lab 1 — Operator installation</a></span>
-  <span class="next"><a href="summary.html">Summary &amp; troubleshooting</a></span>
+  <span class="prev"><a href="lab0.html">Hands-on — Operator installation</a></span>
+  <span class="next"><a href="summary.html">Summary</a></span>
 </nav>
 </article>
   </div>
