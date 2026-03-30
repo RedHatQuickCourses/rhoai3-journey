@@ -56,4 +56,4 @@ Follow the phases sequentially to build your platform from the ground up, or jum
 *Ready to start building?* Proceed to ** #1: Assembling the Factory**.
 
 
-*Need more details on RHOAI installation or Operator setup?* Proceed to ** #0: Operators and Ecosystems**.
+*Need more details on RHOAI installation or Operator setup* Proceed to ** #0: Operator Ecosystem**.
