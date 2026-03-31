@@ -486,7 +486,7 @@ spec:
       modelsAsService:
         managementState: Removed
       nim:
-        managementState: Managed
+        managementState: Removed
       rawDeploymentServiceConfig: Headless
 
     # 3. Model Management &amp; Pipelines
@@ -500,11 +500,11 @@ spec:
     kueue:
       defaultClusterQueueName: default
       defaultLocalQueueName: default
-      managementState: Unmanaged
+      managementState: Removed
     ray:
       managementState: Managed
     trainingoperator:
-      managementState: Managed
+      managementState: Removed
     llamastackoperator:
       managementState: Managed
 
@@ -515,13 +515,13 @@ spec:
 
     # 6. Additional Integrations
     feastoperator:
-      managementState: Managed
+      managementState: Removed
     trustyai:
       eval:
         lmeval:
           permitCodeExecution: deny
           permitOnline: deny
-      managementState: Managed
+      managementState: Removed
     mlflowoperator: {}
     trainer: {}
 EOF</code></pre>
