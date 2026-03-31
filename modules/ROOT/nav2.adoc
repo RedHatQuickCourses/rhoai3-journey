@@ -26,7 +26,7 @@
 ** xref:p1-catalog-home.adoc[Model catalog — introduction]
 *** xref:p1-catalog-section1.adoc[Architecture — governance & flow]
 *** xref:p1-catalog-section4.adoc[Simulate the catalog experience]
-*** xref:p1-catalog-section2.adoc[Hands-on - Customize the model catalog
+*** xref:p1-catalog-section2.adoc[Hands-on - Customize the model catalog]
 *** xref:p1-catalog-section3.adoc[Catalog administration]
 ** xref:p2-hwprofiles.adoc[Hardware profiles — overview]
 *** xref:p2-hw-placement.adoc[Placement — where workloads land]
