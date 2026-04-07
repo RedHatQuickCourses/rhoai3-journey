@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Understanding Model Architecture: Dense vs. Sparse :: Red Hat AI 3x Foundations for Scalable AI</title>
+    <link rel="prev" href="index.html">
+    <link rel="next" href="s2-capability-assessment.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Red Hat AI 3x Foundations for Scalable AI</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhoai3-maas" data-version="3.4">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introduction &amp; Value</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../ch1-architecture/index.html">Design a MaaS Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch1-architecture/s1-gpu-silo.html">Solving the GPU Silo Crisis</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch1-architecture/s2-architecture-stack.html">The Core Architecture Stack and GPU Strategy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch1-architecture/s3-validation-quiz.html">Quiz: Architecture Validation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../ch2-configuration/index.html">Configure the MaaS Platform and Ecosystem</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch2-configuration/s1-ecosystem-operators.html">Hardware Acceleration and Ecosystem Operators</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch2-configuration/s2-enable-maas-lab.html">Lab: Enabling the MaaS Component</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch2-configuration/s3-governance-tiers-lab.html">Lab: Defining Governance Tiers</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Formulate a Model Selection Strategy</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="s1-model-architecture.html">Understanding Model Architecture: Dense vs. Sparse</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="s2-capability-assessment.html">Assessing Model Capabilities: Reasoning vs. Non-Reasoning</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="s3-selection-criteria-quiz.html">Quiz: Model Selection Criteria</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../ch4-deployment/index.html">Deploy Models for MaaS</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch4-deployment/s1-distributed-inference.html">Distributed Inference with llm-d and vLLM</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch4-deployment/s2-publish-model-lab.html">Lab: Publishing and Instrumenting a Model</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch4-deployment/s3-lifecycle-management-lab.html">Lab: Lifecycle Management and GitOps</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../ch5-observability/index.html">Track Metrics and Usage</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch5-observability/s1-observability-stack.html">The MaaS Observability Stack</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch5-observability/s2-metrics-visualization-lab.html">Lab: Visualizing Token and Request Data</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../ch6-consumption/index.html">Consume MaaS Endpoints and Agentic Integrations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch6-consumption/s1-developer-experience.html">The Developer Experience</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch6-consumption/s2-api-consumption-lab.html">Lab: Consuming the OpenAI-Compatible API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch6-consumption/s3-agentic-integration-lab.html">Lab: Agentic Integration with OpenShift DevSpaces</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</span>
+    <span class="version">3.4</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../../rhoai3-storage/3.3/index.html">Architecting AI Storage Logistics in OpenShift AI</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-storage/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-operators/3.3/index.html">Building the OpenShift AI Foundation - The Operator Ecosystem</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-operators/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai-gpu-aas/1/index.html">End the GPU Bottleneck, Automated Access at Scale</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai-gpu-aas/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai-hwprofiles/1/index.html">From Hoarding to Governance at Scale with RHOAI Hardware Profiles</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai-hwprofiles/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-catalog/3.3/index.html">Industrializing GenAI Operationalizing the RHOAI Model Catalog</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-catalog/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-llmd/3.3/index.html">Industrializing Inference Maximizing GPU ROI with llm-d</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-llmd/3.3/index.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-validate/1/index.html">Model Validation for Business Applications</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-validate/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="../index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">3.4</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-journey/1/index.html">Red Hat AI 3x Foundations for Scalable AI</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-journey/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-registry/1/index.html">Red Hat OpenShift AI (RHOAI) Model Registry</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-registry/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../rhoai3-deploy/1/index.html">Shadow-Proof AI, The Economics of Governed Serving</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../rhoai3-deploy/1/index.html">1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../rhoai3-journey/1/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Models as a Service (MaaS) on Red Hat OpenShift AI 3.x</a></li>
+    <li><a href="index.html">Formulate a Model Selection Strategy</a></li>
+    <li><a href="s1-model-architecture.html">Understanding Model Architecture: Dense vs. Sparse</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Understanding Model Architecture: Dense vs. Sparse</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>Estimated reading time: <strong>15 minutes</strong>.</em></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Objective</dt>
+<dd>
+<p>Evaluate models based on architecture: understand the architectural differences and performance impacts of choosing dense versus sparse models. Learn how model architecture affects GPU memory consumption and inference speed.</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Not started yet.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dense_models"><a class="anchor" href="#_dense_models"></a>Dense Models</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Dense models use all parameters for every inference operation.</p>
+</div>
+<div class="paragraph">
+<p><strong>Characteristics:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Every parameter is active for every token</p>
+</li>
+<li>
+<p>Predictable memory footprint</p>
+</li>
+<li>
+<p>Consistent inference latency</p>
+</li>
+<li>
+<p>Simpler deployment architecture</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Examples:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>GPT-3, GPT-4</p>
+</li>
+<li>
+<p>Llama 2, Llama 3</p>
+</li>
+<li>
+<p>Mistral 7B</p>
+</li>
+<li>
+<p>Most traditional transformer models</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>GPU Impact:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Memory usage = model size + KV cache + activations</p>
+</li>
+<li>
+<p>For a 7B parameter model in FP16: ~14GB base memory</p>
+</li>
+<li>
+<p>Additional memory for batch processing and KV cache</p>
+</li>
+<li>
+<p>Memory bandwidth is the primary bottleneck</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sparse_models_mixture_of_experts"><a class="anchor" href="#_sparse_models_mixture_of_experts"></a>Sparse Models (Mixture of Experts)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sparse models activate only a subset of parameters per token using a routing mechanism.</p>
+</div>
+<div class="paragraph">
+<p><strong>Characteristics:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Only a fraction of experts are active per token</p>
+</li>
+<li>
+<p>More parameters with less compute per token</p>
+</li>
+<li>
+<p>Variable latency depending on routing</p>
+</li>
+<li>
+<p>Complex deployment with expert-parallelism</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Examples:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Mixtral 8x7B (47B total, ~13B active)</p>
+</li>
+<li>
+<p>DBRX (132B total, ~36B active)</p>
+</li>
+<li>
+<p>Grok-1 (314B total)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>GPU Impact:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Memory usage = all expert parameters + routing overhead</p>
+</li>
+<li>
+<p>Compute = only active experts per token</p>
+</li>
+<li>
+<p>Better throughput per GPU with efficient expert placement</p>
+</li>
+<li>
+<p>Requires careful sharding across GPUs</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_performance_comparison"><a class="anchor" href="#_performance_comparison"></a>Performance Comparison</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>| Aspect | Dense Models | Sparse Models |
+|--------|--------------|---------------|
+| Memory | Full model always loaded | All experts loaded, subset active |
+| Throughput | Moderate | Higher (less compute per token) |
+| Latency | Consistent | Variable (routing overhead) |
+| Deployment | Simpler | Complex (expert sharding) |
+| Cost Efficiency | Lower at small scale | Higher at large scale |</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_choosing_the_right_architecture"><a class="anchor" href="#_choosing_the_right_architecture"></a>Choosing the Right Architecture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Use Dense Models When:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You need predictable latency</p>
+</li>
+<li>
+<p>Simple deployment is preferred</p>
+</li>
+<li>
+<p>Model size fits comfortably in GPU memory</p>
+</li>
+<li>
+<p>You&#8217;re serving moderate traffic volumes</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Use Sparse Models When:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You need maximum throughput per GPU</p>
+</li>
+<li>
+<p>You can tolerate variable latency</p>
+</li>
+<li>
+<p>You have infrastructure for expert-parallelism</p>
+</li>
+<li>
+<p>Serving high traffic volumes justifies complexity</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hardware_implications"><a class="anchor" href="#_hardware_implications"></a>Hardware Implications</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Dense Model Example (Llama-2-70B):</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Requires 140GB in FP16 (2 x A100 80GB)</p>
+</li>
+<li>
+<p>Or 70GB in INT8 (1 x A100 80GB)</p>
+</li>
+<li>
+<p>Predictable scaling with batch size</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Sparse Model Example (Mixtral 8x7B):</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Requires 94GB for all experts (2 x A100 80GB)</p>
+</li>
+<li>
+<p>Active compute equivalent to ~13B dense model</p>
+</li>
+<li>
+<p>3-4x throughput compared to dense 13B model</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_whats_next"><a class="anchor" href="#_whats_next"></a>What&#8217;s Next</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that you understand model architectures, the next section explores how to assess models based on their capabilities, specifically reasoning versus non-reasoning models and their computational requirements.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html">Formulate a Model Selection Strategy</a></span>
+  <span class="next"><a href="s2-capability-assessment.html">Assessing Model Capabilities: Reasoning vs. Non-Reasoning</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
