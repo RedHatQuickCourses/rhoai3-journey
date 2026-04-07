@@ -60,12 +60,12 @@
 *** xref:p4a-llmd-section4.adoc[Hands-on — deploy llm-d]
 *** xref:p4a-llmd-section5.adoc[Production tuning & EPP]
 *** xref:p4a-llmd-summary.adoc[ROI, summary & next steps]
-** xref:p4b-maas-index.adoc[MaaS — introduction & business case]
-*** xref:p4b-maas-section1.adoc[Strategy — internal AI as a product]
-*** xref:p4b-maas-section2.adoc[Architecture — gateways, policy & APIs]
-*** xref:p4b-maas-section3.adoc[Hands-on — build your MaaS]
-*** xref:p4b-maas-section4.adoc[Day-2 — operate governed endpoints]
-*** xref:p4b-maas-quiz.adoc[Knowledge check]
+//** xref:p4b-maas-index.adoc[MaaS — introduction & business case]
+//*** xref:p4b-maas-section1.adoc[Strategy — internal AI as a product]
+//*** xref:p4b-maas-section2.adoc[Architecture — gateways, policy & APIs]
+//*** xref:p4b-maas-section3.adoc[Hands-on — build your MaaS]
+//*** xref:p4b-maas-section4.adoc[Day-2 — operate governed endpoints]
+//*** xref:p4b-maas-quiz.adoc[Knowledge check]
 
 // * 4: Quality and SLOs (validate and eval)
 // ** xref:phase4.adoc[Phase overview — trust, guardrails & validation]
