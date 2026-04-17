@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RHOAI3 Journey - Learner's Guide</title>
+    <style>
+        :root {
+            --rh-red: #ee0000;
+            --primary-purple: #667eea;
+            --secondary-purple: #764ba2;
+            --text-dark: #333;
+            --text-light: #6c757d;
+            --bg-white: #fff;
+            --bg-light: #f8f9fa;
+            --bg-code: #f6f8fa;
+            --border-color: #e1e4e8;
+            --info-bg: #d1ecf1;
+            --info-border: #17a2b8;
+            --tip-bg: #e1f5fe;
+            --tip-border: #03a9f4;
+            --warn-bg: #fff3e0;
+            --warn-border: #ff9800;
+            --success-bg: #d4edda;
+            --success-border: #28a745;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--secondary-purple) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .hero-subtitle {
+            margin-top: 1rem;
+            font-size: 1rem;
+            opacity: 0.85;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--bg-light);
+            border-bottom: 2px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            min-width: max-content;
+        }
+
+        .tab-button {
+            background: transparent;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-button:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-purple);
+        }
+
+        .tab-button.active {
+            color: var(--rh-red);
+            border-bottom-color: var(--rh-red);
+            background: var(--bg-white);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2.5rem;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography */
+        h2 {
+            color: var(--primary-purple);
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h3 {
+            color: var(--secondary-purple);
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        h4 {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        /* Callout Boxes */
+        .callout {
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border-left: 5px solid;
+        }
+
+        .callout h4 {
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+        }
+
+        .callout.tip {
+            background: var(--tip-bg);
+            border-color: var(--tip-border);
+        }
+
+        .callout.info {
+            background: var(--info-bg);
+            border-color: var(--info-border);
+        }
+
+        .callout.warn {
+            background: var(--warn-bg);
+            border-color: var(--warn-border);
+        }
+
+        .callout.success {
+            background: var(--success-bg);
+            border-color: var(--success-border);
+        }
+
+        /* Code Blocks */
+        code {
+            font-family: 'Courier New', Consolas, Monaco, monospace;
+            background: rgba(27,31,35,0.05);
+            padding: 0.2em 0.5em;
+            border-radius: 3px;
+            font-size: 0.9em;
+            color: var(--rh-red);
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', Consolas, Monaco, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #abb2bf;
+        }
+
+        .command-block {
+            background: #1e1e1e;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .command-header {
+            background: #2d2d2d;
+            padding: 0.5rem 1rem;
+            color: #d4d4d4;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 1px solid #404040;
+        }
+
+        .command-body {
+            padding: 1rem;
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
+        }
+
+        .command-body:before {
+            content: "$ ";
+            color: #4ec9b0;
+            font-weight: bold;
+        }
+
+        /* Tree Structure */
+        .tree-structure {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--primary-purple);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .step-list > li {
+            counter-increment: step;
+            margin-bottom: 1.5rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .step-list > li:before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--primary-purple);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            color: var(--text-light);
+        }
+
+        .checklist li.checked:before {
+            content: "✓";
+            color: var(--success-border);
+            font-weight: bold;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--primary-purple);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .card h4 {
+            color: var(--primary-purple);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        /* Workflow Diagram */
+        .workflow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            gap: 1rem;
+        }
+
+        .workflow-step {
+            background: var(--primary-purple);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .workflow-arrow {
+            font-size: 1.5rem;
+            color: var(--primary-purple);
+            font-weight: bold;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .badge-phase0 { background: #e7f3ff; color: #0066cc; }
+        .badge-phase1 { background: #fff3e0; color: #e65100; }
+        .badge-phase2 { background: #f3e5f5; color: #7b1fa2; }
+        .badge-phase3 { background: #e8f5e9; color: #2e7d32; }
+        .badge-phase4 { background: #fce4ec; color: #c2185b; }
+
+        /* Decision Tree */
+        .decision-tree {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .decision-node {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-purple);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .decision-option {
+            display: inline-block;
+            background: var(--primary-purple);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .decision-option:hover {
+            background: var(--secondary-purple);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-light);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-light);
+            border-top: 2px solid var(--border-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .tab-content {
+                padding: 1.5rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .workflow {
+                flex-direction: column;
+            }
+
+            .workflow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #f9e794 0%, #f8dd5c 100%);
+            padding: 0 0.25rem;
+            border-radius: 3px;
+        }
+
+        strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RHOAI3 Journey Learner's Guide</h1>
+            <p>Your Complete Guide to Creating and Contributing to Red Hat AI Training</p>
+            <p class="hero-subtitle">From QuickCourse Creation to Journey Integration</p>
+        </header>
+
+        <nav class="tab-nav">
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="openTab(event, 'getting-started')">Getting Started</button>
+                <button class="tab-button" onclick="openTab(event, 'create-course')">Create a QuickCourse</button>
+                <button class="tab-button" onclick="openTab(event, 'add-content')">Add Content to Journey</button>
+                <button class="tab-button" onclick="openTab(event, 'submit-prs')">Submit Issues & PRs</button>
+                <button class="tab-button" onclick="openTab(event, 'add-repo')">Add New Repository</button>
+                <button class="tab-button" onclick="openTab(event, 'reference')">Reference & Examples</button>
+            </div>
+        </nav>
+
+        <!-- Tab 1: Getting Started -->
+        <div id="getting-started" class="tab-content active">
+            <h2>Getting Started with RHOAI3 Journey</h2>
+
+            <div class="callout info">
+                <h4>🎯 What is the RHOAI3 Journey?</h4>
+                <p>The RHOAI3 Journey is a <strong>unified learning path</strong> that combines <strong>10 separate training courses</strong> into one comprehensive guide for deploying an industrialized AI platform on Red Hat OpenShift AI 3.x.</p>
+                <p>It's not a single repository—it's a <strong>multi-repository architecture</strong> where one "journey map" repo orchestrates content from 10 sibling course repos.</p>
+            </div>
+
+            <h3>Prerequisites</h3>
+            <ul class="checklist checked">
+                <li class="checked">Claude Code installed on your system</li>
+                <li class="checked">Git and GitHub account configured</li>
+                <li class="checked">Code editor (VS Code, vim, or similar)</li>
+                <li class="checked">Basic command-line familiarity</li>
+                <li class="checked">Node.js 16+ (for local builds)</li>
+                <li class="checked">Docker (optional, for containerized builds)</li>
+            </ul>
+
+            <h3>Understanding the Architecture</h3>
+            <p>The journey consists of <strong>1 journey repository + 10 course repositories</strong>:</p>
+
+            <div class="tree-structure">
+parent/<br>
+├── rhoai3-journey/         ← Journey map (navigation & structure)<br>
+├── rhoai3-operators/       ← Phase 0: Operators<br>
+├── rhoai3-storage/         ← Phase 1: Storage<br>
+├── rhoai3-registry/        ← Phase 1: Model Registry<br>
+├── rhoai3-catalog/         ← Phase 1: Model Catalog<br>
+├── rhoai3-hwprofiles/      ← Phase 1: Hardware Profiles<br>
+├── rhoai3-gpu-aas/         ← Phase 1: GPU as a Service<br>
+├── rhoai3-deploy/          ← Phase 2: Model Serving<br>
+├── rhoai3-llmd/            ← Phase 3: Distributed Inference<br>
+├── rhoai3-maas/            ← Phase 3: Models as a Service<br>
+└── rhoai3-validate/        ← Phase 4: Validation
+            </div>
+
+            <div class="callout tip">
+                <h4>💡 Key Concept: Separation of Concerns</h4>
+                <p><strong>Journey repo (rhoai3-journey):</strong> Contains only navigation structure, phase introductions, and wrapper pages that link to course content.</p>
+                <p><strong>Course repos (rhoai3-storage, etc.):</strong> Contain the actual training content—presentations, labs, quizzes.</p>
+            </div>
+
+            <h3>Choose Your Path</h3>
+            <div class="decision-tree">
+                <div class="decision-node">
+                    <p><strong>What do you want to do?</strong></p>
+                </div>
+                <div>
+                    <span class="decision-option" onclick="openTab(event, 'create-course')">Create a New QuickCourse</span>
+                    <span class="decision-option" onclick="openTab(event, 'add-content')">Edit Existing Course Content</span>
+                    <span class="decision-option" onclick="openTab(event, 'add-repo')">Add Course to Journey</span>
+                </div>
+            </div>
+
+            <h3>Initial Workspace Setup</h3>
+            <ol class="step-list">
+                <li>
+                    <strong>Clone the journey repository</strong>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">git clone https://github.com/RedHatQuickCourses/rhoai3-journey.git</div>
+                    </div>
+                </li>
+                <li>
+                    <strong>Clone sibling course repositories (as needed)</strong>
+                    <p>For local builds, clone relevant course repos as siblings to the journey repo:</p>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">cd parent/<br>git clone https://github.com/RedHatQuickCourses/rhoai3-storage.git<br>git clone https://github.com/RedHatQuickCourses/rhoai3-registry.git</div>
+                    </div>
+                </li>
+                <li>
+                    <strong>Navigate to your working directory</strong>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">cd rhoai3-journey    # For journey structure work<br># OR<br>cd rhoai3-storage   # For course content work</div>
+                    </div>
+                </li>
+            </ol>
+
+            <h3>Next Steps</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>New to Course Creation?</h4>
+                    <p>Start with <strong>Create a QuickCourse</strong> to learn the 5-phase workflow using Claude Code skills.</p>
+                </div>
+                <div class="card">
+                    <h4>Contributing to Existing Content?</h4>
+                    <p>Jump to <strong>Add Content to Journey</strong> to understand how to edit course modules.</p>
+                </div>
+                <div class="card">
+                    <h4>Adding a New Course?</h4>
+                    <p>See <strong>Add New Repository</strong> for the 7-step integration process.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Create a QuickCourse -->
+        <div id="create-course" class="tab-content">
+            <h2>Create a QuickCourse with Claude Code</h2>
+
+            <p>This section covers the complete workflow for creating a new Red Hat QuickCourse using the GitHub template and Claude Code skills.</p>
+
+            <div class="workflow">
+                <div class="workflow-step">Phase 0<br>Setup</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Phase 1<br>Design</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Phase 2<br>Initialize</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Phase 3<br>Generate</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Phase 4<br>Develop</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Phase 5<br>Publish</div>
+            </div>
+
+            <h3>Phase 0: Setup (Workspace Preparation)</h3>
+            <ol class="step-list">
+                <li>
+                    <strong>Use the QuickCourse template on GitHub</strong>
+                    <p>Navigate to: <code>https://github.com/RedHatQuickCourses/course-starter-template</code></p>
+                    <p>Click <strong>"Use this template"</strong> → Choose <strong>"Create a new repository"</strong></p>
+                    <p>Name your repository (e.g., <code>rhoai3-newcourse</code>) and set to <strong>Public</strong></p>
+                </li>
+                <li>
+                    <strong>Clone your new repository</strong>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">git clone https://github.com/RedHatQuickCourses/your-repository<br>cd your-repository</div>
+                    </div>
+                </li>
+                <li>
+                    <strong>Launch Claude Code</strong>
+                    <p>Open your terminal within the repository directory:</p>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">claude</div>
+                    </div>
+                </li>
+            </ol>
+
+            <div class="callout tip">
+                <h4>💡 Claude Code Skills</h4>
+                <p>All <code>/commands</code> are typed directly into the Claude Code terminal prompt. Claude acts as your AI pair-programmer inside the repository.</p>
+            </div>
+
+            <h3>Phase 1: Course Design</h3>
+            <p><strong>Goal:</strong> Create a structured course design document that drives automated generation.</p>
+
+            <p>Create a file: <code>prompts/course-design.md</code> with this structure:</p>
+            <pre><code>![Course Banner](../images/banner.png)
+
+# Course Title
+
+One-sentence course description.
+
+# COURSE GOAL
+
+What learners will accomplish by completing this course.
+Focus on business value and practical outcomes.
+
+# TARGET AUDIENCE
+
+Who should take this course:
+- Job roles (e.g., "OpenShift administrators")
+- Experience level (e.g., "Intermediate")
+- Responsibilities
+
+# COURSE DESIGN
+
+| Learning Objective / Section | Session Type |
+|------------------------------|--------------|
+| **LEARNING OBJECTIVE #1: Brief description** | |
+| Section 1 - Introduction | Presentation |
+| Section 2 - Hands-on practice | Lab |
+| Section 3 - Knowledge check | Quiz |
+| **LEARNING OBJECTIVE #2: Another objective** | |
+| Section description | Lecture |
+| Hands-on activity | Lab |</code></pre>
+
+            <div class="callout warn">
+                <h4>⚠️ Design Best Practices</h4>
+                <ul>
+                    <li><strong>Learning Objectives:</strong> 3-6 per course (optimal: 4-5)</li>
+                    <li><strong>Sections per Objective:</strong> 2-5 sections</li>
+                    <li><strong>Follow flow:</strong> Presentation → Lab → Quiz</li>
+                    <li><strong>Section length:</strong> 5-15 minutes each</li>
+                </ul>
+            </div>
+
+            <h3>Phase 2: Initialize Course Project</h3>
+            <p><strong>Goal:</strong> Configure the repository for your course type and lab environment.</p>
+
+            <p>In Claude Code terminal, type:</p>
+            <div class="command-block">
+                <div class="command-header">Claude Code Prompt</div>
+                <div class="command-body">/initialize-course-project</div>
+            </div>
+
+            <p>Claude will ask you:</p>
+            <ol>
+                <li><strong>Course type:</strong> Choose <code>bfx</code> (recommended for QuickCourses)</li>
+                <li><strong>Lab environment:</strong> Choose <code>demo</code>, <code>role</code>, or <code>other</code></li>
+                <li><strong>Course title:</strong> Enter your course title</li>
+            </ol>
+
+            <p>Claude will automatically:</p>
+            <ul>
+                <li>Run <code>course-init.sh</code> script</li>
+                <li>Update <code>antora.yml</code> and <code>antora-playbook.yml</code></li>
+                <li>Install dependencies (<code>npm install</code>)</li>
+                <li>Run a test build</li>
+            </ul>
+
+            <h3>Phase 3: Generate Course Structure</h3>
+            <p><strong>Goal:</strong> Auto-generate the complete course skeleton from your design document.</p>
+
+            <p>Prerequisites:</p>
+            <ul class="checklist">
+                <li class="checked">Phase 2 completed (course initialized)</li>
+                <li class="checked"><code>prompts/course-design.md</code> exists</li>
+            </ul>
+
+            <p>In Claude Code terminal:</p>
+            <div class="command-block">
+                <div class="command-header">Claude Code Prompt</div>
+                <div class="command-body">/generate-course-structure</div>
+            </div>
+
+            <p>This skill will:</p>
+            <ol>
+                <li>Parse your course design document</li>
+                <li>Create chapter directories (e.g., <code>modules/ch1-intro/</code>)</li>
+                <li>Generate section files with AsciiDoc templates</li>
+                <li>Create navigation files (<code>nav.adoc</code>)</li>
+                <li>Update <code>antora.yml</code></li>
+            </ol>
+
+            <p>What gets generated for each Learning Objective:</p>
+            <div class="tree-structure">
+modules/ch1-keyword/<br>
+├── nav.adoc<br>
+├── pages/<br>
+│   ├── index.adoc             # Chapter landing page<br>
+│   ├── s1-intro.adoc          # Section 1 (Presentation)<br>
+│   ├── s2-lab.adoc            # Section 2 (Lab)<br>
+│   └── s3-quiz.adoc           # Section 3 (Quiz)<br>
+└── images/                    # Chapter images
+            </div>
+
+            <h3>Phase 4: Develop Content</h3>
+            <p><strong>Goal:</strong> Fill in the generated skeleton with actual course content using Claude assistance.</p>
+
+            <div class="callout warn">
+                <h4>⚠️ Start Watch Mode First!</h4>
+                <p>Open <strong>TWO separate terminal windows</strong> (not the Claude prompt):</p>
+                <div class="command-block">
+                    <div class="command-header">Terminal 1: Watch for changes</div>
+                    <div class="command-body">npm run watch:adoc</div>
+                </div>
+                <div class="command-block">
+                    <div class="command-header">Terminal 2: Serve the site</div>
+                    <div class="command-body">npm run serve</div>
+                </div>
+                <p>Open browser to: <code>http://localhost:8080</code></p>
+            </div>
+
+            <h4>Using Claude to Write Content</h4>
+            <p>In your Claude Code terminal, ask Claude to help write content:</p>
+
+            <p><strong>Example prompts:</strong></p>
+            <ul>
+                <li><em>"Claude, open <code>modules/ch1-intro/pages/s1-overview.adoc</code> and write a 3-paragraph introduction about GPU requirements for AI workloads."</em></li>
+                <li><em>"Claude, format these bash commands into proper AsciiDoc code blocks with callouts in <code>s2-lab.adoc</code>."</em></li>
+                <li><em>"Claude, generate 3 quiz questions for <code>s3-quiz.adoc</code> based on chapter 1 content."</em></li>
+            </ul>
+
+            <h4>Essential AsciiDoc Syntax</h4>
+            <p><strong>CLI Commands (Labs):</strong></p>
+            <pre><code>[source,console,subs="verbatim,quotes"]
+----
+$ *oc get nodes -l node-role.kubernetes.io/gpu=*
+NAME                    STATUS   ROLES
+worker-gpu-1.ocp.com    Ready    worker
+----</code></pre>
+
+            <p><strong>Images:</strong></p>
+            <pre><code>image::architecture-diagram.png[Architecture]</code></pre>
+
+            <p><strong>Callouts:</strong></p>
+            <pre><code>[NOTE]
+====
+Important information for learners.
+====</code></pre>
+
+            <h3>Phase 5: Publish</h3>
+            <p><strong>Goal:</strong> Generate PDF and deploy to GitHub Pages.</p>
+
+            <h4>Generate PDF</h4>
+            <p>In Claude Code terminal:</p>
+            <div class="command-block">
+                <div class="command-header">Claude Code Prompt</div>
+                <div class="command-body">/generate-pdf</div>
+            </div>
+
+            <h4>Deploy to GitHub Pages</h4>
+            <ol>
+                <li>Commit your changes</li>
+                <li>Push to <code>main</code> branch</li>
+                <li>GitHub Actions automatically builds and publishes</li>
+            </ol>
+
+            <div class="command-block">
+                <div class="command-header">Terminal</div>
+                <div class="command-body">git add .<br>git commit -m "Complete course content"<br>git push origin main</div>
+            </div>
+
+            <p>Site will be available at: <code>https://&lt;org&gt;.github.io/&lt;repo&gt;/</code></p>
+
+            <div class="callout success">
+                <h4>✅ Course Creation Complete!</h4>
+                <p>You now have a fully functional QuickCourse deployed to GitHub Pages. Next, learn how to add it to the RHOAI3 Journey in the <strong>Add New Repository</strong> tab.</p>
+            </div>
+        </div>
+
+        <!-- Tab 3: Add Content to Journey -->
+        <div id="add-content" class="tab-content">
+            <h2>Add Content to Existing Journey Courses</h2>
+
+            <div class="callout info">
+                <h4>🎯 Key Principle: Edit in Source Repos</h4>
+                <p><strong>Never edit course content in the rhoai3-journey repo.</strong> The journey repo only contains wrapper pages and navigation. All actual course content lives in the 10 sibling repositories.</p>
+            </div>
+
+            <h3>Understanding Content Separation</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Journey Repo (rhoai3-journey)</th>
+                        <th>Course Repos (rhoai3-storage, etc.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Contains</strong></td>
+                        <td>Navigation structure, phase intros, wrapper pages</td>
+                        <td>Actual presentations, labs, quizzes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Edit For</strong></td>
+                        <td>Journey flow, phase organization</td>
+                        <td>Course content, technical material</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Location</strong></td>
+                        <td><code>modules/ROOT/pages/</code></td>
+                        <td><code>modules/chapter1/pages/</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Workflow: Adding/Editing Course Content</h3>
+            <ol class="step-list">
+                <li>
+                    <strong>Identify which course to edit</strong>
+                    <p>Example: To edit storage content → <code>rhoai3-storage</code> repo</p>
+                    <p>Course mapping:</p>
+                    <ul>
+                        <li><span class="badge badge-phase0">Phase 0</span> rhoai3-operators</li>
+                        <li><span class="badge badge-phase1">Phase 1</span> rhoai3-storage, rhoai3-registry, rhoai3-catalog, rhoai3-hwprofiles, rhoai3-gpu-aas</li>
+                        <li><span class="badge badge-phase2">Phase 2</span> rhoai3-deploy</li>
+                        <li><span class="badge badge-phase3">Phase 3</span> rhoai3-llmd, rhoai3-maas</li>
+                        <li><span class="badge badge-phase4">Phase 4</span> rhoai3-validate</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Navigate to the course repository</strong>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">cd ../rhoai3-storage    # Or appropriate course repo</div>
+                    </div>
+                </li>
+                <li>
+                    <strong>Launch Claude Code in that repo</strong>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">claude</div>
+                    </div>
+                </li>
+                <li>
+                    <strong>Edit content files</strong>
+                    <p>Course repos follow standard Antora structure:</p>
+                    <div class="tree-structure">
+rhoai3-storage/<br>
+├── antora.yml<br>
+├── modules/<br>
+│   ├── ROOT/<br>
+│   │   └── pages/index.adoc<br>
+│   └── chapter1/<br>
+│       ├── nav.adoc<br>
+│       ├── pages/<br>
+│       │   ├── index.adoc<br>
+│       │   ├── section1.adoc    ← Edit these files<br>
+│       │   ├── section2.adoc<br>
+│       │   └── lab.adoc<br>
+│       └── images/
+                    </div>
+                    <p>Ask Claude to help:</p>
+                    <p><em>"Claude, open modules/chapter1/pages/section1.adoc and update the storage architecture diagram description."</em></p>
+                </li>
+                <li>
+                    <strong>Test locally in the course repo</strong>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">npm run build<br>npm run serve</div>
+                    </div>
+                    <p>Verify your changes at: <code>http://localhost:8080</code></p>
+                </li>
+                <li>
+                    <strong>Commit changes to the course repo</strong>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">git add modules/chapter1/pages/section1.adoc<br>git commit -m "Update storage architecture content"<br>git push origin main</div>
+                    </div>
+                </li>
+                <li>
+                    <strong>Test in journey context (optional)</strong>
+                    <p>Return to rhoai3-journey and rebuild to see changes in full journey:</p>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">cd ../rhoai3-journey<br>npm run build</div>
+                    </div>
+                </li>
+            </ol>
+
+            <h3>Common Content Patterns</h3>
+
+            <h4>Including External Content (Wrapper Pages)</h4>
+            <p>Journey wrapper pages use the <code>include::</code> directive to pull in course content:</p>
+            <pre><code>// File: rhoai3-journey/modules/ROOT/pages/p1-storage-section1.adoc
+:navtitle: Storage Architecture
+
+include::rhoai3-storage:chapter1:section1.adoc[]</code></pre>
+
+            <p><strong>Pattern:</strong> <code>include::&lt;component&gt;:&lt;module&gt;:&lt;file&gt;.adoc[]</code></p>
+            <ul>
+                <li><code>&lt;component&gt;</code> = component name from course's <code>antora.yml</code></li>
+                <li><code>&lt;module&gt;</code> = module directory (usually <code>chapter1</code>)</li>
+                <li><code>&lt;file&gt;</code> = path to file within module's pages directory</li>
+            </ul>
+
+            <h4>Cross-Referencing Between Courses</h4>
+            <pre><code>// Link from rhoai3-storage to rhoai3-registry
+For model registry integration, see
+xref:rhoai3-registry:chapter1:index.adoc[Model Registry guide].</code></pre>
+
+            <h4>Adding Images</h4>
+            <ol>
+                <li>Place image in: <code>modules/chapter1/images/my-diagram.png</code></li>
+                <li>Reference in page: <code>image::my-diagram.png[Diagram description]</code></li>
+            </ol>
+
+            <h3>AsciiDoc Quick Reference</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Element</th>
+                        <th>Syntax</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Heading 2</td>
+                        <td><code>== Title</code></td>
+                    </tr>
+                    <tr>
+                        <td>Heading 3</td>
+                        <td><code>=== Title</code></td>
+                    </tr>
+                    <tr>
+                        <td>Bold</td>
+                        <td><code>*text*</code></td>
+                    </tr>
+                    <tr>
+                        <td>Italic</td>
+                        <td><code>_text_</code></td>
+                    </tr>
+                    <tr>
+                        <td>Code inline</td>
+                        <td><code>`code`</code></td>
+                    </tr>
+                    <tr>
+                        <td>Code block</td>
+                        <td><code>[source,console]<br>----<br>$ command<br>----</code></td>
+                    </tr>
+                    <tr>
+                        <td>Image</td>
+                        <td><code>image::file.png[]</code></td>
+                    </tr>
+                    <tr>
+                        <td>Link</td>
+                        <td><code>https://example.com[text]</code></td>
+                    </tr>
+                    <tr>
+                        <td>Note</td>
+                        <td><code>[NOTE]<br>====<br>Text<br>====</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout tip">
+                <h4>💡 Pro Tip: Use USAGEGUIDE.adoc</h4>
+                <p>Every course repo includes <code>USAGEGUIDE.adoc</code> with comprehensive AsciiDoc syntax examples. Reference it for formatting guidance.</p>
+            </div>
+        </div>
+
+        <!-- Tab 4: Submit Issues & PRs -->
+        <div id="submit-prs" class="tab-content">
+            <h2>Submit Issues and Pull Requests</h2>
+
+            <h3>Where Should I Submit?</h3>
+            <div class="decision-tree">
+                <div class="decision-node">
+                    <p><strong>Is the issue with journey navigation or structure?</strong></p>
+                </div>
+                <div>
+                    <span class="decision-option" style="background: var(--success-border);">YES → Submit to rhoai3-journey</span>
+                    <span class="decision-option" style="background: var(--warn-border);">NO → Submit to specific course repo</span>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Issue Type</th>
+                        <th>Submit To</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Navigation broken</td>
+                        <td><code>rhoai3-journey</code></td>
+                        <td>"Phase 2 links don't work"</td>
+                    </tr>
+                    <tr>
+                        <td>Phase ordering wrong</td>
+                        <td><code>rhoai3-journey</code></td>
+                        <td>"Phase 3 should come before Phase 4"</td>
+                    </tr>
+                    <tr>
+                        <td>Journey build fails</td>
+                        <td><code>rhoai3-journey</code></td>
+                        <td>"GitHub Pages deployment error"</td>
+                    </tr>
+                    <tr>
+                        <td>Storage content error</td>
+                        <td><code>rhoai3-storage</code></td>
+                        <td>"PVC configuration steps incorrect"</td>
+                    </tr>
+                    <tr>
+                        <td>Registry lab doesn't work</td>
+                        <td><code>rhoai3-registry</code></td>
+                        <td>"Model upload command fails"</td>
+                    </tr>
+                    <tr>
+                        <td>GPU section typo</td>
+                        <td><code>rhoai3-gpu-aas</code></td>
+                        <td>"Spelling error in section 2"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>GitHub Workflows Explained</h3>
+
+            <h4>Main Branch Workflow (main.yml)</h4>
+            <p><strong>Triggers:</strong> Push to <code>main</code> branch</p>
+            <p><strong>What it does:</strong></p>
+            <ol>
+                <li>Checks out the repository</li>
+                <li>Installs Node.js and dependencies</li>
+                <li>Runs <code>npx antora --fetch antora-playbook.yml</code></li>
+                <li>Publishes to GitHub Pages</li>
+            </ol>
+
+            <div class="callout info">
+                <h4>📦 The --fetch Flag</h4>
+                <p>The <code>--fetch</code> flag tells Antora to clone all 10 course repos from GitHub (via git URLs in the playbook). This ensures the full journey is built even though only the journey repo is checked out.</p>
+            </div>
+
+            <h4>Pull Request Workflow (pr.yml)</h4>
+            <p><strong>Triggers:</strong> PR opened, reopened, synchronized, or closed</p>
+            <p><strong>What it does:</strong></p>
+            <ol>
+                <li>Builds a preview of the site with PR changes</li>
+                <li>Publishes preview to a unique URL</li>
+                <li>Removes preview when PR is merged/closed</li>
+            </ol>
+
+            <div class="callout tip">
+                <h4>💡 PR Previews</h4>
+                <p>PR previews only work for branches in the <strong>same repository</strong>, not from forks. This is a security measure to prevent malicious code execution.</p>
+            </div>
+
+            <h3>Submitting an Issue</h3>
+            <ol class="step-list">
+                <li>
+                    <strong>Navigate to the correct repository</strong>
+                    <p>Journey issues: <code>https://github.com/RedHatQuickCourses/rhoai3-journey/issues</code></p>
+                    <p>Course issues: <code>https://github.com/RedHatQuickCourses/rhoai3-storage/issues</code> (example)</p>
+                </li>
+                <li>
+                    <strong>Click "New Issue"</strong>
+                </li>
+                <li>
+                    <strong>Provide clear title and description</strong>
+                    <p><strong>Good title:</strong> "Storage section 2 PVC command fails on OCP 4.15"</p>
+                    <p><strong>Bad title:</strong> "Broken"</p>
+                    <p><strong>Include:</strong></p>
+                    <ul>
+                        <li>What you expected</li>
+                        <li>What actually happened</li>
+                        <li>Steps to reproduce</li>
+                        <li>Environment (if relevant)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Submitting a Pull Request</h3>
+            <ol class="step-list">
+                <li>
+                    <strong>Fork or branch the repository</strong>
+                    <p>For external contributors: Fork the repo</p>
+                    <p>For team members: Create a branch</p>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">git checkout -b fix/storage-pvc-update</div>
+                    </div>
+                </li>
+                <li>
+                    <strong>Make your changes</strong>
+                    <p>Edit files, test locally, ensure build succeeds</p>
+                </li>
+                <li>
+                    <strong>Commit with clear message</strong>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">git add modules/chapter1/pages/section2.adoc<br>git commit -m "Fix PVC creation command for OCP 4.15"</div>
+                    </div>
+                </li>
+                <li>
+                    <strong>Push to your fork/branch</strong>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">git push origin fix/storage-pvc-update</div>
+                    </div>
+                </li>
+                <li>
+                    <strong>Create PR on GitHub</strong>
+                    <p>Navigate to the repo, click "Compare & pull request"</p>
+                    <p><strong>PR description should include:</strong></p>
+                    <ul>
+                        <li>What changed</li>
+                        <li>Why it changed</li>
+                        <li>How to test</li>
+                        <li>Related issues (if any)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Best Practices</h3>
+            <ul class="checklist checked">
+                <li class="checked">Test locally before submitting PR</li>
+                <li class="checked">Keep PRs focused (one fix per PR)</li>
+                <li class="checked">Write clear commit messages</li>
+                <li class="checked">Reference related issues (<code>Fixes #123</code>)</li>
+                <li class="checked">Respond to review comments promptly</li>
+                <li class="checked">Ensure CI builds pass</li>
+            </ul>
+        </div>
+
+        <!-- Tab 5: Add New Repository -->
+        <div id="add-repo" class="tab-content">
+            <h2>Add a New Repository to the Journey</h2>
+
+            <p>This section explains how to integrate a new QuickCourse you've created into the RHOAI3 Journey as Phase 5, 6, or a new track.</p>
+
+            <div class="callout warn">
+                <h4>⚠️ Prerequisites</h4>
+                <ul>
+                    <li>You've completed a QuickCourse following the <strong>Create a QuickCourse</strong> tab</li>
+                    <li>Your course is published and accessible on GitHub</li>
+                    <li>You have all 10 existing journey repos + your new repo cloned as siblings</li>
+                </ul>
+            </div>
+
+            <h3>7-Step Integration Process</h3>
+            <ol class="step-list">
+                <li>
+                    <strong>Ensure your course repo has proper structure</strong>
+                    <p>Your new course must have:</p>
+                    <div class="tree-structure">
+rhoai3-newcourse/<br>
+├── antora.yml          # Must have: name, title, version, nav<br>
+├── modules/<br>
+│   ├── ROOT/<br>
+│   │   ├── nav.adoc<br>
+│   │   └── pages/index.adoc<br>
+│   └── chapter1/<br>
+│       ├── nav.adoc<br>
+│       ├── pages/<br>
+│       │   ├── index.adoc<br>
+│       │   ├── section1.adoc<br>
+│       │   └── ...<br>
+│       └── images/
+                    </div>
+                    <p>Check your <code>antora.yml</code>:</p>
+                    <pre><code>name: rhoai3-newcourse        # ← IMPORTANT: Used in include:: directives
+title: My New Course Title
+version: 3.3
+nav:
+- modules/ROOT/nav.adoc
+- modules/chapter1/nav.adoc</code></pre>
+                </li>
+                <li>
+                    <strong>Update antora-playbook.yml in journey repo</strong>
+                    <p>Add your repo to the content sources list:</p>
+                    <pre><code># File: rhoai3-journey/antora-playbook.yml
+
+content:
+  sources:
+  # ... existing repos ...
+  # Phase 5: Your New Course
+  - url: https://github.com/RedHatQuickCourses/rhoai3-newcourse.git</code></pre>
+                </li>
+                <li>
+                    <strong>Create wrapper pages in journey repo</strong>
+                    <p>Create shell pages in <code>rhoai3-journey/modules/ROOT/pages/</code></p>
+                    <p>Example: <code>p5-newcourse-home.adoc</code></p>
+                    <pre><code>:navtitle: New Course — Introduction
+
+// Optional: Add video or intro content
+++++
+<iframe src="https://..."></iframe>
+++++
+
+include::rhoai3-newcourse:chapter1:index.adoc[]</code></pre>
+                    <p>Create wrapper for each section:</p>
+                    <pre><code>// File: p5-newcourse-section1.adoc
+:navtitle: New Course — Architecture
+
+include::rhoai3-newcourse:chapter1:section1.adoc[]</code></pre>
+                </li>
+                <li>
+                    <strong>Update navigation (nav2.adoc)</strong>
+                    <p>Add entries to <code>rhoai3-journey/modules/ROOT/nav2.adoc</code>:</p>
+                    <pre><code>* 5: New Phase Title (Your Course)
+** xref:p5-newcourse-home.adoc[New Course — Introduction]
+*** xref:p5-newcourse-section1.adoc[Architecture Overview]
+*** xref:p5-newcourse-section2.adoc[Hands-on Labs]
+*** xref:p5-newcourse-section3.adoc[Best Practices]
+*** xref:p5-newcourse-summary.adoc[Summary]</code></pre>
+                </li>
+                <li>
+                    <strong>Clone as sibling (local testing)</strong>
+                    <p>Ensure directory structure:</p>
+                    <div class="tree-structure">
+parent/<br>
+├── rhoai3-journey/<br>
+├── rhoai3-operators/<br>
+├── rhoai3-storage/<br>
+... (other repos)<br>
+└── rhoai3-newcourse/        ← Your new repo
+                    </div>
+                </li>
+                <li>
+                    <strong>Test locally</strong>
+                    <div class="command-block">
+                        <div class="command-header">Terminal (in rhoai3-journey/)</div>
+                        <div class="command-body">npm install<br>npx antora antora-playbook.yml --fetch</div>
+                    </div>
+                    <p>Check build output:</p>
+                    <ul>
+                        <li>No errors during build</li>
+                        <li>New phase appears in navigation</li>
+                        <li>All wrapper pages load correctly</li>
+                        <li>Content from your course displays</li>
+                    </ul>
+                    <p>Open: <code>build/site/index.html</code></p>
+                </li>
+                <li>
+                    <strong>Submit PR to journey repo</strong>
+                    <div class="command-block">
+                        <div class="command-header">Terminal</div>
+                        <div class="command-body">git checkout -b add/phase5-newcourse<br>git add antora-playbook.yml modules/ROOT/<br>git commit -m "Add Phase 5: New Course integration"<br>git push origin add/phase5-newcourse</div>
+                    </div>
+                    <p>Create PR with description:</p>
+                    <ul>
+                        <li>What course is being added</li>
+                        <li>Which phase it belongs to</li>
+                        <li>Link to course repo</li>
+                        <li>Screenshot of navigation</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Component Naming Conventions</h3>
+            <div class="callout info">
+                <h4>📝 Critical: Component Name Consistency</h4>
+                <p>The <code>name:</code> field in your course's <code>antora.yml</code> MUST match exactly what you use in <code>include::</code> directives.</p>
+                <p><strong>Example:</strong></p>
+                <ul>
+                    <li>In <code>rhoai3-newcourse/antora.yml</code>: <code>name: rhoai3-newcourse</code></li>
+                    <li>In wrapper page: <code>include::rhoai3-newcourse:chapter1:index.adoc[]</code></li>
+                </ul>
+            </div>
+
+            <h3>Include and Xref Patterns</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pattern</th>
+                        <th>Use Case</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>include::</code></td>
+                        <td>Embed entire page</td>
+                        <td><code>include::rhoai3-newcourse:chapter1:index.adoc[]</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>xref:</code></td>
+                        <td>Link to another page</td>
+                        <td><code>xref:p5-newcourse-home.adoc[]</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>xref:</code> (external)</td>
+                        <td>Link to other component</td>
+                        <td><code>xref:rhoai3-storage:chapter1:index.adoc[Storage Guide]</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Troubleshooting Integration</h3>
+
+            <h4>Build Error: "Component not found"</h4>
+            <p><strong>Cause:</strong> Component name mismatch</p>
+            <p><strong>Solution:</strong> Check that <code>antora.yml</code> name matches include directive</p>
+
+            <h4>Navigation Doesn't Show New Phase</h4>
+            <p><strong>Cause:</strong> Wrapper pages don't exist or nav not updated</p>
+            <p><strong>Solution:</strong></p>
+            <ul>
+                <li>Verify wrapper pages created in <code>modules/ROOT/pages/</code></li>
+                <li>Check <code>nav2.adoc</code> has xref entries</li>
+                <li>Ensure filenames match exactly (case-sensitive)</li>
+            </ul>
+
+            <h4>Content Doesn't Display</h4>
+            <p><strong>Cause:</strong> Include path incorrect</p>
+            <p><strong>Solution:</strong> Verify pattern: <code>component:module:file.adoc</code></p>
+            <ul>
+                <li>Component = <code>name:</code> from <code>antora.yml</code></li>
+                <li>Module = directory name (e.g., <code>chapter1</code>)</li>
+                <li>File = path within <code>pages/</code></li>
+            </ul>
+
+            <h4>Local Build Works, CI Fails</h4>
+            <p><strong>Cause:</strong> Sibling repo not in playbook git URLs</p>
+            <p><strong>Solution:</strong> Ensure your repo is listed in <code>antora-playbook.yml</code> with full GitHub URL</p>
+
+            <div class="callout success">
+                <h4>✅ Integration Complete!</h4>
+                <p>Once your PR is merged, the journey will automatically rebuild via GitHub Actions and your course will be live on GitHub Pages.</p>
+            </div>
+        </div>
+
+        <!-- Tab 6: Reference & Examples -->
+        <div id="reference" class="tab-content">
+            <h2>Reference & Examples</h2>
+
+            <h3>Quick Reference: Claude Code Skills</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Skill Command</th>
+                        <th>When to Use</th>
+                        <th>Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>/initialize-course-project</code></td>
+                        <td>Once at project start (Phase 2)</td>
+                        <td>Configured repo, installed deps, initial build</td>
+                    </tr>
+                    <tr>
+                        <td><code>/generate-course-structure</code></td>
+                        <td>After creating course-design.md (Phase 3)</td>
+                        <td>Complete skeleton with all chapters/sections</td>
+                    </tr>
+                    <tr>
+                        <td><code>/generate-pdf</code></td>
+                        <td>When ready to export (Phase 5)</td>
+                        <td>PDF file in build/assembler-pdf/</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Quick Reference: Build Commands</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Purpose</th>
+                        <th>Context</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>npm install</code></td>
+                        <td>Install dependencies</td>
+                        <td>First time in any repo</td>
+                    </tr>
+                    <tr>
+                        <td><code>npm run build</code></td>
+                        <td>Build site once</td>
+                        <td>Testing, verification</td>
+                    </tr>
+                    <tr>
+                        <td><code>npm run watch:adoc</code></td>
+                        <td>Auto-rebuild on changes</td>
+                        <td>Active development (Terminal 1)</td>
+                    </tr>
+                    <tr>
+                        <td><code>npm run serve</code></td>
+                        <td>Serve site locally</td>
+                        <td>Active development (Terminal 2)</td>
+                    </tr>
+                    <tr>
+                        <td><code>npx antora antora-playbook.yml --fetch</code></td>
+                        <td>Build with repo cloning</td>
+                        <td>Journey repo, CI simulation</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Quick Reference: File Paths</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Purpose</th>
+                        <th>Who Edits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>antora.yml</code></td>
+                        <td>Component metadata</td>
+                        <td>Course maintainer</td>
+                    </tr>
+                    <tr>
+                        <td><code>antora-playbook.yml</code></td>
+                        <td>Build config, content sources</td>
+                        <td>Journey architect</td>
+                    </tr>
+                    <tr>
+                        <td><code>modules/ROOT/nav2.adoc</code></td>
+                        <td>Journey navigation</td>
+                        <td>Journey architect</td>
+                    </tr>
+                    <tr>
+                        <td><code>modules/chapter1/pages/*.adoc</code></td>
+                        <td>Course content</td>
+                        <td>Content contributor</td>
+                    </tr>
+                    <tr>
+                        <td><code>modules/ROOT/pages/p*-*.adoc</code></td>
+                        <td>Journey wrapper pages</td>
+                        <td>Journey architect</td>
+                    </tr>
+                    <tr>
+                        <td><code>prompts/course-design.md</code></td>
+                        <td>Course structure design</td>
+                        <td>Course creator</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Example: Wrapper Page</h3>
+            <pre><code>// File: rhoai3-journey/modules/ROOT/pages/p1-storage-section1.adoc
+// Purpose: Pull in storage architecture content from rhoai3-storage repo
+
+:navtitle: Data & Storage — Architecture
+
+// Optional: Add journey-specific intro
+[.lead]
+This section covers the architecture patterns for AI data storage.
+
+// Include the actual content from the course repo
+include::rhoai3-storage:chapter1:section1.adoc[]
+
+// Optional: Add "What's Next" navigation
+[NOTE]
+====
+*What's Next:* Continue to xref:p1-storage-section2.adoc[Data Connections]
+====</code></pre>
+
+            <h3>Example: Navigation Entry</h3>
+            <pre><code>// File: rhoai3-journey/modules/ROOT/nav2.adoc
+
+* 1: Assembling the Factory (configure)
+** xref:phase1.adoc[Phase overview — supply chain & machinery]
+** xref:p1-storage-index.adoc[Data & storage — introduction]
+*** xref:p1-storage-section1.adoc[Architecture — PVCs, classes & data paths]
+*** xref:p1-storage-section2.adoc[Data connections & credentials]
+*** xref:p1-storage-lab.adoc[Hands-on — Storage lab exercises]</code></pre>
+
+            <h3>Example: Repository Structure</h3>
+            <div class="tree-structure">
+rhoai3-storage/<br>
+├── antora.yml<br>
+│   name: rhoai3-storage<br>
+│   title: Architecting AI Storage Logistics<br>
+│   version: 3.3<br>
+│   nav:<br>
+│   - modules/ROOT/nav.adoc<br>
+│   - modules/chapter1/nav.adoc<br>
+├── modules/<br>
+│   ├── ROOT/<br>
+│   │   ├── nav.adoc           # Minimal: points to chapter1<br>
+│   │   └── pages/<br>
+│   │       └── index.adoc     # Optional landing page<br>
+│   └── chapter1/<br>
+│       ├── nav.adoc           # Chapter navigation<br>
+│       ├── pages/<br>
+│       │   ├── index.adoc     # Chapter overview<br>
+│       │   ├── section1.adoc  # Architecture<br>
+│       │   ├── section2.adoc  # Data connections<br>
+│       │   ├── lab.adoc       # Hands-on lab<br>
+│       │   └── section5.adoc  # Field notes<br>
+│       └── images/<br>
+│           ├── pvc-diagram.png<br>
+│           └── storage-flow.png<br>
+├── .github/<br>
+│   └── workflows/<br>
+│       └── main.yml           # GitHub Pages deployment<br>
+└── package.json               # NPM scripts
+            </div>
+
+            <h3>Common Errors and Solutions</h3>
+
+            <h4>Error: "antora: command not found"</h4>
+            <p><strong>Solution:</strong> Run <code>npm install</code> first</p>
+
+            <h4>Error: "Page not found" in navigation</h4>
+            <p><strong>Solutions:</strong></p>
+            <ul>
+                <li>Check filename matches xref exactly (case-sensitive)</li>
+                <li>Verify file exists in <code>pages/</code> directory</li>
+                <li>Check for typos in navigation file</li>
+            </ul>
+
+            <h4>Error: Build succeeds but content blank</h4>
+            <p><strong>Solutions:</strong></p>
+            <ul>
+                <li>Check include pattern: <code>component:module:file.adoc</code></li>
+                <li>Verify component name in <code>antora.yml</code></li>
+                <li>Ensure sibling repo is cloned (local) or in playbook (CI)</li>
+            </ul>
+
+            <h4>Watch mode not rebuilding</h4>
+            <p><strong>Solutions:</strong></p>
+            <ul>
+                <li>Kill and restart <code>npm run watch:adoc</code></li>
+                <li>Check you're editing files in <code>modules/</code></li>
+                <li>Try manual build: <code>npm run build</code></li>
+            </ul>
+
+            <h3>Helpful Resources</h3>
+            <ul>
+                <li><a href="https://github.com/RedHatQuickCourses/course-starter-template">QuickCourse Template</a> - Starting point for new courses</li>
+                <li><a href="https://docs.asciidoctor.org/asciidoc/latest/">AsciiDoc Documentation</a> - Full syntax reference</li>
+                <li><a href="https://docs.antora.org/">Antora Documentation</a> - Site generator docs</li>
+                <li><code>CLAUDE.md</code> - Repository-specific guidance (in each repo)</li>
+                <li><code>USAGEGUIDE.adoc</code> - AsciiDoc syntax examples (in each repo)</li>
+                <li><code>README.md</code> - Setup and build instructions (in each repo)</li>
+            </ul>
+
+            <h3>FAQ</h3>
+
+            <h4>Q: Can I use Markdown instead of AsciiDoc?</h4>
+            <p><strong>A:</strong> No, Red Hat QuickCourses use AsciiDoc exclusively for richer formatting and Antora compatibility.</p>
+
+            <h4>Q: How do I add videos?</h4>
+            <p><strong>A:</strong> Use pass-through blocks with HTML iframe:</p>
+            <pre><code>++++
+<iframe src="https://youtube.com/embed/..."></iframe>
+++++</code></pre>
+
+            <h4>Q: Can I test the full journey locally without cloning all 10 repos?</h4>
+            <p><strong>A:</strong> Yes, use <code>npx antora antora-playbook.yml --fetch</code>. Antora will clone repos to its cache.</p>
+
+            <h4>Q: How do I update reading time estimates?</h4>
+            <p><strong>A:</strong> Use the included script:</p>
+            <div class="command-block">
+                <div class="command-header">Terminal</div>
+                <div class="command-body">bash reading-time.sh modules/chapter1/pages/section1.adoc</div>
+            </div>
+
+            <h4>Q: What if I want to reorganize the journey phases?</h4>
+            <p><strong>A:</strong> Edit <code>modules/ROOT/nav2.adoc</code> in the journey repo. Just reorder the xref entries. No changes needed in course repos.</p>
+
+            <h4>Q: Can I preview my course before adding to journey?</h4>
+            <p><strong>A:</strong> Yes! Each course repo can be built independently. Run <code>npm run build</code> in your course repo to preview it standalone.</p>
+
+            <div class="callout success">
+                <h4>🎓 You're Ready!</h4>
+                <p>You now have all the knowledge needed to create QuickCourses and contribute to the RHOAI3 Journey. Start small, build incrementally, and use Claude Code to accelerate your work!</p>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>RHOAI3 Journey Learner's Guide</strong></p>
+            <p>Red Hat OpenShift AI 3.x Training • Created with Claude Code</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">
+                For questions or contributions:
+                <a href="https://github.com/RedHatQuickCourses/rhoai3-journey" style="color: var(--primary-purple);">rhoai3-journey on GitHub</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function openTab(evt, tabId) {
+            // Hide all tab contents
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let content of tabContents) {
+                content.classList.remove('active');
+            }
+
+            // Remove active class from all buttons
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let button of tabButtons) {
+                button.classList.remove('active');
+            }
+
+            // Show selected tab and mark button as active
+            document.getElementById(tabId).classList.add('active');
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add('active');
+            }
+
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handle decision tree clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            const decisionOptions = document.querySelectorAll('.decision-option');
+            decisionOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    if (!e.target.hasAttribute('onclick')) {
+                        return;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
