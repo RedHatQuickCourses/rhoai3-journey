@@ -1,6 +1,6 @@
 // Learner-oriented navigation (v2). Same xrefs as nav.adoc; labels emphasize outcomes and journey language.
 // To use this file, point antora.yml nav at modules/ROOT/nav2.adoc (or merge entries you prefer into nav.adoc).
-* xref:index.adoc[Overview of the Journey]
+* xref:index.adoc[Foundations for Scalable AI]
 
 * 0: Operator Ecosystem
 ** xref:p0-operators-home.adoc[Operators - OpenShift Ecosystem ]
