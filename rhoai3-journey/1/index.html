@@ -156,7 +156,7 @@
     <a class="nav-link" href="p2-gpu-section2.html">Hands-on — time-slicing (GPU node required)</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <span class="nav-text">xref:p2-gpu-section3.adoc[Hands-on— Kueue, gpu hardware profiles</span>
+    <a class="nav-link" href="p2-gpu-section3.html">Hands-on— Kueue, gpu hardware profiles</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="p2-gpu-section4.html">Hands-on — GPU aggregation (GPU node required)</a>
@@ -371,7 +371,7 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p><strong>Learn more about the course structure and adding your expertises:</strong></p>
+<p><strong>Learn more about the course structure or contribute your expertise:</strong></p>
 </div>
 <div class="ulist">
 <ul>
@@ -417,6 +417,11 @@
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_solution"><a class="anchor" href="#_the_solution"></a>The Solution</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p><strong>Centralized Gen AI Model-as-a-Service (MaaS) Platform</strong></p>
 </div>
@@ -451,15 +456,15 @@
 <p>This deployment guide assumes you are a platform engineer starting with a greenfield Red Hat OpenShift AI environment equipped with multiple GPUs. Your business mandate is to flip that narrative: to move from consuming tokens to generating them at a lower cost than public APIs.</p>
 </div>
 <div class="paragraph">
-<p>By treating Red Hat OpenShift AI as the AI plaform for an on-premise industrial token factory, we focus on saturating GPU hardware for maximum ROI. We are building a secure, governed foundation that can support everything from basic inference to complex Compound AI Systems and Agentic workflows.</p>
+<p>By treating Red Hat OpenShift AI as the AI platform for an on-premise industrial token factory, we focus on saturating GPU hardware for maximum ROI. We are building a secure, governed foundation that can support everything from basic inference to complex Compound AI Systems and Agentic workflows.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_modular_approah_phases"><a class="anchor" href="#_the_modular_approah_phases"></a>The Modular Approah - Phases</h2>
+<h2 id="_the_modular_approach_phases"><a class="anchor" href="#_the_modular_approach_phases"></a>The Modular Approach - Phases</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This collection of courses provides an opinionated set of patterns for building a shared platform, which could evolve into a Model-as-a-Service (MaaS) self-service generative AI resource. Starting from an OpenShift Container Platform, each phase—and its constituent modules—functions as a standalone lesson, focusing on a specific Red Hat OpenShift AI capability and its command-line deployment and configuration.</p>
+<p>This collection of courses provides an opinionated set of patterns for building a shared platform, which could evolve into a Model-as-a-Service (MaaS) self-service generative AI resource. Starting from an OpenShift Container Platform, each phase—and its constituent modules—function as a standalone lesson, focusing on a specific Red Hat OpenShift AI capability and its command-line deployment and configuration.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -477,8 +482,8 @@
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Phase 0:</strong> OpenShift Operator Ecosystem</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Installation and configuiration</strong> Before you can use OpenShift AI, we must install the dependent infrastructure operators and the core OpenShift AI Operator. Once the operators are installed, we’ll configure the cluster policies and settings to ensure the platform is fully ready for the journey to come.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Covered:</strong> Red Hat OpenShift AI Operator, Node Feature Discovery (NFD) Operator, NVIDIA GPU Operator, cert-manager Operator, Leader Worker Set Operator, Red Hat Connectivity Link Operator, Kueue Operator (RHBOK),</p>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Installation and configuration</strong> Before you can use OpenShift AI, you must install the dependent infrastructure operators and the core OpenShift AI Operator. Once the operators are installed, we’ll configure the cluster policies and settings to ensure the platform is fully ready for the journey to come.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Covered:</strong> Red Hat OpenShift AI Operator, Node Feature Discovery (NFD) Operator, NVIDIA GPU Operator, cert-manager Operator, Leader Worker Set Operator, Red Hat Connectivity Link Operator, and Kueue Operator (RHBOK).</p>
 <p class="tableblock"><strong>Self-study:</strong> Job-set-operator, openshift-custom-metrics-autoscaler-operator, SR-IOV Operator, OpenTelemetry, Tempo, Cluster Observability Operator.</p></td>
 </tr>
 <tr>
@@ -493,7 +498,7 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Phase 3:</strong> Scaling the Utility</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Distributed Inference, MaaS, and Observability.</strong> Here, we scale the operation. We move to distributed inference using llm-d to handle massive workloads. We also expose these models via Model-as-a-Service (MaaS) API endpoints for internal consumption, and implement observability metrics to monitor the health and throughput of the token factory.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Distributed Inference, MaaS, and Observability.</strong> Here, we scale the operation. We move to distributed inference using <em>llm-d</em> to handle massive workloads. We also expose these models via Model-as-a-Service (MaaS) API endpoints for internal consumption, and implement observability metrics to monitor the health and throughput of the token factory.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">llm-d, MaaS APIs, AI Gateway, Prometheus/Grafana</p></td>
 </tr>
 <tr>
@@ -512,13 +517,13 @@
 <p>Follow the phases sequentially to build your platform from the ground up, or jump directly to a specific module to deploy a targeted capability.</p>
 </div>
 <div class="paragraph">
-<p>Each module in this series is standalone; you do not have to complete them in order.</p>
+<p>Each module in this series is standalone. You do not have to complete them in order.</p>
 </div>
 <div class="paragraph">
 <p><strong>Ready to start building?</strong> Proceed to <strong> #1: Assembling the Factory</strong>.</p>
 </div>
 <div class="paragraph">
-<p><strong>Need more details on RHOAI installation or Operator setup</strong> Proceed to <strong> #0: Operator Ecosystem</strong>.</p>
+<p>*Need more details on RHOAI installation or Operator setup: Proceed to <strong> #0: Operator Ecosystem</strong>.</p>
 </div>
 </div>
 </div>
