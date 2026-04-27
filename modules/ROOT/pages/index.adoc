@@ -6,7 +6,35 @@
 [.lead]
 *Welcome to the journey of building a scalable AI generation engine.*
 
-In this series, we deliberately opted for business value and simplified deployment over technical depth. By the time you finish, you won't just know what the buttons do; you will have deployed and engineered a working, scalable token generating platform.  
+In this series, we deliberately opted for business value and simplified deployment over technical depth. By the time you finish, you won't just know what the buttons do; you will have deployed and engineered a working, scalable token generating platform.
+
+[NOTE]
+====
+*Additional Resources:*
+
+* link:../../../rhoai3-journey-guide.html[User Guide^] - Offline usage, customization, and course overview
+* link:../../../rhoai3-journey-learner-guide.html[Learner's Guide & Collaboration Guide^] - For contributors and course creators
+====
+
+== The Problem We're Solving
+
+Organizations currently face a *GPU crisis* where expensive, limited hardware is trapped within individual teams. This leads to simultaneous idle capacity and project bottlenecks.
+
+*Without a centralized approach:*
+
+* Teams request and manage their own dedicated GPUs
+* Expensive hardware sits under-utilized while high-priority projects stall
+* No centralized orchestration to enforce usage quotas
+* Lack of multi-tenant security and standardized model library
+* GPU resources locked in silos
+
+*This journey solves this through Models as a Service (MaaS):*
+
+* Acts as a governance layer between users and model serving infrastructure
+* Enables efficient GPU resource sharing and allocation
+* Provides centralized model catalog and lifecycle management
+* Enforces usage quotas and multi-tenant security
+* Transforms GPU infrastructure from isolated assets to a shared utility
 
 == Why This Approach?
 

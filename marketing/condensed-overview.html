@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RHOAI 3.x Journey - Overview</title>
+    <style>
+        @page {
+            size: letter;
+            margin: 0.75in;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            font-size: 10.5pt;
+        }
+
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            margin: 0 auto;
+            padding: 0.75in;
+            background: white;
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #cc0000 0%, #8b0000 100%);
+            color: white;
+            padding: 20px;
+            margin: -0.75in -0.75in 20px -0.75in;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28pt;
+            font-weight: bold;
+        }
+
+        header .subtitle {
+            font-size: 13pt;
+            margin-top: 8px;
+            opacity: 0.95;
+        }
+
+        h2 {
+            color: #cc0000;
+            font-size: 14pt;
+            border-bottom: 2px solid #cc0000;
+            padding-bottom: 4px;
+            margin: 18px 0 10px 0;
+        }
+
+        h3 {
+            color: #004153;
+            font-size: 11.5pt;
+            margin: 12px 0 6px 0;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul, ol {
+            margin: 6px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 3px 0;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 12px 0;
+        }
+
+        .box {
+            border: 2px solid #ddd;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .problem-box {
+            background: #fff5f5;
+            border-color: #cc0000;
+        }
+
+        .solution-box {
+            background: #f0f8ff;
+            border-color: #0066cc;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .stat {
+            background: #004153;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 18pt;
+            font-weight: bold;
+            color: #ffc107;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 8.5pt;
+            margin-top: 4px;
+        }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 10px 0;
+        }
+
+        .phase-card {
+            border: 2px solid #0066cc;
+            border-radius: 6px;
+            padding: 10px;
+            background: #f9f9ff;
+        }
+
+        .phase-header {
+            background: #004153;
+            color: white;
+            padding: 6px 10px;
+            margin: -10px -10px 8px -10px;
+            border-radius: 4px 4px 0 0;
+            font-weight: bold;
+            font-size: 10pt;
+        }
+
+        .phase-card ul {
+            font-size: 9.5pt;
+            margin: 6px 0;
+        }
+
+        .highlight {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 10pt;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 10px 0;
+        }
+
+        .value-box {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .value-icon {
+            font-size: 24pt;
+            margin-bottom: 4px;
+        }
+
+        .value-title {
+            font-weight: bold;
+            color: #004153;
+            font-size: 9.5pt;
+            margin-bottom: 3px;
+        }
+
+        .value-desc {
+            font-size: 8.5pt;
+            color: #666;
+            line-height: 1.3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 9.5pt;
+        }
+
+        table th {
+            background: #004153;
+            color: white;
+            padding: 6px;
+            text-align: left;
+            font-size: 9pt;
+        }
+
+        table td {
+            padding: 6px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table {
+            margin: 10px 0;
+        }
+
+        .comparison-table td:first-child {
+            width: 15%;
+            font-weight: bold;
+            color: #004153;
+        }
+
+        .before {
+            background: #fff5f5;
+        }
+
+        .after {
+            background: #f0fff0;
+        }
+
+        .footer-box {
+            background: #004153;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .footer-box strong {
+            font-size: 12pt;
+            color: #ffc107;
+        }
+
+        @media print {
+            body {
+                font-size: 10pt;
+            }
+            .page {
+                padding: 0;
+                margin: 0;
+            }
+            header {
+                margin: 0 0 20px 0;
+            }
+        }
+
+        .compact-list {
+            columns: 2;
+            column-gap: 15px;
+            margin: 8px 0;
+        }
+
+        .compact-list li {
+            break-inside: avoid;
+            font-size: 9.5pt;
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page">
+    <header>
+        <h1>The RHOAI 3.x Journey</h1>
+        <div class="subtitle">From Shadow AI to Strategic Asset: Industrialized GenAI Platform</div>
+    </header>
+
+    <div class="two-col">
+        <div class="box problem-box">
+            <h3 style="margin-top: 0; color: #cc0000;">❌ The Shadow AI Crisis</h3>
+            <ul style="font-size: 9.5pt;">
+                <li>Unpredictable costs from external API providers</li>
+                <li>Data sovereignty and compliance risks</li>
+                <li>GPU hardware sitting 60-80% idle</li>
+                <li>No model governance or version control</li>
+                <li>Fragmented, non-scalable solutions</li>
+                <li>Security gaps from unauthorized AI tools</li>
+            </ul>
+        </div>
+        <div class="box solution-box">
+            <h3 style="margin-top: 0; color: #0066cc;">✅ The Strategic Solution</h3>
+            <ul style="font-size: 9.5pt;">
+                <li>On-premise token generation utility</li>
+                <li>100% data sovereignty on your infrastructure</li>
+                <li>70-85% GPU utilization through sharing</li>
+                <li>Complete audit trail and governance</li>
+                <li>Platform approach with reusable patterns</li>
+                <li>Governed model registry and catalog</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Measurable Business Outcomes</h2>
+    <div class="stats-grid">
+        <div class="stat">
+            <span class="stat-number">3-5x</span>
+            <div class="stat-label">GPU Utilization Increase</div>
+        </div>
+        <div class="stat">
+            <span class="stat-number">40-60%</span>
+            <div class="stat-label">Infrastructure Cost Reduction</div>
+        </div>
+        <div class="stat">
+            <span class="stat-number">10x</span>
+            <div class="stat-label">Faster Time-to-Production</div>
+        </div>
+        <div class="stat">
+            <span class="stat-number">70-75%</span>
+            <div class="stat-label">Learning Time Reduction</div>
+        </div>
+    </div>
+
+    <h2>The Journey: Four Strategic Phases</h2>
+    <p style="font-size: 9.5pt; margin-bottom: 10px;">A unified learning path combining <strong>10 specialized training courses</strong> into one outcome-focused deployment guide. Total time investment: <strong>30-50 hours</strong> from greenfield to production.</p>
+
+    <div class="phase-grid">
+        <div class="phase-card">
+            <div class="phase-header">Phase 0: Operator Ecosystem (2-4 hrs)</div>
+            <ul>
+                <li>Install RHOAI, NVIDIA GPU, NFD operators</li>
+                <li>Configure cert-manager, Kueue, LWS</li>
+                <li>Set cluster policies and readiness</li>
+            </ul>
+            <strong style="font-size: 9pt;">Outcome:</strong> <span style="font-size: 9pt;">Foundation for multi-tenant AI platform</span>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-header">Phase 1: Assembling the Factory (8-12 hrs)</div>
+            <ul>
+                <li>Model Registry & Catalog governance</li>
+                <li>Data storage connections and credentials</li>
+                <li>Hardware Profiles abstraction layer</li>
+                <li>GPU-as-a-Service (time-slicing, MIG)</li>
+            </ul>
+            <strong style="font-size: 9pt;">Outcome:</strong> <span style="font-size: 9pt;">End Shadow AI through centralized governance</span>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-header">Phase 2: Token Production Engine (6-10 hrs)</div>
+            <ul>
+                <li>KServe serving architecture</li>
+                <li>vLLM inference engine deployment</li>
+                <li>VRAM sizing and memory optimization</li>
+                <li>Model compression strategies</li>
+            </ul>
+            <strong style="font-size: 9pt;">Outcome:</strong> <span style="font-size: 9pt;">High-throughput token generation at scale</span>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-header">Phase 3: Scaling the Utility (6-10 hrs)</div>
+            <ul>
+                <li>Distributed inference with llm-d</li>
+                <li>Model-as-a-Service (MaaS) APIs</li>
+                <li>API Gateway and multi-tenancy</li>
+                <li>Observability (Prometheus/Grafana)</li>
+            </ul>
+            <strong style="font-size: 9pt;">Outcome:</strong> <span style="font-size: 9pt;">Democratize AI across organization</span>
+        </div>
+    </div>
+
+    <h2>Before vs. After: Real-World Transformation</h2>
+    <table class="comparison-table">
+        <tr>
+            <td><strong>GPU Access</strong></td>
+            <td class="before">Teams wait weeks for provisioning</td>
+            <td class="after">Self-service deployment in minutes</td>
+        </tr>
+        <tr>
+            <td><strong>Costs</strong></td>
+            <td class="before">$50K-$200K/yr per team in external APIs</td>
+            <td class="after">Predictable on-premise costs, 70-90% reduction</td>
+        </tr>
+        <tr>
+            <td><strong>GPU Utilization</strong></td>
+            <td class="before">20-30% (over-reservation waste)</td>
+            <td class="after">70-85% through time-slicing and queuing</td>
+        </tr>
+        <tr>
+            <td><strong>Governance</strong></td>
+            <td class="before">No version control, unauthorized tools</td>
+            <td class="after">Complete audit trail, governed catalog</td>
+        </tr>
+        <tr>
+            <td><strong>Deployment Speed</strong></td>
+            <td class="before">Months of trial-and-error</td>
+            <td class="after">Days with proven patterns</td>
+        </tr>
+    </table>
+
+    <div class="footer-box">
+        <p style="margin: 0;"><strong>Transform fragmented experimentation into strategic advantage</strong></p>
+        <p style="margin: 5px 0 0 0; font-size: 9.5pt;">Red Hat OpenShift AI 3.x—Production AI at Enterprise Scale</p>
+    </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+    <h2 style="margin-top: 0; color: #004153; font-size: 16pt; text-align: center; border: none;">Why This Approach Works</h2>
+
+    <div class="highlight">
+        <strong style="color: #004153;">The Cookbook Method:</strong> Operationalize first, understand second, optimize third. Deploy proven patterns in hours, learn business value from running systems, tune for your specific workload requirements.
+    </div>
+
+    <h2>What You Get in Every Module</h2>
+    <div class="value-grid">
+        <div class="value-box">
+            <div class="value-icon">⚡</div>
+            <div class="value-title">Deployment Scripts</div>
+            <div class="value-desc">Command-line automation to operationalize features in minutes</div>
+        </div>
+        <div class="value-box">
+            <div class="value-icon">💼</div>
+            <div class="value-title">Business Context</div>
+            <div class="value-desc">ROI and organizational value for every capability</div>
+        </div>
+        <div class="value-box">
+            <div class="value-icon">🏗️</div>
+            <div class="value-title">Architecture Guidance</div>
+            <div class="value-desc">Why decisions were made, where features fit</div>
+        </div>
+        <div class="value-box">
+            <div class="value-icon">🔬</div>
+            <div class="value-title">Hands-On Labs</div>
+            <div class="value-desc">Guided exercises to verify and explore</div>
+        </div>
+        <div class="value-box">
+            <div class="value-icon">📊</div>
+            <div class="value-title">Field Notes</div>
+            <div class="value-desc">Production realities from practitioners at scale</div>
+        </div>
+        <div class="value-box">
+            <div class="value-icon">🎯</div>
+            <div class="value-title">Optimization Tips</div>
+            <div class="value-desc">Tuning parameters and cost-reduction strategies</div>
+        </div>
+    </div>
+
+    <h2>Skills You'll Build</h2>
+    <ul class="compact-list">
+        <li><strong>Infrastructure as Code</strong> - Automate RHOAI deployment</li>
+        <li><strong>GPU Operations</strong> - Time-slicing, MIG, optimization</li>
+        <li><strong>Model Governance</strong> - Registry, catalog, compliance</li>
+        <li><strong>Inference Optimization</strong> - vLLM tuning, VRAM sizing</li>
+        <li><strong>Distributed Systems</strong> - llm-d architecture, routing</li>
+        <li><strong>Platform Engineering</strong> - Multi-tenancy, self-service</li>
+        <li><strong>Observability</strong> - Metrics, dashboards, alerting</li>
+        <li><strong>Cost Optimization</strong> - Resource sharing, compression</li>
+    </ul>
+
+    <h2>Strategic Imperatives Addressed</h2>
+
+    <div class="two-col">
+        <div>
+            <h3>1. Data Sovereignty & Compliance</h3>
+            <p style="font-size: 9.5pt;">Regulatory frameworks (GDPR, HIPAA, SOC2) demand control. Build zero-trust architecture where your data never leaves your infrastructure.</p>
+
+            <h3>2. Cost Predictability</h3>
+            <p style="font-size: 9.5pt;">External token-based pricing creates budget uncertainty. On-premise AI converts unpredictable opex into manageable capex with linear scaling.</p>
+        </div>
+        <div>
+            <h3>3. Competitive Differentiation</h3>
+            <p style="font-size: 9.5pt;">Organizations that master AI infrastructure move faster. When deployment drops from months to days, you can out-iterate competitors.</p>
+
+            <h3>4. Technical Debt Reduction</h3>
+            <p style="font-size: 9.5pt;">Every team building their own AI creates duplicated effort. Platform approach eliminates redundant work and creates reusable capabilities.</p>
+        </div>
+    </div>
+
+    <h2>Who This Journey Serves</h2>
+    <table style="font-size: 9.5pt;">
+        <tr>
+            <th>Role</th>
+            <th>Value Delivered</th>
+        </tr>
+        <tr>
+            <td><strong>Platform Engineers</strong></td>
+            <td>Deploy production-grade AI infrastructure without years of trial-and-error</td>
+        </tr>
+        <tr>
+            <td><strong>ML/AI Teams</strong></td>
+            <td>Focus on model development, not infrastructure plumbing</td>
+        </tr>
+        <tr>
+            <td><strong>Security & Compliance</strong></td>
+            <td>Implement governed AI with full audit trails and access controls</td>
+        </tr>
+        <tr>
+            <td><strong>Finance & Operations</strong></td>
+            <td>Gain cost predictability and maximize GPU capital investment ROI</td>
+        </tr>
+        <tr>
+            <td><strong>Executive Leadership</strong></td>
+            <td>Accelerate AI adoption while reducing risk and controlling costs</td>
+        </tr>
+    </table>
+
+    <h2>The Time Investment vs. Traditional Learning</h2>
+    <div class="two-col" style="margin-top: 10px;">
+        <div class="box" style="background: #fff5f5; border-color: #cc0000;">
+            <h3 style="margin-top: 0; color: #cc0000; text-align: center;">❌ Learning from Scratch</h3>
+            <p style="text-align: center; font-size: 20pt; font-weight: bold; margin: 10px 0; color: #cc0000;">120-200 hrs</p>
+            <ul style="font-size: 9.5pt;">
+                <li>Read 500+ pages of documentation</li>
+                <li>Trial-and-error on deployment patterns</li>
+                <li>Troubleshoot undocumented issues</li>
+                <li>Redesign after production failures</li>
+                <li>Learn 80% of irrelevant details</li>
+            </ul>
+        </div>
+        <div class="box" style="background: #f0fff0; border-color: #00cc00;">
+            <h3 style="margin-top: 0; color: #00aa00; text-align: center;">✅ The RHOAI 3.x Journey</h3>
+            <p style="text-align: center; font-size: 20pt; font-weight: bold; margin: 10px 0; color: #00aa00;">30-50 hrs</p>
+            <ul style="font-size: 9.5pt;">
+                <li>Deploy with provided automation</li>
+                <li>Learn from running systems</li>
+                <li>Proven configurations that work</li>
+                <li>Understand business value immediately</li>
+                <li>Focus on optimization, not basics</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-box">
+        <p style="margin: 0; font-size: 11pt;"><strong>Ready to transform your AI strategy?</strong></p>
+        <p style="margin: 8px 0 0 0; font-size: 9.5pt;">A unified learning path combining 10 specialized courses into one deployment guide</p>
+        <p style="margin: 5px 0 0 0; font-size: 9.5pt;">From greenfield installation to production-scale AI services—delivered with the efficiency your organization demands</p>
+    </div>
+</div>
+
+</body>
+</html>

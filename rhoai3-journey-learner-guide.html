@@ -7,8 +7,10 @@
     <style>
         :root {
             --rh-red: #ee0000;
-            --primary-purple: #667eea;
-            --secondary-purple: #764ba2;
+            --rh-dark-red: #a30000;
+            --rh-black: #000000;
+            --primary-color: #ee0000;
+            --secondary-color: #a30000;
             --text-dark: #333;
             --text-light: #6c757d;
             --bg-white: #fff;
@@ -46,7 +48,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--secondary-purple) 100%);
+            background: linear-gradient(135deg, var(--rh-black) 0%, var(--rh-dark-red) 50%, var(--rh-red) 100%);
             color: white;
             padding: 3rem 2rem;
             text-align: center;
@@ -100,8 +102,8 @@
         }
 
         .tab-button:hover {
-            background: rgba(102, 126, 234, 0.1);
-            color: var(--primary-purple);
+            background: rgba(238, 0, 0, 0.1);
+            color: var(--primary-color);
         }
 
         .tab-button.active {
@@ -127,7 +129,7 @@
 
         /* Typography */
         h2 {
-            color: var(--primary-purple);
+            color: var(--primary-color);
             font-size: 2rem;
             margin: 2rem 0 1rem;
             padding-bottom: 0.5rem;
@@ -135,7 +137,7 @@
         }
 
         h3 {
-            color: var(--secondary-purple);
+            color: var(--secondary-color);
             font-size: 1.5rem;
             margin: 1.5rem 0 1rem;
         }
@@ -247,7 +249,7 @@
             border-radius: 8px;
             font-family: 'Courier New', monospace;
             margin: 1.5rem 0;
-            border-left: 4px solid var(--primary-purple);
+            border-left: 4px solid var(--primary-color);
             font-size: 0.9rem;
             line-height: 1.8;
         }
@@ -281,7 +283,7 @@
             top: 0;
             width: 2rem;
             height: 2rem;
-            background: var(--primary-purple);
+            background: var(--primary-color);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -330,13 +332,13 @@
         }
 
         .card:hover {
-            border-color: var(--primary-purple);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 20px rgba(238, 0, 0, 0.2);
             transform: translateY(-5px);
         }
 
         .card h4 {
-            color: var(--primary-purple);
+            color: var(--primary-color);
             margin-top: 0;
             margin-bottom: 1rem;
         }
@@ -352,7 +354,7 @@
         }
 
         .workflow-step {
-            background: var(--primary-purple);
+            background: var(--primary-color);
             color: white;
             padding: 1rem 1.5rem;
             border-radius: 8px;
@@ -363,7 +365,7 @@
 
         .workflow-arrow {
             font-size: 1.5rem;
-            color: var(--primary-purple);
+            color: var(--primary-color);
             font-weight: bold;
         }
 
@@ -388,7 +390,7 @@
         }
 
         tr:hover {
-            background: rgba(102, 126, 234, 0.05);
+            background: rgba(238, 0, 0, 0.05);
         }
 
         /* Badges */
@@ -417,7 +419,7 @@
 
         .decision-node {
             background: var(--bg-white);
-            border: 2px solid var(--primary-purple);
+            border: 2px solid var(--primary-color);
             border-radius: 8px;
             padding: 1rem;
             margin: 1rem 0;
@@ -426,7 +428,7 @@
 
         .decision-option {
             display: inline-block;
-            background: var(--primary-purple);
+            background: var(--primary-color);
             color: white;
             padding: 0.75rem 1.5rem;
             margin: 0.5rem;
@@ -437,7 +439,7 @@
         }
 
         .decision-option:hover {
-            background: var(--secondary-purple);
+            background: var(--secondary-color);
             transform: scale(1.05);
         }
 
@@ -495,7 +497,9 @@
 
         <nav class="tab-nav">
             <div class="tab-buttons">
-                <button class="tab-button active" onclick="openTab(event, 'getting-started')">Getting Started</button>
+                <button class="tab-button active" onclick="openTab(event, 'course-overview')">Course Overview</button>
+                <button class="tab-button" onclick="openTab(event, 'getting-started')">Getting Started</button>
+                <button class="tab-button" onclick="openTab(event, 'antora-structure')">Antora Structure</button>
                 <button class="tab-button" onclick="openTab(event, 'create-course')">Create a QuickCourse</button>
                 <button class="tab-button" onclick="openTab(event, 'add-content')">Add Content to Journey</button>
                 <button class="tab-button" onclick="openTab(event, 'submit-prs')">Submit Issues & PRs</button>
@@ -504,8 +508,213 @@
             </div>
         </nav>
 
-        <!-- Tab 1: Getting Started -->
-        <div id="getting-started" class="tab-content active">
+        <!-- Tab 1: Course Overview -->
+        <div id="course-overview" class="tab-content active">
+            <h2>Red Hat OpenShift AI 3.x Course Series Overview</h2>
+
+            <div class="callout info">
+                <h4>🎯 Welcome to the Foundation of Scalable AI</h4>
+                <p>A unified learning journey designed to help you or your organization move from a greenfield OpenShift cluster to an operational, production-grade AI platform in a few hours.</p>
+            </div>
+
+            <h3>The Problem We're Solving</h3>
+            <p>Organizations currently face a <strong>GPU crisis</strong> where expensive, limited hardware is trapped within individual teams. This leads to simultaneous idle capacity and project bottlenecks.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>⚠️ Without Centralized Approach</h4>
+                    <ul>
+                        <li>Dedicated GPUs sit under-utilized</li>
+                        <li>High-priority projects stall</li>
+                        <li>No usage quotas or governance</li>
+                        <li>Lack of multi-tenant security</li>
+                        <li>No standardized model library</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>✅ With Models as a Service (MaaS)</h4>
+                    <ul>
+                        <li>Centralized governance layer</li>
+                        <li>Efficient GPU utilization</li>
+                        <li>Enforced usage quotas</li>
+                        <li>Multi-tenant security</li>
+                        <li>Standardized model catalog</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>The Challenge & Our Approach</h3>
+            <p><strong>The Question:</strong> How fast can you move from "we want AI" to "AI delivers business value"?</p>
+
+            <div class="callout warn">
+                <h4>⚠️ The Traditional Timeline</h4>
+                <p>Most organizations struggle with <strong>6–18 months</strong> of infrastructure setup before development begins.</p>
+                <ul>
+                    <li>GPU costs are high</li>
+                    <li>Governance is hard</li>
+                    <li>Complexity is distributed</li>
+                </ul>
+            </div>
+
+            <div class="callout success">
+                <h4>✅ Our Solution</h4>
+                <p>A <strong>progressive, opinionated architecture</strong> that's a starting point—not the final destination. We show you the business decision, then the technical implementation. No fluff. Result-focused.</p>
+            </div>
+
+            <h3>The Learning Journey: 5 Phases</h3>
+            <div class="workflow">
+                <div class="workflow-step" style="background: #0066cc;">Phase 0<br>Operators<br>(1 hour)</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step" style="background: #e65100;">Phase 1<br>Assemble<br>(2-3 hours)</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step" style="background: #7b1fa2;">Phase 2<br>Deploy<br>(1-2 hours)</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step" style="background: #2e7d32;">Phase 3<br>Scale<br>(2-3 hours)</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step" style="background: #c2185b;">Phase 4<br>Validate<br>(WIP)</div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Focus</th>
+                        <th>Duration</th>
+                        <th>Outcome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge badge-phase0">Phase 0</span></td>
+                        <td>Operator Ecosystem</td>
+                        <td>~1 hour</td>
+                        <td>OpenShift operators installed and configured</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-phase1">Phase 1</span></td>
+                        <td>Assembling the Factory</td>
+                        <td>2-3 hours</td>
+                        <td>Storage, Registry, Catalog, Hardware Profiles, GPU-aaS configured</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-phase2">Phase 2</span></td>
+                        <td>Token Production Engine</td>
+                        <td>1-2 hours</td>
+                        <td>Model serving with KServe and vLLM deployed</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-phase3">Phase 3</span></td>
+                        <td>Scaling the Utility</td>
+                        <td>2-3 hours</td>
+                        <td>Distributed inference (llm-d) and MaaS platform operational</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-phase4">Phase 4</span></td>
+                        <td>Quality and SLOs</td>
+                        <td>WIP</td>
+                        <td>Validation services and automated quality checks</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>A Note on This Series</h3>
+            <div class="callout tip">
+                <h4>💡 AI-Assisted Course Creation</h4>
+                <p>These courses were created with AI assistance. They provide <strong>basic, functional code</strong> to stand up your environment quickly.</p>
+                <p><strong>Important:</strong> This code is <span class="highlight">NOT production-ready CI/CD</span>—that's your next phase.</p>
+            </div>
+
+            <p>Our focus here is <strong>technical implementation driven by business decisions</strong> and real problems you're solving. We show you <em>how to get a result</em> so you can explore the platform as a whole.</p>
+
+            <p>You'll learn deeper troubleshooting and architectural complexity later, after you have a working environment.</p>
+
+            <h3>Why This Works</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>📚 Progressive</h4>
+                    <p>Each phase builds on the last. Understand <em>why</em> before executing <em>how</em>.</p>
+                </div>
+                <div class="card">
+                    <h4>⚡ Hands-On</h4>
+                    <p>Copy-paste ready YAML and scripts. Deploy on day one.</p>
+                </div>
+                <div class="card">
+                    <h4>💼 Business-Aligned</h4>
+                    <p>Technical decisions tied directly to business outcomes.</p>
+                </div>
+                <div class="card">
+                    <h4>🔧 Extensible</h4>
+                    <p>Opinionated starting point. Adapt and extend for production.</p>
+                </div>
+            </div>
+
+            <h3>Your Path Forward</h3>
+            <ol class="step-list">
+                <li>
+                    <strong>Learn</strong>
+                    <p>Complete the rhoai3-journey in ~5-10 hours total</p>
+                </li>
+                <li>
+                    <strong>Operate</strong>
+                    <p>Run your AI platform and measure business impact</p>
+                </li>
+                <li>
+                    <strong>Extend</strong>
+                    <p>Create custom modules for your specific domain, compliance, or workload</p>
+                </li>
+                <li>
+                    <strong>Contribute</strong>
+                    <p>Share your modules with the community</p>
+                </li>
+            </ol>
+
+            <h3>Getting Started</h3>
+            <p>Each module follows a consistent pattern:</p>
+            <div class="workflow">
+                <div class="workflow-step">Business Value</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Architecture</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Implementation</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Validation</div>
+            </div>
+
+            <div class="callout success">
+                <h4>🚀 Ready to Begin?</h4>
+                <p>Start with <strong>Phase 1</strong> this week. Get storage, registry, and catalog running. Explore the platform.</p>
+                <p>Once you have the foundation, everything else becomes easier—and you'll be ready to invest in production-grade tooling and governance.</p>
+                <p><strong>The real learning happens when you run it yourself.</strong></p>
+            </div>
+
+            <h3>Next Steps</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>New to the Journey?</h4>
+                    <p>Click <strong>Getting Started</strong> to understand the architecture and set up your workspace.</p>
+                </div>
+                <div class="card">
+                    <h4>Want to Understand the Tech?</h4>
+                    <p>Check out <strong>Antora Structure</strong> to learn how the course system works.</p>
+                </div>
+                <div class="card">
+                    <h4>Ready to Create Content?</h4>
+                    <p>Jump to <strong>Create a QuickCourse</strong> to build your own training modules.</p>
+                </div>
+                <div class="card">
+                    <h4>Just Want to Use the Course?</h4>
+                    <p>See the <strong><a href="rhoai3-journey-guide.html" style="color: var(--primary-color);">User Guide</a></strong> for offline setup and customization.</p>
+                </div>
+            </div>
+
+            <div class="callout info">
+                <h4>📖 Looking for the User Guide?</h4>
+                <p><strong>This guide is for contributors and course creators.</strong> If you're looking to use the course, customize it for your organization, or set up offline access, visit the <strong><a href="rhoai3-journey-guide.html" style="color: var(--primary-color);">User Guide</a></strong>.</p>
+            </div>
+        </div>
+
+        <!-- Tab 2: Getting Started -->
+        <div id="getting-started" class="tab-content">
             <h2>Getting Started with RHOAI3 Journey</h2>
 
             <div class="callout info">
@@ -603,7 +812,358 @@ parent/<br>
             </div>
         </div>
 
-        <!-- Tab 2: Create a QuickCourse -->
+        <!-- Tab 3: Antora Structure -->
+        <div id="antora-structure" class="tab-content">
+            <h2>Understanding Antora & Course Structure</h2>
+
+            <div class="callout info">
+                <h4>🎯 What is Antora?</h4>
+                <p><strong>Antora</strong> is a static site generator designed specifically for creating documentation sites from AsciiDoc files stored across multiple git repositories.</p>
+                <p>It's the engine that powers the RHOAI3 Journey and all Red Hat QuickCourses.</p>
+            </div>
+
+            <h3>Why Antora for Training Content?</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>📦 Component-Based</h4>
+                    <p>Each course is a separate "component" that can be versioned, built, and published independently.</p>
+                </div>
+                <div class="card">
+                    <h4>🔗 Multi-Repository</h4>
+                    <p>Aggregate content from multiple git repositories into a single unified site.</p>
+                </div>
+                <div class="card">
+                    <h4>📚 Content Reuse</h4>
+                    <p>Include and reference content across components using xref and include directives.</p>
+                </div>
+                <div class="card">
+                    <h4>🎨 Consistent UI</h4>
+                    <p>Single UI bundle applied across all courses for brand consistency.</p>
+                </div>
+            </div>
+
+            <h3>Antora Terminology</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Definition</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Component</strong></td>
+                        <td>A discrete unit of documentation (typically one course/repo)</td>
+                        <td><code>rhoai3-storage</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Module</strong></td>
+                        <td>A subdivision of a component (usually by topic/chapter)</td>
+                        <td><code>chapter1</code>, <code>ROOT</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Page</strong></td>
+                        <td>An individual AsciiDoc file that becomes an HTML page</td>
+                        <td><code>section1.adoc</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Playbook</strong></td>
+                        <td>Configuration file that defines what content to build</td>
+                        <td><code>antora-playbook.yml</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Component Descriptor</strong></td>
+                        <td>Metadata file for a component</td>
+                        <td><code>antora.yml</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>UI Bundle</strong></td>
+                        <td>Theme/template that controls site appearance</td>
+                        <td><code>ui-bundle.zip</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Standard Antora Repository Structure</h3>
+            <div class="tree-structure">
+<strong>Single Course Repository (e.g., rhoai3-storage)</strong><br>
+rhoai3-storage/<br>
+├── antora.yml                  # Component descriptor<br>
+│   ├── name: rhoai3-storage    # Component identifier<br>
+│   ├── title: Course Title     # Display title<br>
+│   ├── version: 3.3            # Version number<br>
+│   └── nav: [...]              # Navigation files<br>
+│<br>
+├── modules/                    # All content goes here<br>
+│   ├── ROOT/                   # Default/root module<br>
+│   │   ├── nav.adoc            # Navigation for ROOT<br>
+│   │   ├── pages/              # AsciiDoc content files<br>
+│   │   │   └── index.adoc      # Landing page<br>
+│   │   ├── images/             # Images for ROOT module<br>
+│   │   ├── examples/           # Code examples<br>
+│   │   └── attachments/        # Downloadable files<br>
+│   │<br>
+│   └── chapter1/               # Additional module (chapter)<br>
+│       ├── nav.adoc            # Chapter navigation<br>
+│       ├── pages/<br>
+│       │   ├── index.adoc      # Chapter landing<br>
+│       │   ├── section1.adoc   # Content pages<br>
+│       │   ├── section2.adoc<br>
+│       │   └── lab.adoc<br>
+│       └── images/             # Chapter-specific images<br>
+│<br>
+├── antora-playbook.yml         # Build config (for standalone builds)<br>
+├── package.json                # NPM dependencies<br>
+└── .github/workflows/          # CI/CD automation
+            </div>
+
+            <h3>Journey Repository Structure (Multi-Component)</h3>
+            <div class="tree-structure">
+<strong>Journey Map Repository (rhoai3-journey)</strong><br>
+rhoai3-journey/<br>
+├── antora-playbook.yml         # <strong>Aggregates 10 course repos</strong><br>
+│   content:<br>
+│     sources:<br>
+│     - url: https://.../rhoai3-operators.git<br>
+│     - url: https://.../rhoai3-storage.git<br>
+│     - url: https://.../rhoai3-registry.git<br>
+│     - ... (10 total)<br>
+│<br>
+├── antora.yml                  # Journey component descriptor<br>
+│   name: rhoai3-journey<br>
+│   nav: [modules/ROOT/nav2.adoc]<br>
+│<br>
+└── modules/<br>
+    └── ROOT/<br>
+        ├── nav2.adoc           # <strong>Master navigation</strong><br>
+        ├── pages/<br>
+        │   ├── index.adoc      # Journey landing page<br>
+        │   ├── phase0.adoc     # Phase intro pages<br>
+        │   ├── phase1.adoc<br>
+        │   ├── p1-storage-section1.adoc  # <strong>Wrapper pages</strong><br>
+        │   └── ...             # (include external content)<br>
+        └── images/
+            </div>
+
+            <h3>How Antora Builds the Site</h3>
+            <ol class="step-list">
+                <li>
+                    <strong>Read the Playbook</strong>
+                    <p>Antora starts with <code>antora-playbook.yml</code>, which defines:</p>
+                    <ul>
+                        <li>Which repositories to include</li>
+                        <li>UI bundle location</li>
+                        <li>Output directory</li>
+                        <li>Site metadata</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Clone Content Sources</strong>
+                    <p>For each repository listed in the playbook:</p>
+                    <ul>
+                        <li>Clones the repo (or uses local path)</li>
+                        <li>Reads its <code>antora.yml</code> to understand the component</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Parse Content</strong>
+                    <p>For each component:</p>
+                    <ul>
+                        <li>Scans <code>modules/</code> directories</li>
+                        <li>Processes AsciiDoc files</li>
+                        <li>Resolves includes and cross-references</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Generate Navigation</strong>
+                    <p>Builds navigation menus from <code>nav.adoc</code> files</p>
+                </li>
+                <li>
+                    <strong>Apply UI Bundle</strong>
+                    <p>Wraps content in the theme/template</p>
+                </li>
+                <li>
+                    <strong>Output HTML</strong>
+                    <p>Generates the static site in <code>build/site/</code></p>
+                </li>
+            </ol>
+
+            <h3>Key Antora Concepts</h3>
+
+            <h4>1. Content References (xref)</h4>
+            <p>Link to pages within or across components:</p>
+            <pre><code>// Same component
+xref:section2.adoc[Next Section]
+
+// Different component
+xref:rhoai3-storage:chapter1:index.adoc[Storage Guide]
+
+// Pattern: component:module:page.adoc[link text]</code></pre>
+
+            <h4>2. Content Inclusion (include)</h4>
+            <p>Embed entire pages or snippets:</p>
+            <pre><code>// Include from another component
+include::rhoai3-storage:chapter1:section1.adoc[]
+
+// Include from same component
+include::partial$snippet.adoc[]</code></pre>
+
+            <h4>3. Resource References</h4>
+            <pre><code>// Images (from same module)
+image::architecture.png[Architecture Diagram]
+
+// Images (from another module)
+image::chapter1:gpu-layout.png[]
+
+// Attachments
+link:{attachmentsdir}/config.yaml[Download Config]</code></pre>
+
+            <h4>4. Navigation Files</h4>
+            <p>Navigation files (<code>nav.adoc</code>) use a simple list syntax:</p>
+            <pre><code>// modules/ROOT/nav.adoc
+
+* xref:index.adoc[Home]
+* xref:chapter1:index.adoc[Chapter 1]
+** xref:chapter1:section1.adoc[Section 1]
+** xref:chapter1:section2.adoc[Section 2]
+* xref:chapter2:index.adoc[Chapter 2]</code></pre>
+
+            <h3>The RHOAI3 Journey Pattern</h3>
+
+            <h4>How Multi-Repository Aggregation Works</h4>
+            <div class="workflow">
+                <div class="workflow-step">10 Course Repos<br>(Content)</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Journey Playbook<br>(Aggregator)</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Single Unified Site<br>(Output)</div>
+            </div>
+
+            <p><strong>Step by step:</strong></p>
+            <ol>
+                <li>Each course repo is built independently (for testing)</li>
+                <li>Journey playbook lists all 10 course repos as content sources</li>
+                <li>Journey repo creates "wrapper pages" that include content from courses</li>
+                <li>Single build produces unified site with all content</li>
+            </ol>
+
+            <h4>Example: Storage Content Flow</h4>
+            <div class="tree-structure">
+<strong>Content Source (rhoai3-storage repo):</strong><br>
+modules/chapter1/pages/section1.adoc<br>
+  ↓<br>
+<strong>Wrapper Page (rhoai3-journey repo):</strong><br>
+modules/ROOT/pages/p1-storage-section1.adoc<br>
+  contains: include::rhoai3-storage:chapter1:section1.adoc[]<br>
+  ↓<br>
+<strong>Navigation (rhoai3-journey):</strong><br>
+modules/ROOT/nav2.adoc<br>
+  contains: *** xref:p1-storage-section1.adoc[Storage Architecture]<br>
+  ↓<br>
+<strong>Generated Site:</strong><br>
+build/site/rhoai3-journey/1/p1-storage-section1.html
+            </div>
+
+            <h3>Where to Edit What</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>To Change...</th>
+                        <th>Edit This File...</th>
+                        <th>In This Repo...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Course content (text, labs, quizzes)</td>
+                        <td><code>modules/chapter1/pages/*.adoc</code></td>
+                        <td>Course repo (e.g., rhoai3-storage)</td>
+                    </tr>
+                    <tr>
+                        <td>Journey navigation order</td>
+                        <td><code>modules/ROOT/nav2.adoc</code></td>
+                        <td>rhoai3-journey</td>
+                    </tr>
+                    <tr>
+                        <td>Phase introduction pages</td>
+                        <td><code>modules/ROOT/pages/phase*.adoc</code></td>
+                        <td>rhoai3-journey</td>
+                    </tr>
+                    <tr>
+                        <td>Which courses are included</td>
+                        <td><code>antora-playbook.yml</code></td>
+                        <td>rhoai3-journey</td>
+                    </tr>
+                    <tr>
+                        <td>Component name or version</td>
+                        <td><code>antora.yml</code></td>
+                        <td>Each course repo</td>
+                    </tr>
+                    <tr>
+                        <td>Site-wide theme/appearance</td>
+                        <td><code>ui-bundle/</code></td>
+                        <td>rhoai3-journey</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Common Antora Build Commands</h3>
+            <div class="command-block">
+                <div class="command-header">Build locally (course repo)</div>
+                <div class="command-body">npx antora antora-playbook.yml</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">Build with remote repos (journey)</div>
+                <div class="command-body">npx antora --fetch antora-playbook.yml</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">Watch mode (auto-rebuild)</div>
+                <div class="command-body">npm run watch:adoc</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">Serve locally</div>
+                <div class="command-body">npm run serve</div>
+            </div>
+
+            <h3>Troubleshooting Antora Issues</h3>
+
+            <h4>Error: "Page not found" or "Unresolved xref"</h4>
+            <p><strong>Causes:</strong></p>
+            <ul>
+                <li>File doesn't exist at the specified path</li>
+                <li>Component name mismatch (check <code>antora.yml</code>)</li>
+                <li>Module name typo</li>
+            </ul>
+            <p><strong>Solution:</strong> Verify the xref pattern matches the actual structure</p>
+
+            <h4>Error: "Component not found"</h4>
+            <p><strong>Causes:</strong></p>
+            <ul>
+                <li>Repository not in playbook content sources</li>
+                <li>Sibling repo not cloned (for local builds without --fetch)</li>
+            </ul>
+            <p><strong>Solution:</strong> Add repo to playbook or use <code>--fetch</code> flag</p>
+
+            <h4>Navigation doesn't update</h4>
+            <p><strong>Causes:</strong></p>
+            <ul>
+                <li>Cache issue</li>
+                <li>Wrong nav file referenced in <code>antora.yml</code></li>
+            </ul>
+            <p><strong>Solution:</strong> Delete <code>build/</code> and rebuild</p>
+
+            <div class="callout success">
+                <h4>🎓 You Now Understand Antora!</h4>
+                <p>You're ready to navigate the course structure, understand where files go, and how the build system assembles everything into a unified site.</p>
+                <p><strong>Next:</strong> Check out <strong>Create a QuickCourse</strong> to put this knowledge into practice!</p>
+            </div>
+        </div>
+
+        <!-- Tab 4: Create a QuickCourse -->
         <div id="create-course" class="tab-content">
             <h2>Create a QuickCourse with Claude Code</h2>
 
@@ -832,7 +1392,7 @@ Important information for learners.
             </div>
         </div>
 
-        <!-- Tab 3: Add Content to Journey -->
+        <!-- Tab 5: Add Content to Journey -->
         <div id="add-content" class="tab-content">
             <h2>Add Content to Existing Journey Courses</h2>
 
@@ -1024,7 +1584,7 @@ xref:rhoai3-registry:chapter1:index.adoc[Model Registry guide].</code></pre>
             </div>
         </div>
 
-        <!-- Tab 4: Submit Issues & PRs -->
+        <!-- Tab 6: Submit Issues & PRs -->
         <div id="submit-prs" class="tab-content">
             <h2>Submit Issues and Pull Requests</h2>
 
@@ -1189,7 +1749,7 @@ xref:rhoai3-registry:chapter1:index.adoc[Model Registry guide].</code></pre>
             </ul>
         </div>
 
-        <!-- Tab 5: Add New Repository -->
+        <!-- Tab 7: Add New Repository -->
         <div id="add-repo" class="tab-content">
             <h2>Add a New Repository to the Journey</h2>
 
@@ -1387,7 +1947,7 @@ parent/<br>
             </div>
         </div>
 
-        <!-- Tab 6: Reference & Examples -->
+        <!-- Tab 8: Reference & Examples -->
         <div id="reference" class="tab-content">
             <h2>Reference & Examples</h2>
 
@@ -1638,7 +2198,7 @@ rhoai3-storage/<br>
             <p>Red Hat OpenShift AI 3.x Training • Created with Claude Code</p>
             <p style="margin-top: 1rem; font-size: 0.9rem;">
                 For questions or contributions:
-                <a href="https://github.com/RedHatQuickCourses/rhoai3-journey" style="color: var(--primary-purple);">rhoai3-journey on GitHub</a>
+                <a href="https://github.com/RedHatQuickCourses/rhoai3-journey" style="color: var(--primary-color);">rhoai3-journey on GitHub</a>
             </p>
         </footer>
     </div>
