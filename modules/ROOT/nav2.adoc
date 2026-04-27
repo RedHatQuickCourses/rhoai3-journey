@@ -37,7 +37,7 @@
 ** xref:p2-gpu-index.adoc[GPU as a Service — introduction]
 *** xref:p2-gpu-section1.adoc[Architecture — decoupled GPU stack]
 *** xref:p2-gpu-section2.adoc[Hands-on — time-slicing (GPU node required)]
-*** xref:p2-gpu-section3.adoc[Hands-on— Kueue, gpu hardware profiles
+*** xref:p2-gpu-section3.adoc[Hands-on— Kueue, gpu hardware profiles]
 *** xref:p2-gpu-section4.adoc[Hands-on — GPU aggregation (GPU node required)]
 
 * 2: Token Production Engine (serve)

@@ -11,7 +11,7 @@ The *Foundations of Scalable AI on OpenShift AI* is a collection of modular, sho
 
 [NOTE]
 ====
-*Learn more about the course structure and adding your expertises:*
+*Learn more about the course structure or contribute your expertise:*
 
 * link:../../_/rhoai3-journey-guide.html[User Guide^] - Offline usage, customization, and course overview
 * link:../../_/rhoai3-journey-learner-guide.html[Learner's Guide & Collaboration Guide^] - For contributors and course creators
@@ -29,6 +29,8 @@ Organizations currently face a *GPU crisis* where expensive, limited hardware is
 * Lack of multi-tenant security and standardized model library
 * GPU resources locked in silos
 
+== The Solution
+
 *Centralized Gen AI Model-as-a-Service (MaaS) Platform*
 
 * Acts as a governance layer between users and model serving infrastructure
@@ -43,19 +45,19 @@ Currently, the market often forces enterprises into a "token-consumption" model�
 
 This deployment guide assumes you are a platform engineer starting with a greenfield Red Hat OpenShift AI environment equipped with multiple GPUs. Your business mandate is to flip that narrative: to move from consuming tokens to generating them at a lower cost than public APIs. 
 
-By treating Red Hat OpenShift AI as the AI plaform for an on-premise industrial token factory, we focus on saturating GPU hardware for maximum ROI. We are building a secure, governed foundation that can support everything from basic inference to complex Compound AI Systems and Agentic workflows.
+By treating Red Hat OpenShift AI as the AI platform for an on-premise industrial token factory, we focus on saturating GPU hardware for maximum ROI. We are building a secure, governed foundation that can support everything from basic inference to complex Compound AI Systems and Agentic workflows.
 
-== The Modular Approah - Phases
+== The Modular Approach - Phases
 
-This collection of courses provides an opinionated set of patterns for building a shared platform, which could evolve into a Model-as-a-Service (MaaS) self-service generative AI resource. Starting from an OpenShift Container Platform, each phase—and its constituent modules—functions as a standalone lesson, focusing on a specific Red Hat OpenShift AI capability and its command-line deployment and configuration.
+This collection of courses provides an opinionated set of patterns for building a shared platform, which could evolve into a Model-as-a-Service (MaaS) self-service generative AI resource. Starting from an OpenShift Container Platform, each phase—and its constituent modules—function as a standalone lesson, focusing on a specific Red Hat OpenShift AI capability and its command-line deployment and configuration.
 
 [cols="1,3,2"]
 |===
 | Phase | Focus & Outcome | Key Components
 
 | *Phase 0:* OpenShift Operator Ecosystem
-| **Installation and configuiration** Before you can use OpenShift AI, we must install the dependent infrastructure operators and the core OpenShift AI Operator. Once the operators are installed, we’ll configure the cluster policies and settings to ensure the platform is fully ready for the journey to come.
-| *Covered:* Red Hat OpenShift AI Operator, Node Feature Discovery (NFD) Operator, NVIDIA GPU Operator, cert-manager Operator, Leader Worker Set Operator, Red Hat Connectivity Link Operator, Kueue Operator (RHBOK),
+| **Installation and configuration** Before you can use OpenShift AI, you must install the dependent infrastructure operators and the core OpenShift AI Operator. Once the operators are installed, we’ll configure the cluster policies and settings to ensure the platform is fully ready for the journey to come.
+| *Covered:* Red Hat OpenShift AI Operator, Node Feature Discovery (NFD) Operator, NVIDIA GPU Operator, cert-manager Operator, Leader Worker Set Operator, Red Hat Connectivity Link Operator, and Kueue Operator (RHBOK).
 
 *Self-study:* Job-set-operator, openshift-custom-metrics-autoscaler-operator, SR-IOV Operator, OpenTelemetry, Tempo, Cluster Observability Operator.
 
@@ -68,7 +70,7 @@ This collection of courses provides an opinionated set of patterns for building 
 | vLLM, LLM Compressor, Inference Services
 
 | *Phase 3:* Scaling the Utility
-| **Distributed Inference, MaaS, and Observability.** Here, we scale the operation. We move to distributed inference using llm-d to handle massive workloads. We also expose these models via Model-as-a-Service (MaaS) API endpoints for internal consumption, and implement observability metrics to monitor the health and throughput of the token factory.
+| **Distributed Inference, MaaS, and Observability.** Here, we scale the operation. We move to distributed inference using _llm-d_ to handle massive workloads. We also expose these models via Model-as-a-Service (MaaS) API endpoints for internal consumption, and implement observability metrics to monitor the health and throughput of the token factory.
 | llm-d, MaaS APIs, AI Gateway, Prometheus/Grafana
 
 | *Phase 4:* Governance & Compound Systems
@@ -80,8 +82,8 @@ This collection of courses provides an opinionated set of patterns for building 
 
 Follow the phases sequentially to build your platform from the ground up, or jump directly to a specific module to deploy a targeted capability.
 
-Each module in this series is standalone; you do not have to complete them in order.
+Each module in this series is standalone. You do not have to complete them in order.
 
 *Ready to start building?* Proceed to ** #1: Assembling the Factory**.
 
-*Need more details on RHOAI installation or Operator setup* Proceed to ** #0: Operator Ecosystem**.
+*Need more details on RHOAI installation or Operator setup: Proceed to ** #0: Operator Ecosystem**.
