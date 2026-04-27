@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RHOAI3 Journey - User Guide</title>
+    <style>
+        :root {
+            --rh-red: #ee0000;
+            --rh-dark-red: #a30000;
+            --rh-black: #000000;
+            --text-dark: #333;
+            --text-light: #6c757d;
+            --bg-white: #fff;
+            --bg-light: #f8f9fa;
+            --border-color: #e9ecef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--rh-black) 0%, var(--rh-dark-red) 50%, var(--rh-red) 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-toc {
+            background: var(--bg-light);
+            padding: 20px 40px;
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-toc h3 {
+            color: var(--rh-red);
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .nav-toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .nav-toc a {
+            color: #495057;
+            text-decoration: none;
+            padding: 8px 12px;
+            display: block;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .nav-toc a:hover {
+            background: var(--rh-red);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            color: var(--rh-red);
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--rh-red);
+        }
+
+        h3 {
+            color: var(--rh-dark-red);
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #495057;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .phase-card {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .phase-card:hover {
+            border-color: var(--rh-red);
+            box-shadow: 0 5px 15px rgba(238, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .phase-card h4 {
+            color: var(--rh-red);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .phase-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .phase-card li {
+            padding: 8px 0;
+            color: #495057;
+            border-bottom: 1px solid #f1f3f5;
+        }
+
+        .phase-card li:before {
+            content: "▸ ";
+            color: var(--rh-red);
+            font-weight: bold;
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        code {
+            background: #f1f3f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: var(--rh-red);
+            font-size: 0.9em;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #abb2bf;
+        }
+
+        .command-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .command-block:before {
+            content: "$ ";
+            color: #4ec9b0;
+            font-weight: bold;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        strong {
+            color: #212529;
+            font-weight: 600;
+        }
+
+        .tree-structure {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            border-left: 4px solid var(--rh-red);
+            font-size: 0.9em;
+            line-height: 1.8;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .badge-phase0 { background: #e7f3ff; color: #0066cc; }
+        .badge-phase1 { background: #fff3e0; color: #e65100; }
+        .badge-phase2 { background: #f3e5f5; color: #7b1fa2; }
+        .badge-phase3 { background: #e8f5e9; color: #2e7d32; }
+        .badge-phase4 { background: #fce4ec; color: #c2185b; }
+
+        .workflow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            gap: 1rem;
+        }
+
+        .workflow-step {
+            background: var(--rh-red);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .workflow-arrow {
+            font-size: 1.5rem;
+            color: var(--rh-red);
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        tr:hover {
+            background: rgba(238, 0, 0, 0.05);
+        }
+
+        footer {
+            background: var(--bg-light);
+            padding: 20px;
+            text-align: center;
+            color: var(--text-light);
+            border-top: 2px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .nav-toc ul {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .phase-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .workflow {
+                flex-direction: column;
+            }
+
+            .workflow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RHOAI3 Journey User Guide</h1>
+            <p>Foundation of Scalable AI for Red Hat OpenShift AI 3.x</p>
+        </header>
+
+        <nav class="nav-toc">
+            <h3>Quick Navigation</h3>
+            <ul>
+                <li><a href="#overview">Course Overview</a></li>
+                <li><a href="#problem">Problem & Solution</a></li>
+                <li><a href="#phases">Learning Phases</a></li>
+                <li><a href="#offline">Offline Usage</a></li>
+                <li><a href="#customization">Customization</a></li>
+                <li><a href="#architecture">Multi-Repo Architecture</a></li>
+                <li><a href="#build">Build & Deploy</a></li>
+                <li><a href="#navigation">Site Navigation</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <section id="overview">
+                <h2>Course Overview</h2>
+                <div class="highlight-box">
+                    <p><strong>Welcome to the Red Hat OpenShift AI 3.x Foundation of Scalable AI</strong> — a unified learning journey designed to help you or your organization move from a greenfield OpenShift cluster to an operational, production-grade AI platform in just a few hours.</p>
+                </div>
+
+                <h3>What This Course Provides</h3>
+                <div class="phase-grid">
+                    <div class="phase-card">
+                        <h4>📚 Comprehensive Training</h4>
+                        <p>10 integrated courses covering the entire AI platform lifecycle—from operators to validation.</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <h4>⚡ Rapid Deployment</h4>
+                        <p>5-10 hours total to go from zero to operational AI platform with working examples.</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <h4>🔧 Hands-On Labs</h4>
+                        <p>Copy-paste ready YAML, scripts, and commands. Deploy on day one.</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <h4>💼 Business-Focused</h4>
+                        <p>Technical decisions tied directly to business outcomes and real-world problems.</p>
+                    </div>
+                </div>
+
+                <h3>Course Creation Note</h3>
+                <div class="info-box">
+                    <p><strong>AI-Assisted Development:</strong> These courses were created with AI assistance to provide <strong>basic, functional code</strong> for rapid environment setup.</p>
+                    <p><strong>Important:</strong> This is a <strong>starting point</strong>, not production-ready CI/CD. Use this to explore and understand the platform, then invest in production-grade tooling for your specific needs.</p>
+                </div>
+            </section>
+
+            <section id="problem">
+                <h2>The Problem We're Solving</h2>
+
+                <h3>The GPU Crisis</h3>
+                <p>Organizations today face a critical challenge: <strong>expensive, limited GPU hardware trapped within individual teams</strong>, leading to simultaneous idle capacity and project bottlenecks.</p>
+
+                <div class="phase-grid">
+                    <div class="phase-card">
+                        <h4>❌ Without Centralized Approach</h4>
+                        <ul>
+                            <li>Teams request dedicated GPUs</li>
+                            <li>Hardware sits under-utilized</li>
+                            <li>High-priority projects stall</li>
+                            <li>No usage quotas or governance</li>
+                            <li>Lack of multi-tenant security</li>
+                            <li>No standardized model library</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card">
+                        <h4>✅ With Models as a Service (MaaS)</h4>
+                        <ul>
+                            <li>Centralized governance layer</li>
+                            <li>Efficient GPU resource sharing</li>
+                            <li>Enforced usage quotas</li>
+                            <li>Multi-tenant security</li>
+                            <li>Standardized model catalog</li>
+                            <li>Orchestration and SLOs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>The Traditional Timeline Problem</h3>
+                <div class="warning-box">
+                    <p><strong>The Question:</strong> How fast can you move from "we want AI" to "AI delivers business value"?</p>
+                    <p><strong>Industry Reality:</strong> Most organizations struggle with <strong>6–18 months</strong> of infrastructure setup before development begins.</p>
+                    <ul>
+                        <li>GPU costs are high</li>
+                        <li>Governance is complex</li>
+                        <li>Knowledge is distributed</li>
+                        <li>Integration is challenging</li>
+                    </ul>
+                </div>
+
+                <h3>Our Solution</h3>
+                <div class="success-box">
+                    <p><strong>Progressive, Opinionated Architecture</strong></p>
+                    <p>This course provides a <strong>starting point</strong>—not the final destination. We show you:</p>
+                    <ul>
+                        <li>The <strong>business decision</strong> behind each component</li>
+                        <li>The <strong>technical implementation</strong> with working code</li>
+                        <li>No fluff—<strong>result-focused</strong> instruction</li>
+                        <li>Extensible foundation for your production needs</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="phases">
+                <h2>The Learning Journey: 5 Phases</h2>
+
+                <div class="workflow">
+                    <div class="workflow-step" style="background: #0066cc;">Phase 0<br>Operators<br>(1 hour)</div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step" style="background: #e65100;">Phase 1<br>Assemble<br>(2-3 hours)</div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step" style="background: #7b1fa2;">Phase 2<br>Deploy<br>(1-2 hours)</div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step" style="background: #2e7d32;">Phase 3<br>Scale<br>(2-3 hours)</div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step" style="background: #c2185b;">Phase 4<br>Validate<br>(WIP)</div>
+                </div>
+
+                <p>Each module follows the same pattern:</p>
+                <div class="workflow">
+                    <div class="workflow-step">Business Value</div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">Architecture</div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">Implementation</div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">Validation</div>
+                </div>
+
+                <h3><span class="badge badge-phase0">Phase 0</span> Operator Ecosystem (~1 hour)</h3>
+                <p><strong>Course:</strong> <code>rhoai3-operators</code></p>
+                <p><strong>Outcome:</strong> OpenShift operators installed and configured</p>
+                <ul>
+                    <li>OpenShift AI operator deployment</li>
+                    <li>Operator configuration and tuning</li>
+                    <li>Validation and troubleshooting</li>
+                </ul>
+
+                <h3><span class="badge badge-phase1">Phase 1</span> Assembling the Factory (2-3 hours)</h3>
+                <p><strong>Outcome:</strong> Complete infrastructure foundation for AI workloads</p>
+                <div class="phase-grid">
+                    <div class="phase-card">
+                        <h4>Storage</h4>
+                        <p><code>rhoai3-storage</code></p>
+                        <p>Data storage, PVCs, storage classes, and data paths</p>
+                    </div>
+                    <div class="phase-card">
+                        <h4>Model Registry</h4>
+                        <p><code>rhoai3-registry</code></p>
+                        <p>Model registry setup and management</p>
+                    </div>
+                    <div class="phase-card">
+                        <h4>Model Catalog</h4>
+                        <p><code>rhoai3-catalog</code></p>
+                        <p>Model catalog governance and versioning</p>
+                    </div>
+                    <div class="phase-card">
+                        <h4>Hardware Profiles</h4>
+                        <p><code>rhoai3-hwprofiles</code></p>
+                        <p>Hardware profiles and node placement strategies</p>
+                    </div>
+                    <div class="phase-card">
+                        <h4>GPU as a Service</h4>
+                        <p><code>rhoai3-gpu-aas</code></p>
+                        <p>GPU resource sharing and allocation</p>
+                    </div>
+                </div>
+
+                <h3><span class="badge badge-phase2">Phase 2</span> Token Production Engine (1-2 hours)</h3>
+                <p><strong>Course:</strong> <code>rhoai3-deploy</code></p>
+                <p><strong>Outcome:</strong> Model serving with KServe and vLLM deployed and operational</p>
+                <ul>
+                    <li>KServe configuration</li>
+                    <li>vLLM inference engine deployment</li>
+                    <li>Model serving endpoints</li>
+                    <li>Performance tuning</li>
+                </ul>
+
+                <h3><span class="badge badge-phase3">Phase 3</span> Scaling the Utility (2-3 hours)</h3>
+                <p><strong>Outcome:</strong> Distributed inference and MaaS platform operational</p>
+                <div class="phase-grid">
+                    <div class="phase-card">
+                        <h4>Distributed Inference</h4>
+                        <p><code>rhoai3-llmd</code></p>
+                        <p>llm-d deployment for distributed model serving</p>
+                    </div>
+                    <div class="phase-card">
+                        <h4>Models as a Service</h4>
+                        <p><code>rhoai3-maas</code></p>
+                        <p>Complete MaaS platform with Gateway API and governance</p>
+                    </div>
+                </div>
+
+                <h3><span class="badge badge-phase4">Phase 4</span> Quality and SLOs (Work in Progress)</h3>
+                <p><strong>Course:</strong> <code>rhoai3-validate</code></p>
+                <p><strong>Outcome:</strong> Validation services and automated quality checks</p>
+                <div class="info-box">
+                    <p><strong>Note:</strong> This phase is currently under development and not included in the active navigation.</p>
+                </div>
+            </section>
+
+            <section id="offline">
+                <h2>Using the Course Offline</h2>
+
+                <h3>Why Offline Access?</h3>
+                <ul>
+                    <li><strong>Air-gapped environments:</strong> Many enterprise OpenShift clusters are isolated from the internet</li>
+                    <li><strong>Unreliable connectivity:</strong> Work without depending on network availability</li>
+                    <li><strong>Custom modifications:</strong> Add company-specific content and branding</li>
+                    <li><strong>Internal distribution:</strong> Host on internal servers or share via USB drives</li>
+                </ul>
+
+                <h3>Quick Start: Offline Setup</h3>
+                <div class="success-box">
+                    <p><strong>Simple Option:</strong> Download the pre-built site from GitHub Pages</p>
+                </div>
+
+                <ol>
+                    <li><strong>Visit the published site:</strong>
+                        <div class="command-block">https://redhatquickcourses.github.io/rhoai3-journey/</div>
+                    </li>
+                    <li><strong>Use browser "Save Page As" → "Webpage, Complete"</strong></li>
+                    <li><strong>Or use wget to mirror the site:</strong>
+                        <div class="command-block">wget --mirror --convert-links --adjust-extension --page-requisites --no-parent https://redhatquickcourses.github.io/rhoai3-journey/</div>
+                    </li>
+                    <li><strong>Open the local <code>index.html</code> in any browser</strong></li>
+                </ol>
+
+                <h3>Advanced: Build Your Own Offline Copy</h3>
+                <p>For customization or the latest content:</p>
+
+                <h4>Prerequisites</h4>
+                <ul>
+                    <li>Git (to clone repositories)</li>
+                    <li>Node.js 16+ and npm (for local builds)</li>
+                    <li>OR Docker (for containerized builds)</li>
+                </ul>
+
+                <h4>Method 1: Clone All Repositories</h4>
+                <pre><code># Create a parent directory
+mkdir rhoai3-offline
+cd rhoai3-offline
+
+# Clone the journey repository
+git clone https://github.com/RedHatQuickCourses/rhoai3-journey.git
+
+# Clone all 10 content repositories
+git clone https://github.com/RedHatQuickCourses/rhoai3-operators.git
+git clone https://github.com/RedHatQuickCourses/rhoai3-storage.git
+git clone https://github.com/RedHatQuickCourses/rhoai3-registry.git
+git clone https://github.com/RedHatQuickCourses/rhoai3-catalog.git
+git clone https://github.com/RedHatQuickCourses/rhoai3-hwprofiles.git
+git clone https://github.com/RedHatQuickCourses/rhoai3-gpu-aas.git
+git clone https://github.com/RedHatQuickCourses/rhoai3-deploy.git
+git clone https://github.com/RedHatQuickCourses/rhoai3-llmd.git
+git clone https://github.com/RedHatQuickCourses/rhoai3-maas.git
+git clone https://github.com/RedHatQuickCourses/rhoai3-validate.git
+
+# Build the site
+cd rhoai3-journey
+npm install
+npx antora antora-playbook.yml
+
+# Site is now in: build/site/
+# Open build/site/index.html in a browser</code></pre>
+
+                <h4>Method 2: Let Antora Fetch Repositories (Internet Required)</h4>
+                <pre><code># Clone only the journey repository
+git clone https://github.com/RedHatQuickCourses/rhoai3-journey.git
+cd rhoai3-journey
+
+# Build with --fetch (Antora will clone other repos to cache)
+npm install
+npx antora --fetch antora-playbook.yml
+
+# Site is in: build/site/</code></pre>
+
+                <h4>Method 3: Docker Build (No Node.js Required)</h4>
+                <pre><code># Clone repositories as in Method 1, then:
+cd rhoai3-offline
+
+docker run -u $(id -u) -v $PWD:/workspace:Z --rm -t \
+  -w /workspace/rhoai3-journey \
+  antora/antora antora-playbook.yml
+
+# Site is in: rhoai3-journey/build/site/</code></pre>
+
+                <h3>Distributing the Offline Site</h3>
+                <div class="phase-grid">
+                    <div class="phase-card">
+                        <h4>USB Drive</h4>
+                        <p>Copy the <code>build/site/</code> directory to a USB drive. Recipients open <code>index.html</code> in any browser.</p>
+                    </div>
+                    <div class="phase-card">
+                        <h4>Internal Web Server</h4>
+                        <p>Host on Apache, Nginx, or any web server. Point to <code>build/site/</code> as the document root.</p>
+                    </div>
+                    <div class="phase-card">
+                        <h4>Compressed Archive</h4>
+                        <p>Create a zip file: <code>zip -r rhoai3-journey.zip build/site/</code> and share via email or file share.</p>
+                    </div>
+                    <div class="phase-card">
+                        <h4>Local Python Server</h4>
+                        <p>For quick testing: <code>cd build/site && python3 -m http.server 8080</code></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="customization">
+                <h2>Customizing the Course</h2>
+
+                <h3>Common Customization Scenarios</h3>
+
+                <h4>1. Add Company Branding</h4>
+                <p>Modify the UI bundle to include your company logo and colors:</p>
+                <ul>
+                    <li>Edit <code>supplemental-ui/partials/header-content.hbs</code> for header logo</li>
+                    <li>Edit <code>supplemental-ui/css/custom.css</code> for custom styles</li>
+                    <li>Replace <code>supplemental-ui/img/logo.png</code> with your logo</li>
+                </ul>
+
+                <h4>2. Add Internal Notes or Warnings</h4>
+                <p>Insert company-specific content in phase introduction pages:</p>
+                <pre><code>// Edit: modules/ROOT/pages/phase1.adoc
+
+[WARNING]
+====
+Internal Note: For &lt;YourCompany&gt; deployments,
+ensure you use the approved storage class:
+`company-approved-storage-class`
+====</code></pre>
+
+                <h4>3. Remove or Reorder Phases</h4>
+                <p>Edit <code>modules/ROOT/nav2.adoc</code> to change navigation order or hide sections:</p>
+                <pre><code>// Comment out sections you don't want:
+// * 4: Quality and SLOs (validate)
+// ** xref:phase4.adoc[Phase overview]</code></pre>
+
+                <h4>4. Add Custom Lab Environment Details</h4>
+                <p>Create a custom intro page with your cluster details:</p>
+                <pre><code>// Create: modules/ROOT/pages/company-intro.adoc
+
+= Lab Environment for &lt;YourCompany&gt;
+
+== Cluster Access
+* Console: https://console.yourcluster.com
+* API: https://api.yourcluster.com:6443
+
+== Credentials
+Contact IT help desk for credentials.
+
+== Support
+Internal support: #ai-platform-support</code></pre>
+
+                <p>Then add to navigation:</p>
+                <pre><code>// In nav2.adoc
+* xref:company-intro.adoc[Company Lab Environment]</code></pre>
+
+                <h4>5. Bundle with Custom Tools or Scripts</h4>
+                <p>Add company-specific automation scripts:</p>
+                <ul>
+                    <li>Place scripts in <code>supplemental-ui/downloads/</code></li>
+                    <li>Reference in pages: <code>link:{attachmentsdir}/setup-company-env.sh[Download Setup Script]</code></li>
+                </ul>
+
+                <h3>Rebuilding After Customization</h3>
+                <div class="command-block">npm run build</div>
+                <p>Test locally:</p>
+                <div class="command-block">npm run serve</div>
+                <p>Then open <code>http://localhost:8080</code> to verify changes.</p>
+
+                <h3>Maintaining Your Custom Version</h3>
+                <div class="info-box">
+                    <p><strong>Best Practice:</strong> Fork the repository on GitHub to maintain your custom version.</p>
+                    <ol>
+                        <li>Fork <code>rhoai3-journey</code> to your organization's GitHub</li>
+                        <li>Make customizations in your fork</li>
+                        <li>Periodically merge updates from upstream</li>
+                        <li>Build and distribute your custom version</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="architecture">
+                <h2>Multi-Repository Architecture</h2>
+
+                <div class="info-box">
+                    <p><strong>Understanding the Structure:</strong> This is NOT a single course—it's a <strong>meta-course</strong> that aggregates content from 10 separate repositories.</p>
+                </div>
+
+                <h3>How It Works</h3>
+                <div class="phase-grid">
+                    <div class="phase-card">
+                        <h4>1. Journey Repository</h4>
+                        <p>Contains only navigation structure and phase overview pages</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <h4>2. Content Repositories</h4>
+                        <p>10 separate repos with actual course content (presentations, labs, quizzes)</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <h4>3. Antora Build System</h4>
+                        <p>Aggregates all repos into a single unified website</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <h4>4. Static Site Output</h4>
+                        <p>Self-contained HTML site that works offline</p>
+                    </div>
+                </div>
+
+                <h3>Directory Structure</h3>
+                <div class="tree-structure">
+rhoai3-offline/                    # Parent directory<br>
+├── rhoai3-journey/                # Journey map<br>
+│   ├── antora-playbook.yml        # Lists all 10 content repos<br>
+│   ├── antora.yml                 # Journey component config<br>
+│   ├── modules/ROOT/              # Journey structure<br>
+│   │   ├── nav2.adoc              # Master navigation<br>
+│   │   └── pages/                 # Phase intro pages<br>
+│   └── build/site/                # Built site (after build)<br>
+│<br>
+├── rhoai3-operators/              # Phase 0 content<br>
+├── rhoai3-storage/                # Phase 1 content<br>
+├── rhoai3-registry/               # Phase 1 content<br>
+├── rhoai3-catalog/                # Phase 1 content<br>
+├── rhoai3-hwprofiles/             # Phase 1 content<br>
+├── rhoai3-gpu-aas/                # Phase 1 content<br>
+├── rhoai3-deploy/                 # Phase 2 content<br>
+├── rhoai3-llmd/                   # Phase 3 content<br>
+├── rhoai3-maas/                   # Phase 3 content<br>
+└── rhoai3-validate/               # Phase 4 content
+                </div>
+
+                <h3>Content Aggregation</h3>
+                <p>The journey repository uses Antora's <code>include::</code> directive to pull content:</p>
+                <pre><code>// File: rhoai3-journey/modules/ROOT/pages/p1-storage.adoc
+// Pulls content from rhoai3-storage repository
+
+include::rhoai3-storage:chapter1:index.adoc[]</code></pre>
+            </section>
+
+            <section id="build">
+                <h2>Build & Deploy Options</h2>
+
+                <h3>Development Build (with live reload)</h3>
+                <p>For active content development:</p>
+                <pre><code># Terminal 1 - Auto-rebuild on changes
+npm run watch:adoc
+
+# Terminal 2 - Serve locally
+npm run serve
+
+# Open: http://localhost:8080</code></pre>
+
+                <h3>Production Build</h3>
+                <p>For final offline distribution:</p>
+                <div class="command-block">npm run build</div>
+                <p>Output: <code>build/site/</code> directory with complete static site</p>
+
+                <h3>GitHub Pages (Automatic)</h3>
+                <p>When you push to <code>main</code> branch, GitHub Actions automatically:</p>
+                <ol>
+                    <li>Clones all 10 content repositories</li>
+                    <li>Builds the unified site with Antora</li>
+                    <li>Publishes to GitHub Pages</li>
+                </ol>
+                <div class="success-box">
+                    <p><strong>Live Site:</strong> <code>https://&lt;org&gt;.github.io/rhoai3-journey/</code></p>
+                </div>
+
+                <h3>PDF Generation</h3>
+                <p>Generate a PDF version for offline reading:</p>
+                <div class="command-block">npm run build:pdf</div>
+                <p>Output: <code>build/assembler-pdf/*.pdf</code></p>
+            </section>
+
+            <section id="navigation">
+                <h2>Understanding Site Navigation</h2>
+
+                <h3>Two Navigation Modes</h3>
+                <p>The journey includes two navigation files:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>File</th>
+                            <th>Style</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>nav2.adoc</code></td>
+                            <td>Learner-oriented, outcome-focused labels</td>
+                            <td><strong>Currently Active</strong></td>
+                        </tr>
+                        <tr>
+                            <td><code>nav.adoc</code></td>
+                            <td>Technical, component-focused labels</td>
+                            <td>Alternative</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>To switch navigation: Edit <code>antora.yml</code> and change the <code>nav:</code> reference.</p>
+
+                <h3>Navigation Structure</h3>
+                <ul>
+                    <li><strong>Phase Overview:</strong> High-level introduction to each phase</li>
+                    <li><strong>Course Sections:</strong> Individual modules within each phase</li>
+                    <li><strong>Cross-References:</strong> Links between related topics across phases</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Getting Help & Support</h2>
+
+                <h3>Documentation Resources</h3>
+                <ul>
+                    <li><strong>This Guide:</strong> Overview and offline usage for end users</li>
+                    <li><strong><a href="rhoai3-journey-learner-guide.html" style="color: var(--rh-red);">Learner's Guide & Collaboration Guide</a></strong> - For contributors and course creators</li>
+                    <li><strong>CLAUDE.md:</strong> Repository-specific technical details</li>
+                    <li><strong>Individual Course READMEs:</strong> In each of the 10 content repositories</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>Want to Contribute or Create Content?</h4>
+                    <p>If you want to contribute to this course journey or create your own QuickCourse modules, visit the <strong><a href="rhoai3-journey-learner-guide.html" style="color: var(--rh-red);">Learner's Guide & Collaboration Guide</a></strong>.</p>
+                    <p>It covers:</p>
+                    <ul>
+                        <li>Creating new QuickCourses with Claude Code</li>
+                        <li>Understanding Antora structure</li>
+                        <li>Adding content to the journey</li>
+                        <li>Submitting issues and pull requests</li>
+                        <li>Integrating new repositories into the journey</li>
+                    </ul>
+                </div>
+
+                <h3>Community & Contributions</h3>
+                <ul>
+                    <li><strong>GitHub Issues:</strong> <a href="https://github.com/RedHatQuickCourses/rhoai3-journey/issues">Report issues or request features</a></li>
+                    <li><strong>Discussions:</strong> <a href="https://github.com/RedHatQuickCourses/rhoai3-journey/discussions">Community Q&A</a></li>
+                    <li><strong>Pull Requests:</strong> Contribute improvements or fixes</li>
+                </ul>
+
+                <h3>Troubleshooting</h3>
+                <div class="highlight-box">
+                    <h4>Common Issues</h4>
+                    <ul>
+                        <li><strong>Build fails:</strong> Ensure all 10 sibling repos are cloned (for local builds without <code>--fetch</code>)</li>
+                        <li><strong>Missing content:</strong> Check that <code>antora-playbook.yml</code> references all content sources</li>
+                        <li><strong>Navigation broken:</strong> Verify xref paths in <code>nav2.adoc</code> match actual page files</li>
+                        <li><strong>Images not loading:</strong> Check image paths and ensure they're in module <code>images/</code> directories</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Next Steps</h2>
+
+                <div class="success-box">
+                    <h3>Start Your Journey</h3>
+                    <ol>
+                        <li><strong>Access the course online:</strong> Visit the GitHub Pages site or build offline copy</li>
+                        <li><strong>Begin with Phase 0:</strong> Set up the OpenShift AI operator ecosystem</li>
+                        <li><strong>Progress through phases:</strong> Each builds on the previous</li>
+                        <li><strong>Complete hands-on labs:</strong> Deploy real AI workloads on your cluster</li>
+                        <li><strong>Customize for production:</strong> Extend and adapt for your organization's needs</li>
+                    </ol>
+                </div>
+
+                <div class="info-box">
+                    <h3>Remember</h3>
+                    <p><strong>This is a starting point</strong> designed to get you operational quickly. Use it to:</p>
+                    <ul>
+                        <li>Understand the platform architecture</li>
+                        <li>Explore capabilities hands-on</li>
+                        <li>Make informed decisions about production deployment</li>
+                        <li>Build expertise within your team</li>
+                    </ul>
+                    <p><strong>The real learning happens when you run it yourself.</strong></p>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p><strong>RHOAI3 Journey User Guide</strong></p>
+            <p>Red Hat OpenShift AI 3.x - Foundation of Scalable AI</p>
+            <p style="margin-top: 1rem;">
+                <a href="https://github.com/RedHatQuickCourses/rhoai3-journey" style="color: var(--rh-red);">View on GitHub</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
