@@ -12,8 +12,8 @@ In this series, we deliberately opted for business value and simplified deployme
 ====
 *Additional Resources:*
 
-* link:../../../rhoai3-journey-guide.html[User Guide^] - Offline usage, customization, and course overview
-* link:../../../rhoai3-journey-learner-guide.html[Learner's Guide & Collaboration Guide^] - For contributors and course creators
+* link:../../_/rhoai3-journey-guide.html[User Guide^] - Offline usage, customization, and course overview
+* link:../../_/rhoai3-journey-learner-guide.html[Learner's Guide & Collaboration Guide^] - For contributors and course creators
 ====
 
 == The Problem We're Solving
