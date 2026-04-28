@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Purpose
 
-This is a **unified learning journey repository** that aggregates **10 separate Red Hat OpenShift AI (RHOAI) 3.x training courses** into one comprehensive learning path for deploying an **industrialized AI token generation platform** on Red Hat OpenShift AI 3.x.
+This is a **unified learning journey repository** that aggregates **10 separate Red Hat OpenShift AI (RHOAI) 3.x training courses** into one comprehensive learning path for deploying an Models as a Service **industrialized AI token generation platform** on Red Hat OpenShift AI 3.x.
 
 **Focus areas:** Optimized resources, performance SLOs, model governance, and engineering outcomes.
 
@@ -75,7 +75,7 @@ docker run -u $(id -u) -v $PWD:/workspace:Z --rm -t -w /workspace/rhoai3-journey
 
 Output: `rhoai3-journey/build/site/index.html`
 
-### Option 2: Local NPM
+### Option 1: Local NPM (Recommended)
 
 Must run from **inside** `rhoai3-journey` with all sibling repos present:
 
@@ -86,6 +86,17 @@ npx antora antora-playbook.yml
 ```
 
 Output: `build/site/index.html`
+
+### Option 2: Docker (Recommended)
+
+Run from the **parent directory** that contains all 11 repositories:
+
+```bash
+cd /path/to/parent
+docker run -u $(id -u) -v $PWD:/workspace:Z --rm -t -w /workspace/rhoai3-journey antora/antora antora-playbook.yml
+```
+
+Output: `rhoai3-journey/build/site/index.html`
 
 ### Development Workflow
 
